@@ -1,0 +1,489 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>Taddline_1D_wizard</class>
+<widget class="QWizard">
+    <property name="name">
+        <cstring>Taddline_1D_wizard</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>640</width>
+            <height>493</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>Wizard for adding a line to the  AND table</string>
+    </property>
+    <widget class="QWidget">
+        <property name="name">
+            <cstring>page</cstring>
+        </property>
+        <attribute name="title">
+            <string>keyword WHEN was found</string>
+        </attribute>
+        <grid>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLabel" row="1" column="0" rowspan="1" colspan="2">
+                <property name="name">
+                    <cstring>textLabel3_2</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;blockquote&gt;&lt;i&gt;It may happen when the detector didn't fire, or the data was not good enough,&lt;br&gt; or the calculation was not possible.&lt;/i&gt;&lt;/blockquote&gt;</string>
+                </property>
+            </widget>
+            <widget class="QLabel" row="0" column="0" rowspan="1" colspan="2">
+                <property name="name">
+                    <cstring>textLabel3</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;font size="+0"&gt;The name of this incrementor contains the word 
+"&lt;font color="#ff0000"&gt;&lt;b&gt;WHEN&lt;/b&gt;&lt;/font&gt;". &lt;br&gt;
+"&lt;font color="#ff0000"&gt;&lt;b&gt;WHEN&lt;/b&gt;&lt;/font&gt;" - means that for some events this incrementor may not have the meaningful 
+value.&lt;/font&gt;</string>
+                </property>
+                <property name="alignment">
+                    <set>WordBreak|AlignVCenter|AlignLeft</set>
+                </property>
+            </widget>
+            <widget class="QLayoutWidget" row="2" column="0" rowspan="1" colspan="2">
+                <property name="name">
+                    <cstring>layout8</cstring>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <spacer>
+                        <property name="name">
+                            <cstring>spacer17</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>201</width>
+                                <height>21</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>pushButton_for_example_when</cstring>
+                        </property>
+                        <property name="text">
+                            <string>for example...</string>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+            <spacer row="3" column="0">
+                <property name="name">
+                    <cstring>spacer18</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Vertical</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Expanding</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>20</width>
+                        <height>30</height>
+                    </size>
+                </property>
+            </spacer>
+            <widget class="QLabel" row="4" column="0" rowspan="1" colspan="2">
+                <property name="name">
+                    <cstring>textLabel2_incr_name</cstring>
+                </property>
+                <property name="text">
+                    <string>Incrementor name</string>
+                </property>
+            </widget>
+            <widget class="QButtonGroup" row="5" column="0" rowspan="1" colspan="2">
+                <property name="name">
+                    <cstring>buttonGroup6</cstring>
+                </property>
+                <property name="title">
+                    <string>What to do if (in the particular event) the incrementor is not currently valid ?</string>
+                </property>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QRadioButton" row="0" column="1">
+                        <property name="name">
+                            <cstring>radioButton_obligatory</cstring>
+                        </property>
+                        <property name="text">
+                            <string>FALSE (recommended)</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton" row="1" column="1">
+                        <property name="name">
+                            <cstring>radioButton_if_possible</cstring>
+                        </property>
+                        <property name="text">
+                            <string>TRUE</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="0" column="0" rowspan="2" colspan="1">
+                        <property name="name">
+                            <cstring>textLabel1_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Let this line (of the condition) be treated as:</string>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignCenter</set>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QLabel" row="6" column="0">
+                <property name="name">
+                    <cstring>textLabel1_3_2</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;font size="-1"&gt;&lt;font color="#005500"&gt;&lt;i&gt;Here you usually want the option: "FALSE" &lt;br&gt;(This means that we are interested only in the events where this incrementor has the meaningful value).&lt;/i&gt;&lt;/font&gt;&lt;/font&gt;</string>
+                </property>
+            </widget>
+            <spacer row="6" column="1">
+                <property name="name">
+                    <cstring>spacer20</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Vertical</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Expanding</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>31</width>
+                        <height>71</height>
+                    </size>
+                </property>
+            </spacer>
+        </grid>
+    </widget>
+    <widget class="QWidget">
+        <property name="name">
+            <cstring>WizardPage</cstring>
+        </property>
+        <attribute name="title">
+            <string>keywords ALL and WHEN was found</string>
+        </attribute>
+        <grid>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <widget class="QLabel" row="5" column="0">
+                <property name="name">
+                    <cstring>textLabel1_3</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;font size="-1"&gt;&lt;font color="#005500"&gt;&lt;i&gt;For the keyword "ALL" - you usually want the option: "TRUE".&lt;br&gt;
+This means that we are interested in events when at least one the incrementors had a valid data&lt;/i&gt;&lt;/font&gt;&lt;/font&gt;</string>
+                </property>
+                <property name="alignment">
+                    <set>WordBreak|AlignVCenter</set>
+                </property>
+                <property name="indent">
+                    <number>7</number>
+                </property>
+            </widget>
+            <widget class="QLabel" row="0" column="0" rowspan="1" colspan="3">
+                <property name="name">
+                    <cstring>textLabel3_3</cstring>
+                </property>
+                <property name="text">
+                    <string>&lt;font size="+0"&gt;The name of this incrementor contains the words: 
+"&lt;font color="#0000ff"&gt;&lt;b&gt;ALL&lt;/b&gt;&lt;/font&gt;" and 
+"&lt;font color="#ff0000"&gt;&lt;b&gt;WHEN&lt;/b&gt;&lt;/font&gt;".&lt;br&gt;&lt;br&gt;
+"&lt;font color="#0000ff"&gt;&lt;b&gt;- ALL&lt;/b&gt;&lt;/font&gt;" - means that acutally this is a set of incrementors.
+&lt;br&gt;
+"&lt;font color="#ff0000"&gt;&lt;b&gt;- WHEN&lt;/b&gt;&lt;/font&gt;" - means that some of the items (members of the "ALL set") 
+may not be present in every event.&lt;/font&gt;
+(The single item is  present only if its "WHEN" situation in true).</string>
+                </property>
+                <property name="alignment">
+                    <set>WordBreak|AlignVCenter|AlignLeft</set>
+                </property>
+            </widget>
+            <widget class="QLayoutWidget" row="1" column="0" rowspan="1" colspan="3">
+                <property name="name">
+                    <cstring>layout7</cstring>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <spacer>
+                        <property name="name">
+                            <cstring>spacer14</cstring>
+                        </property>
+                        <property name="orientation">
+                            <enum>Horizontal</enum>
+                        </property>
+                        <property name="sizeType">
+                            <enum>Expanding</enum>
+                        </property>
+                        <property name="sizeHint">
+                            <size>
+                                <width>461</width>
+                                <height>21</height>
+                            </size>
+                        </property>
+                    </spacer>
+                    <widget class="QPushButton">
+                        <property name="name">
+                            <cstring>pushButton_expl_all_when</cstring>
+                        </property>
+                        <property name="text">
+                            <string>for example...</string>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+            <spacer row="2" column="2">
+                <property name="name">
+                    <cstring>spacer15</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Vertical</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Expanding</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>21</width>
+                        <height>40</height>
+                    </size>
+                </property>
+            </spacer>
+            <widget class="QLabel" row="3" column="0" rowspan="1" colspan="3">
+                <property name="name">
+                    <cstring>textLabel2_incr_name_2</cstring>
+                </property>
+                <property name="text">
+                    <string>Incrementor name</string>
+                </property>
+            </widget>
+            <widget class="QButtonGroup" row="4" column="0" rowspan="1" colspan="3">
+                <property name="name">
+                    <cstring>buttonGroup6_2</cstring>
+                </property>
+                <property name="title">
+                    <string>What to do if (in the particular event) one of items of the "ALL" set  - is not currently valid ?</string>
+                </property>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QRadioButton" row="0" column="1">
+                        <property name="name">
+                            <cstring>radioButton_always_ALL</cstring>
+                        </property>
+                        <property name="text">
+                            <string>FALSE</string>
+                        </property>
+                    </widget>
+                    <widget class="QRadioButton" row="1" column="1">
+                        <property name="name">
+                            <cstring>radioButton_if_possible_ALL</cstring>
+                        </property>
+                        <property name="text">
+                            <string>TRUE (recommended)</string>
+                        </property>
+                    </widget>
+                    <widget class="QLabel" row="0" column="0" rowspan="2" colspan="1">
+                        <property name="name">
+                            <cstring>textLabel1_2_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>Let this item  be considered  (in the condition) as:</string>
+                        </property>
+                        <property name="alignment">
+                            <set>AlignCenter</set>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <spacer row="5" column="1">
+                <property name="name">
+                    <cstring>spacer16</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Vertical</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Expanding</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>21</width>
+                        <height>31</height>
+                    </size>
+                </property>
+            </spacer>
+        </grid>
+    </widget>
+    <widget class="QWidget">
+        <property name="name">
+            <cstring>page</cstring>
+        </property>
+        <attribute name="title">
+            <string>What was chosen</string>
+        </attribute>
+        <vbox>
+            <property name="name">
+                <cstring>unnamed</cstring>
+            </property>
+            <spacer>
+                <property name="name">
+                    <cstring>spacer2</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Vertical</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Preferred</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>21</width>
+                        <height>61</height>
+                    </size>
+                </property>
+            </spacer>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1</cstring>
+                </property>
+                <property name="text">
+                    <string>You have chosen the incrementor:</string>
+                </property>
+                <property name="alignment">
+                    <set>AlignBottom</set>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel_incrementor_name</cstring>
+                </property>
+                <property name="font">
+                    <font>
+                        <bold>1</bold>
+                    </font>
+                </property>
+                <property name="frameShape">
+                    <enum>Box</enum>
+                </property>
+                <property name="frameShadow">
+                    <enum>Sunken</enum>
+                </property>
+                <property name="text">
+                    <string>&lt;h3&gt;Name of your incrementor&lt;/h3&gt;</string>
+                </property>
+                <property name="alignment">
+                    <set>WordBreak|AlignCenter</set>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel2</cstring>
+                </property>
+                <property name="text">
+                    <string>In the condition table it will be marked as:</string>
+                </property>
+            </widget>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout4</cstring>
+                </property>
+                <hbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>textLabel2_2</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;h3&gt;When incrementor is not valid?  :&lt;/h3&gt;</string>
+                        </property>
+                        <property name="alignment">
+                            <set>WordBreak|AlignCenter</set>
+                        </property>
+                    </widget>
+                    <widget class="QLabel">
+                        <property name="name">
+                            <cstring>textLabel_when_to_test</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;h3&gt;always&lt;/h3&gt;</string>
+                        </property>
+                    </widget>
+                </hbox>
+            </widget>
+            <spacer>
+                <property name="name">
+                    <cstring>spacer4</cstring>
+                </property>
+                <property name="orientation">
+                    <enum>Vertical</enum>
+                </property>
+                <property name="sizeType">
+                    <enum>Preferred</enum>
+                </property>
+                <property name="sizeHint">
+                    <size>
+                        <width>41</width>
+                        <height>81</height>
+                    </size>
+                </property>
+            </spacer>
+        </vbox>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>pushButton_for_example_when</sender>
+        <signal>clicked()</signal>
+        <receiver>Taddline_1D_wizard</receiver>
+        <slot>explain_all_when()</slot>
+    </connection>
+</connections>
+<includes>
+    <include location="global" impldecl="in declaration">qmessagebox.h</include>
+    <include location="local" impldecl="in implementation">taddline_1d_wizard.ui.h</include>
+</includes>
+<variables>
+    <variable>QString incrementor_name;</variable>
+    <variable>bool when_not_valid_consider;</variable>
+    <variable>bool is_all;</variable>
+    <variable>bool is_when;</variable>
+    <variable>bool make_obligatory;</variable>
+</variables>
+<slots>
+    <slot>next()</slot>
+    <slot>explain_all_when()</slot>
+    <slot>explain_when()</slot>
+</slots>
+<functions>
+    <function returnType="int">set_incrementor( QString name )</function>
+    <function returnType="bool">give_obligatory()</function>
+</functions>
+<pixmapinproject/>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

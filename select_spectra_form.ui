@@ -1,0 +1,926 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Select_spectra_form</class>
+ <widget class="QDialog" name="Select_spectra_form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>820</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>88</horstretch>
+    <verstretch>59</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>9999</width>
+    <height>32000</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Select spectra   to display on the screen</string>
+  </property>
+  <layout class="QGridLayout">
+   <item row="6" column="2" rowspan="2">
+    <widget class="QCheckBox" name="Check_add_overwrite">
+     <property name="text">
+      <string>Add chosen spectra to the spectra 
+which are already on the screen</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QPushButton" name="Button_group">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>Any group of spectra names can be defined a &quot;selection set&quot;.\nYou can later recall such a set just by choosing a name</string>
+     </property>
+     <property name="text">
+      <string>Define above spectra names as a new &quot;group&quot;</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>gwiazdka.png</normaloff>gwiazdka.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton_zeroing">
+       <property name="text">
+        <string>ZERO (clear) chosen spectra</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>zero_displayed_spec.png</normaloff>zero_displayed_spec.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="push_save_as_ascii">
+       <property name="text">
+        <string>Save as ASCII</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="5" column="2">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="pushButton_sum">
+       <property name="text">
+        <string>SUM spectrum ...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="spacer1">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>41</width>
+         <height>21</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_overlay">
+       <property name="text">
+        <string>OVERLAY spectrum...</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="8" column="2">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="Button_show_exit">
+       <property name="text">
+        <string>Show chosen spectra      and Exit</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>all_spectrum.xpm</normaloff>all_spectrum.xpm</iconset>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="Push_B_OK">
+       <property name="toolTip">
+        <string>Show choosen and exit</string>
+       </property>
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="1">
+    <layout class="QVBoxLayout">
+     <item>
+      <layout class="QVBoxLayout">
+       <item>
+        <widget class="QPushButton" name="PushButton_choose">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>70</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>select highlighted spectra</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="PushButton_choose_ALL">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>70</horstretch>
+           <verstretch>50</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>select highlighted spectra</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="spacer2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>21</width>
+         <height>51</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QVBoxLayout">
+       <item>
+        <widget class="QPushButton" name="PushButton_deselect">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>70</width>
+           <height>80</height>
+          </size>
+         </property>
+         <property name="toolTip">
+          <string>remove selected</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="PushButton_deselect_all">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+           <horstretch>70</horstretch>
+           <verstretch>50</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>remove all spectra from the &quot;choosen&quot; list</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="2" column="2">
+    <widget class="Q3ListBox" name="ListBox_chosen">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string>List of the spectra which you choose to display on the screen. The order of this spectra is the order  in which the spectra will be displayed on the screen.</string>
+     </property>
+     <property name="selectionMode">
+      <enum>Q3ListBox::Extended</enum>
+     </property>
+     <item>
+      <property name="text">
+       <string>New Item</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="1" column="0" rowspan="6">
+    <widget class="Q3ListBox" name="ListBox_available">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>357</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="whatsThis">
+      <string>List of all the spectra on your disk in the ./spectra directory</string>
+     </property>
+     <property name="selectionMode">
+      <enum>Q3ListBox::Extended</enum>
+     </property>
+     <item>
+      <property name="text">
+       <string>New Item</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="TextLabel2">
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>&quot;Text filter&quot; for spectra names listed above</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <layout class="QHBoxLayout">
+     <item>
+      <layout class="QVBoxLayout">
+       <item>
+        <widget class="QCheckBox" name="checkBox2">
+         <property name="toolTip">
+          <string>if you prefer another mode of selecting items</string>
+         </property>
+         <property name="whatsThis">
+          <string>The MS Windows  -like way of selecting items.  </string>
+         </property>
+         <property name="text">
+          <string>use &quot;Ctrl/Shift selection&quot; mode</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="TextLabel1">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="text">
+          <string>Spectra available</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="spacer3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>30</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="push_zero_all_all">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>30</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="whatsThis">
+        <string>Zero all spectra currently porduced by the SPY</string>
+       </property>
+       <property name="text">
+        <string>zero all</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>zero_displayed_spec.png</normaloff>zero_displayed_spec.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="8" column="0">
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QComboBox" name="ComboBox_filter">
+       <property name="toolTip">
+        <string>Type the string which you want to occur in the names of spectra listed on &quot;spectra available&quot; list</string>
+       </property>
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_filter_dialog">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>32767</width>
+         <height>32767</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Filter</string>
+       </property>
+       <property name="default">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="2" rowspan="2">
+    <layout class="QVBoxLayout">
+     <item>
+      <widget class="QLabel" name="TextLabel3_2_2">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Add spectra names &lt;b&gt;from&lt;/b&gt; the &quot;group&quot; definition</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="Combo_groups">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QHBoxLayout">
+       <item>
+        <widget class="QPushButton" name="PushButton_Delete_group">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <italic>true</italic>
+          </font>
+         </property>
+         <property name="text">
+          <string>Remove group definition</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="spacer4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>41</width>
+           <height>21</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="push_add_from_screen">
+         <property name="text">
+          <string>add spectra from screen</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout">
+       <item>
+        <widget class="QLabel" name="TextLabel1_2">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Spectra chosen to display</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="TextLabel1_2_2">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>&lt;font size=&quot;-2&quot;&gt;click the right mouse button&lt;br&gt;to move item up/dn on the list&lt;/font&gt;</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>Q3Frame</class>
+   <extends>QFrame</extends>
+   <header>Qt3Support/Q3Frame</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Q3ListBox</class>
+   <extends>Q3Frame</extends>
+   <header>q3listbox.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>ComboBox_filter</tabstop>
+  <tabstop>push_save_as_ascii</tabstop>
+  <tabstop>PushButton_choose</tabstop>
+  <tabstop>Button_show_exit</tabstop>
+  <tabstop>Combo_groups</tabstop>
+  <tabstop>ListBox_available</tabstop>
+  <tabstop>PushButton_deselect</tabstop>
+  <tabstop>PushButton_deselect_all</tabstop>
+  <tabstop>Check_add_overwrite</tabstop>
+  <tabstop>PushButton_Delete_group</tabstop>
+  <tabstop>Button_group</tabstop>
+  <tabstop>Push_B_OK</tabstop>
+  <tabstop>ListBox_chosen</tabstop>
+  <tabstop>pushButton_zeroing</tabstop>
+  <tabstop>PushButton_choose_ALL</tabstop>
+  <tabstop>checkBox2</tabstop>
+  <tabstop>pushButton_sum</tabstop>
+  <tabstop>pushButton_overlay</tabstop>
+  <tabstop>push_zero_all_all</tabstop>
+ </tabstops>
+ <includes>
+  <include location="global">qstring.h</include>
+  <include location="local">ui_spectrum_form.h</include>
+  <include location="global">qworkspace.h</include>
+  <include location="global">qinputdialog.h</include>
+  <include location="local">spectrum_1D.h</include>
+  <include location="local">spectrum_2D.h</include>
+  <include location="local">paths.h</include>
+  <include location="global">qstringlist.h</include>
+  <include location="global">qregexp.h</include>
+  <include location="local">ui_tsum_spectra_dialog.h</include>
+  <include location="global">q3progressdialog.h</include>
+ </includes>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>PushButton_choose</sender>
+   <signal>clicked()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>select_one_pressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ListBox_available</sender>
+   <signal>doubleClicked(Q3ListBoxItem*)</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>select_one_pressed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PushButton_deselect</sender>
+   <signal>pressed()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>remove_highlighted()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PushButton_deselect_all</sender>
+   <signal>pressed()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>remove_all()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Push_B_OK</sender>
+   <signal>clicked()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Combo_groups</sender>
+   <signal>activated(int)</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>combo_groups_activated()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Button_show_exit</sender>
+   <signal>pressed()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>show_choosen_and_exit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ComboBox_filter</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>selected_filter()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PushButton_Delete_group</sender>
+   <signal>pressed()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>delete_group()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>Button_group</sender>
+   <signal>pressed()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>define_group()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_zeroing</sender>
+   <signal>clicked()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>zeroing_choosen_spectra()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>PushButton_choose_ALL</sender>
+   <signal>clicked()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>select_all()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_sum</sender>
+   <signal>clicked()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>create_the_sum_spectrum()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox2</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>extended_selection_mode(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>push_save_as_ascii</sender>
+   <signal>clicked()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>select_chosen_as_ascii()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_overlay</sender>
+   <signal>clicked()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>create_the_overplot_spectrum()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>ListBox_chosen</sender>
+   <signal>rightButtonClicked(Q3ListBoxItem*,QPoint)</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>right_mouse_on_chosen(Q3ListBoxItem*,QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>push_zero_all_all</sender>
+   <signal>clicked()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>zero_all_available_spectra()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_filter_dialog</sender>
+   <signal>clicked()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>filter_dialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>push_add_from_screen</sender>
+   <signal>clicked()</signal>
+   <receiver>Select_spectra_form</receiver>
+   <slot>add_spectra_names_currently_displayed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

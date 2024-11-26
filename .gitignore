@@ -1,0 +1,11 @@
+*.o
+*.txt
+*.Debug
+*.Release
+*.user
+moc_*
+*.pro.user*
+*.spc
+callgrind*
+*.tar
+*.gz

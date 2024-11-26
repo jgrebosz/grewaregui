@@ -1,0 +1,741 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>auto_calibr_flexible_wizard</class>
+ <widget class="Q3Wizard" name="auto_calibr_flexible_wizard">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>799</width>
+    <height>511</height>
+   </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Automatic calibration - FLEXIBLE wizard</string>
+  </property>
+  <widget class="QWidget" name="WizardPage">
+   <attribute name="title">
+    <string>Constructing a skeleton for spectra names</string>
+   </attribute>
+   <widget class="QSplitter" name="splitter1">
+    <property name="geometry">
+     <rect>
+      <x>11</x>
+      <y>10</y>
+      <width>765</width>
+      <height>411</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+    <widget class="QWidget" name="layout16">
+     <layout class="QVBoxLayout">
+      <item>
+       <widget class="QLabel" name="textLabel1_2">
+        <property name="text">
+         <string>Here you can tell the system which spectra have to be analysed (fitted) to create their calibration.&lt;br&gt;
+Type below the spectum name. In the name you can use symbols %1, %2, %3 to mark places, which are changing.
+&lt;br&gt;&lt;br&gt;For example:   &lt;tt&gt;&lt;tt&gt;&lt;/tt&gt;&lt;/tt&gt;&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;&lt;font color=&quot;#0000aa&quot;&gt;detector_&lt;font color=&quot;#0000ff&quot;&gt;%1&lt;/font&gt;_&lt;font color=&quot;#ff0000&quot;&gt;%2&lt;/font&gt;_&lt;font color=&quot;#00aa00&quot;&gt;%3&lt;/font&gt;_energy_raw.spc&lt;/font&gt;&lt;/b&gt;&lt;/font&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout">
+        <item>
+         <widget class="QLabel" name="textLabel_skeleton">
+          <property name="text">
+           <string>Skeleton  for a spectrum name</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_skeleton"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="textLabel3">
+        <property name="text">
+         <string>Prepare lists of symbols. The items on the list shoud be separated by spaces. &lt;br&gt;For example  &lt;br&gt;
+&lt;font color=&quot;#0000ff&quot;&gt;%1&lt;/font&gt;:      A B C D&lt;br&gt;
+&lt;font color=&quot;#ff0000&quot;&gt;%2&lt;/font&gt;:     x y&lt;br&gt;
+&lt;font color=&quot;#00aa00&quot;&gt;%3&lt;/font&gt;:     00 01 02 03 04 05 06 07</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout">
+        <item>
+         <widget class="QLabel" name="textLabel2">
+          <property name="text">
+           <string>&lt;font color=&quot;#0000ff&quot;&gt;&lt;b&gt;%1&lt;/b&gt;:&lt;/font&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_one"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout">
+        <item>
+         <widget class="QLabel" name="textLabel2_2">
+          <property name="text">
+           <string>&lt;b&gt;&lt;font color=&quot;#ff0000&quot;&gt;%2&lt;/font&gt;:&lt;/b&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_two"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout">
+        <item>
+         <widget class="QLabel" name="textLabel2_3">
+          <property name="text">
+           <string>&lt;b&gt;&lt;font color=&quot;#00aa00&quot;&gt;%3&lt;/font&gt;:&lt;/b&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_three"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="spacer5">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>481</width>
+          <height>21</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <layout class="QHBoxLayout">
+        <item>
+         <layout class="QVBoxLayout">
+          <item>
+           <widget class="QPushButton" name="pushButton_save_skeleton">
+            <property name="text">
+             <string>Save &quot;skeleton parameters&quot; as...</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_restore_skeleton">
+            <property name="text">
+             <string>Restore &quot;skeleton parameters&quot;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <spacer name="spacer42">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>100</width>
+            <height>21</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_show_spectra_names">
+          <property name="text">
+           <string>Produce 
+the list of spectra names</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layout18">
+     <layout class="QVBoxLayout">
+      <item>
+       <widget class="QLabel" name="textLabel4">
+        <property name="text">
+         <string>List of spectra names created by your skeleton</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Q3TextEdit" name="textEdit_spectra_names">
+        <property name="maximumSize">
+         <size>
+          <width>400</width>
+          <height>32767</height>
+         </size>
+        </property>
+        <property name="wordWrap">
+         <enum>Q3TextEdit::NoWrap</enum>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="page">
+   <property name="geometry">
+    <rect>
+     <x>6</x>
+     <y>34</y>
+     <width>787</width>
+     <height>432</height>
+    </rect>
+   </property>
+   <attribute name="title">
+    <string>You are going to make an automatic calibration of the all germanium detectors</string>
+   </attribute>
+   <layout class="QGridLayout">
+    <item row="4" column="0" colspan="2">
+     <widget class="QPushButton" name="push_run_gf4">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>78</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>run gf5 program</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0" colspan="2">
+     <widget class="QLabel" name="textLabel1_4_2">
+      <property name="text">
+       <string>&lt;p align=&quot;right&quot;&gt;The spectra are always saved when you &lt;b&gt;&lt;font color=&quot;#aa0000&quot;&gt;stop/pause&lt;/font&gt;&lt;/b&gt; the analysis&lt;/p&gt;
+&lt;p align=&quot;right&quot;&gt;or when you press the &lt;b&gt;&lt;font color=&quot;#aa0000&quot;&gt;update&lt;/font&gt;&lt;/b&gt; button&lt;/p&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="2">
+     <widget class="QLabel" name="textLabel1_4">
+      <property name="text">
+       <string>&lt;b&gt;The calibration routine takes the current state of spectra from the disk.&lt;br&gt;
+So - if your analysis is running - be sure that all the spectra have been recently saved&lt;/b&gt;</string>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="5" column="0" colspan="2">
+     <widget class="QLabel" name="textLabel_note_about_silence_gf4">
+      <property name="maximumSize">
+       <size>
+        <width>32767</width>
+        <height>83</height>
+       </size>
+      </property>
+      <property name="text">
+       <string>Note: when you press this button - nothing seems to happen - but looking
+at the window where from you started &quot;cracow&quot; - you will see all output form the Carl's gf5  program.
+Soon you will notice a graphic window appearing and blinking on the screen.</string>
+      </property>
+      <property name="wordWrap">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" rowspan="2">
+     <spacer name="spacer38">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Expanding</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>50</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item row="2" column="0">
+     <layout class="QHBoxLayout">
+      <item>
+       <widget class="QLabel" name="textLabel1">
+        <property name="text">
+         <string>Start searching for peaks (in the RAW spectra) from channel:</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spinBox1_thrsh">
+        <property name="maximum">
+         <number>8192</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="0">
+     <layout class="QVBoxLayout">
+      <item>
+       <layout class="QHBoxLayout">
+        <item>
+         <widget class="QLabel" name="textLabel1_5">
+          <property name="text">
+           <string>Name of file describing peaks in your calibration source       *.sou</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="lineEdit_source_description_file"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <spacer name="spacer4">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Expanding</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>281</width>
+          <height>21</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="page">
+   <property name="geometry">
+    <rect>
+     <x>6</x>
+     <y>34</y>
+     <width>787</width>
+     <height>432</height>
+    </rect>
+   </property>
+   <attribute name="title">
+    <string>You can watch the file with error messages</string>
+   </attribute>
+   <layout class="QGridLayout">
+    <item row="0" column="0">
+     <widget class="Q3TextEdit" name="textEdit_error_messages">
+      <property name="wordWrap">
+       <enum>Q3TextEdit::NoWrap</enum>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="page">
+   <property name="geometry">
+    <rect>
+     <x>6</x>
+     <y>34</y>
+     <width>787</width>
+     <height>432</height>
+    </rect>
+   </property>
+   <attribute name="title">
+    <string>Result of the autocalibration - the new coefficients</string>
+   </attribute>
+   <layout class="QGridLayout">
+    <item row="0" column="0">
+     <widget class="Q3TextEdit" name="textEdit_results">
+      <property name="wordWrap">
+       <enum>Q3TextEdit::NoWrap</enum>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="page">
+   <property name="geometry">
+    <rect>
+     <x>6</x>
+     <y>34</y>
+     <width>787</width>
+     <height>432</height>
+    </rect>
+   </property>
+   <attribute name="title">
+    <string>Install</string>
+   </attribute>
+   <layout class="QGridLayout">
+    <item row="0" column="0">
+     <layout class="QVBoxLayout">
+      <item>
+       <widget class="QLabel" name="textLabel_means">
+        <property name="text">
+         <string>Installing the coefficients - means that the new coeffincients will be introduced into the &lt;font color=&quot;#00aa00&quot;&gt;&lt;tt&gt;./calibration/rising_calibration.txt&lt;/tt&gt;&lt;/font&gt; file (replacing the former ones)</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="textLabel1_3">
+        <property name="text">
+         <string>&lt;font size=&quot;+2&quot;&gt;&lt;b&gt;If you want to install these new coefficients, &lt;br&gt;please press the button &quot;Install&quot;&lt;/b&gt;&lt;/font&gt;</string>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout">
+        <item>
+         <layout class="QVBoxLayout">
+          <item>
+           <widget class="QPushButton" name="push_install">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>52</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Install new coefficients</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkBox_archive">
+            <property name="text">
+             <string>Yes, archive</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout">
+        <item>
+         <spacer name="spacer3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>121</width>
+            <height>41</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="textLabel_archive">
+          <property name="frameShape">
+           <enum>QFrame::Box</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <property name="lineWidth">
+           <number>1</number>
+          </property>
+          <property name="text">
+           <string>&lt;font size=&quot;-0&quot;&gt;&lt;p align=&quot;left&quot;&gt;&lt;b&gt;to archive - means:&lt;/b&gt;&lt;br&gt;&lt;br&gt;a) the previous calibration file into the subdirectory &quot;./calibration/history&quot; &lt;br&gt;
+with the current file name appended with text&lt;br&gt;
+&lt;tt&gt;rising_calibration_&lt;font color=&quot;#ff0000&quot;&gt;till&lt;/font&gt;_&lt;i&gt;&lt;font color=&quot;#0000ff&quot;&gt;current_date_time&lt;/font&gt;&lt;/i&gt;.txt&lt;/tt&gt;&lt;br&gt;&lt;br&gt;b) The new calibration will be stored as
+&lt;tt&gt;rising_calibration_&lt;font color=&quot;#ff0000&quot;&gt;since&lt;/font&gt;_&lt;i&gt;&lt;font color=&quot;#0000ff&quot;&gt;current_date_time&lt;/font&gt;&lt;/i&gt;.txt&lt;/tt&gt;&lt;/p&gt;&lt;/p&gt;&lt;/font&gt;</string>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEdit_install_messages">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>12</height>
+         </size>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>Q3Frame</class>
+   <extends>QFrame</extends>
+   <header>Qt3Support/Q3Frame</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Q3Wizard</class>
+   <extends>QDialog</extends>
+   <header>q3wizard.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>Q3TextEdit</class>
+   <extends>Q3Frame</extends>
+   <header>q3textedit.h</header>
+  </customwidget>
+ </customwidgets>
+ <includes>
+  <include location="global">fstream</include>
+  <include location="local">Tfile_helper.h</include>
+  <include location="global">string</include>
+  <include location="local">paths.h</include>
+  <include location="global">vector</include>
+  <include location="global">q3filedialog.h</include>
+ </includes>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>push_run_gf4</sender>
+   <signal>clicked()</signal>
+   <receiver>auto_calibr_flexible_wizard</receiver>
+   <slot>next()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>push_install</sender>
+   <signal>clicked()</signal>
+   <receiver>auto_calibr_flexible_wizard</receiver>
+   <slot>pressed_install()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>push_run_gf4</sender>
+   <signal>clicked()</signal>
+   <receiver>auto_calibr_flexible_wizard</receiver>
+   <slot>pressed_run_gf4()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_show_spectra_names</sender>
+   <signal>released()</signal>
+   <receiver>auto_calibr_flexible_wizard</receiver>
+   <slot>action_show_spectra_names()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_one</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>auto_calibr_flexible_wizard</receiver>
+   <slot>skeleton_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_two</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>auto_calibr_flexible_wizard</receiver>
+   <slot>skeleton_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_three</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>auto_calibr_flexible_wizard</receiver>
+   <slot>skeleton_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>lineEdit_skeleton</sender>
+   <signal>textChanged(QString)</signal>
+   <receiver>auto_calibr_flexible_wizard</receiver>
+   <slot>skeleton_changed()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_save_skeleton</sender>
+   <signal>clicked()</signal>
+   <receiver>auto_calibr_flexible_wizard</receiver>
+   <slot>save_skeleton_parameters_as()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_restore_skeleton</sender>
+   <signal>clicked()</signal>
+   <receiver>auto_calibr_flexible_wizard</receiver>
+   <slot>restore_skeleton_parameters()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

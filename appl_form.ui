@@ -1,0 +1,1533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>appl_form</class>
+ <widget class="QMainWindow" name="appl_form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1114</width>
+    <height>612</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>greware GUI</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="greware_icons.qrc">
+    <normaloff>:/images/images/literaG.jpg</normaloff>:/images/images/literaG.jpg</iconset>
+  </property>
+  <property name="toolTip">
+   <string notr="true"/>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <widget class="QFrame" name="second_row_bar">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>33</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>41</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::Panel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="4,0,2,1,0,1,8">
+       <property name="spacing">
+        <number>3</number>
+       </property>
+       <property name="leftMargin">
+        <number>1</number>
+       </property>
+       <property name="topMargin">
+        <number>1</number>
+       </property>
+       <property name="rightMargin">
+        <number>1</number>
+       </property>
+       <property name="bottomMargin">
+        <number>1</number>
+       </property>
+       <item>
+        <widget class="QComboBox" name="Combo_app_group">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maxVisibleItems">
+          <number>50</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_select_spectra">
+         <property name="minimumSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>10</width>
+           <height>10</height>
+          </size>
+         </property>
+         <property name="autoFillBackground">
+          <bool>false</bool>
+         </property>
+         <property name="text">
+          <string>select the spectrum</string>
+         </property>
+         <property name="icon">
+          <iconset resource="greware_icons.qrc">
+           <normaloff>:/images/images/select_icon_manual.png</normaloff>
+           <normalon>:/images/images/select_spectra.png</normalon>:/images/images/select_icon_manual.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="popupMode">
+          <enum>QToolButton::InstantPopup</enum>
+         </property>
+         <property name="toolButtonStyle">
+          <enum>Qt::ToolButtonIconOnly</enum>
+         </property>
+         <property name="autoRaise">
+          <bool>false</bool>
+         </property>
+         <property name="arrowType">
+          <enum>Qt::NoArrow</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QScrollBar" name="ScrollBar_poziomy_widma">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>15</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>14</height>
+          </size>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame">
+         <property name="maximumSize">
+          <size>
+           <width>70</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Panel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Sunken</enum>
+         </property>
+         <property name="lineWidth">
+          <number>1</number>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>3</number>
+          </property>
+          <property name="leftMargin">
+           <number>1</number>
+          </property>
+          <property name="topMargin">
+           <number>1</number>
+          </property>
+          <property name="rightMargin">
+           <number>1</number>
+          </property>
+          <property name="bottomMargin">
+           <number>1</number>
+          </property>
+          <item>
+           <widget class="QToolButton" name="act_on_all_spectra_Button">
+            <property name="minimumSize">
+             <size>
+              <width>26</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>26</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="greware_icons.qrc">
+              <normaloff>:/images/images/apply_all.png</normaloff>
+              <normalon>:/images/images/apply_all.bmp</normalon>:/images/images/apply_all.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QToolButton" name="act_on_one_spectrum_Button">
+            <property name="minimumSize">
+             <size>
+              <width>26</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>26</width>
+              <height>26</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>...</string>
+            </property>
+            <property name="icon">
+             <iconset resource="greware_icons.qrc">
+              <normaloff>:/images/images/apply_to_one.png</normaloff>
+              <normalon>:/images/images/apply_to_one_active.png</normalon>:/images/images/apply_to_one.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>20</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="checkable">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QFrame" name="frame_2">
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <property name="lineWidth">
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_apply_to_others">
+         <property name="minimumSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>26</width>
+           <height>26</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>...</string>
+         </property>
+         <property name="icon">
+          <iconset resource="greware_icons.qrc">
+           <normaloff>:/images/images/do_apply_to_all.png</normaloff>:/images/images/do_apply_to_all.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_spy_info"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QMdiArea" name="mdiArea">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QScrollBar" name="ScrollBar_pionowy_widma">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>200</height>
+           </size>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>108</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1114</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Fi&amp;le</string>
+    </property>
+    <addaction name="actionOpen"/>
+    <addaction name="actionClose_all_spectra"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_as"/>
+    <addaction name="separator"/>
+    <addaction name="filePrintAction"/>
+    <addaction name="separator"/>
+    <addaction name="actionDefine_snapshot_program_to_print"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="Action_undo"/>
+    <addaction name="actionSelecting_the_spectra"/>
+    <addaction name="separator"/>
+    <addaction name="user_spec_wizard_Action"/>
+    <addaction name="actionCall_wizard_to_edit_the_CURRENT_user_def_spectrum"/>
+    <addaction name="actionCondition_Manager"/>
+    <addaction name="incrementer_managerAction"/>
+   </widget>
+   <widget class="QMenu" name="menuSpectrum">
+    <property name="title">
+     <string>Spect&amp;rum</string>
+    </property>
+    <addaction name="full_spectrum_action"/>
+    <addaction name="expand_spectrum_action"/>
+    <addaction name="shift_left_action"/>
+    <addaction name="shift_right_action"/>
+    <addaction name="Yscale05_action"/>
+    <addaction name="Yscale2_action"/>
+    <addaction name="Yscale_fit_action"/>
+    <addaction name="parameters_Action"/>
+    <addaction name="separator"/>
+    <addaction name="Integrate_spectrum_action"/>
+    <addaction name="log_scale_Action"/>
+    <addaction name="black_white_action"/>
+    <addaction name="petrify_Action"/>
+    <addaction name="separator"/>
+    <addaction name="actionCopy_integration_markers_and_background_markers_to_other_spectra"/>
+    <addaction name="actionChange_the_binning_and_range"/>
+    <addaction name="actionOther_tools_for_1D_operations"/>
+   </widget>
+   <widget class="QMenu" name="menuMatrix">
+    <property name="title">
+     <string>&amp;Matrix</string>
+    </property>
+    <addaction name="full_spectrum_action"/>
+    <addaction name="lupa_action"/>
+    <addaction name="Yscale05_action"/>
+    <addaction name="Yscale2_action"/>
+    <addaction name="Yscale_fit_action"/>
+    <addaction name="shift_left_action"/>
+    <addaction name="shift_right_action"/>
+    <addaction name="log_scale_Action"/>
+    <addaction name="parameters_Action"/>
+    <addaction name="show_hide_polygons_action"/>
+    <addaction name="actionShow_full_names_of_polygon_gates"/>
+    <addaction name="black_white_action"/>
+    <addaction name="actionChange_the_binning_and_range"/>
+    <addaction name="matrix_projection_Action"/>
+    <addaction name="actionSum_many_2D_spectra"/>
+    <addaction name="actionOther_tools_for_matrix_operations"/>
+    <addaction name="actionAuto_scale_to_highest_peaks"/>
+   </widget>
+   <widget class="QMenu" name="menuTools">
+    <property name="title">
+     <string>Tools&amp;</string>
+    </property>
+    <addaction name="actionAutomatic_calibration_of_germanium_detectors"/>
+    <addaction name="actionRead_and_install_the_frs_calibration_factors_from_an_external_file"/>
+    <addaction name="actionMake_tar_file_with_calibrations_and_lookup_tables"/>
+    <addaction name="actionCheck_incrementers"/>
+   </widget>
+   <widget class="QMenu" name="menuSpy_actions">
+    <property name="title">
+     <string>Spy-actions</string>
+    </property>
+    <addaction name="actionZero_ing_a_contents_of_the_current_spectrum"/>
+    <addaction name="actionZero_ing_all_currently_displayed_spectra"/>
+    <addaction name="actionZero_ing_ALL_SPECTRA"/>
+    <addaction name="actionZero_ing_all_displayed_spectra_no_questions_using_shorcut_Ctrl_Alt_Z"/>
+    <addaction name="separator"/>
+    <addaction name="spy_go_action"/>
+    <addaction name="spy_pause_action"/>
+    <addaction name="actionSpy_Update_pause_and_run_again"/>
+    <addaction name="actionSpy_Finish_quit_the_spy"/>
+   </widget>
+   <widget class="QMenu" name="menuSpy_optioons">
+    <property name="title">
+     <string>Spy-options</string>
+    </property>
+    <addaction name="actionN_tuple_Root_Tree_options"/>
+    <addaction name="actionVerbose_mode_show_selected_range_of_events_on_the_screen"/>
+    <addaction name="actionOther_SPY_options"/>
+    <addaction name="separator"/>
+    <addaction name="actionChoose_relevant_dialog_windows"/>
+    <addaction name="separator"/>
+    <addaction name="actionMatching_the_MBS_subevents"/>
+    <addaction name="actionGalileo_prefered_ranges_of_spectra"/>
+    <addaction name="actionInteresting_region_of_Z_and_A_Q"/>
+    <addaction name="actionSelect_a_type_of_the_Doppler_correction_algorithm"/>
+    <addaction name="addback_dlg_Action"/>
+    <addaction name="active_stopper_munich_Action"/>
+    <addaction name="active_stopper_optionsAction"/>
+    <addaction name="actionLYCCA_settings"/>
+    <addaction name="action_Good_Galileo_Germanium_data"/>
+    <addaction name="actionDefinition_of_Good_Germanium_detectors_data"/>
+    <addaction name="actionDefinition_of_Good_CATE_data"/>
+    <addaction name="actionDefinition_of_Good_Hector_BaF_data"/>
+    <addaction name="actionDefinition_of_good_Miniball_data"/>
+    <addaction name="actionGood_signals_from_KRATTA_element"/>
+    <addaction name="actionGalileo_signals_enabling"/>
+    <addaction name="actionEuclides_signals_enabling"/>
+    <addaction name="actionNeutronwall_signals_enabling"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuCracow_preferences">
+    <property name="title">
+     <string>&amp;GUI-preferences</string>
+    </property>
+    <addaction name="actionPath_to_the_spy_directory"/>
+    <addaction name="actionSetting_times_of_refreshing"/>
+    <addaction name="actionGUI_options"/>
+   </widget>
+   <widget class="QMenu" name="menuWindow">
+    <property name="title">
+     <string>&amp;Window</string>
+    </property>
+    <addaction name="actionTile"/>
+    <addaction name="actionCustom_tiling"/>
+    <addaction name="actionCascade"/>
+    <addaction name="actionSpectrum_below_spectrum"/>
+    <addaction name="actionTile_with_system_function"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>Abo&amp;ut</string>
+    </property>
+    <addaction name="about_Action"/>
+    <addaction name="actionTip_of_the_day"/>
+    <addaction name="actionHelp_about_mouse_clicking"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuSpectrum"/>
+   <addaction name="menuMatrix"/>
+   <addaction name="menuTools"/>
+   <addaction name="menuSpy_actions"/>
+   <addaction name="menuSpy_optioons"/>
+   <addaction name="menuCracow_preferences"/>
+   <addaction name="menuWindow"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="maximumSize">
+    <size>
+     <width>16777215</width>
+     <height>26</height>
+    </size>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>20</width>
+     <height>20</height>
+    </size>
+   </property>
+   <property name="toolButtonStyle">
+    <enum>Qt::ToolButtonIconOnly</enum>
+   </property>
+   <property name="floatable">
+    <bool>true</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="Action_undo"/>
+   <addaction name="parameters_Action"/>
+   <addaction name="full_spectrum_action"/>
+   <addaction name="Yscale05_action"/>
+   <addaction name="Yscale2_action"/>
+   <addaction name="Yscale_fit_action"/>
+   <addaction name="separator"/>
+   <addaction name="expand_spectrum_action"/>
+   <addaction name="Integrate_spectrum_action"/>
+   <addaction name="actionSum_many_2D_spectra"/>
+   <addaction name="matrix_projection_Action"/>
+   <addaction name="petrify_Action"/>
+   <addaction name="log_scale_Action"/>
+   <addaction name="draw_scale_Action"/>
+   <addaction name="show_hide_polygons_action"/>
+   <addaction name="lupa_action"/>
+   <addaction name="black_white_action"/>
+   <addaction name="filePrintAction"/>
+   <addaction name="actionCustom_tiling"/>
+   <addaction name="actionMatching_the_MBS_subevents"/>
+   <addaction name="separator"/>
+   <addaction name="actionSpy_Update_pause_and_run_again"/>
+   <addaction name="spy_go_action"/>
+   <addaction name="spy_pause_action"/>
+   <addaction name="separator"/>
+   <addaction name="separator"/>
+   <addaction name="actionZero_ing_a_contents_of_the_current_spectrum"/>
+   <addaction name="actionZero_ing_all_currently_displayed_spectra"/>
+   <addaction name="actionZero_ing_ALL_SPECTRA"/>
+   <addaction name="separator"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QToolBar" name="toolBar_left">
+   <property name="maximumSize">
+    <size>
+     <width>26</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="windowTitle">
+    <string>toolBar_2</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::NoToolBarArea</set>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>19</width>
+     <height>30</height>
+    </size>
+   </property>
+   <property name="floatable">
+    <bool>true</bool>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="separator"/>
+   <addaction name="separator"/>
+   <addaction name="separator"/>
+   <addaction name="action"/>
+   <addaction name="separator"/>
+   <addaction name="user_spec_wizard_Action"/>
+   <addaction name="actionCall_wizard_to_edit_the_CURRENT_user_def_spectrum"/>
+   <addaction name="actionCondition_Manager"/>
+   <addaction name="incrementer_managerAction"/>
+   <addaction name="separator"/>
+   <addaction name="actionSelecting_the_spectra"/>
+  </widget>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <action name="actionOpen">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Open</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionClose_all_spectra">
+   <property name="text">
+    <string>&amp;Close all spectra</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="text">
+    <string>Sa&amp;ve as...</string>
+   </property>
+  </action>
+  <action name="actionSum_many_2D_spectra">
+   <property name="icon">
+    <iconset>
+     <normalon>:/images/images/sum_2D.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>Sum many &amp;2D spectra</string>
+   </property>
+  </action>
+  <action name="filePrintAction">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/print.png</normaloff>:/images/images/print.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Print hardcopy by external program</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionDefine_snapshot_program_to_print">
+   <property name="text">
+    <string>&amp;Define snapshot program to print</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>&amp;Exit</string>
+   </property>
+  </action>
+  <action name="Action_undo">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/undo.png</normaloff>:/images/images/undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Undo</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSelecting_the_spectra">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/select_icon_manual.png</normaloff>:/images/images/select_icon_manual.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Selecting the spectra</string>
+   </property>
+   <property name="toolTip">
+    <string>Selecting the spectra to be displayed</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="user_spec_wizard_Action">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/user_spec_manager.png</normaloff>:/images/images/user_spec_manager.png</iconset>
+   </property>
+   <property name="text">
+    <string>User &amp;Defined Spectra Manager</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionCall_wizard_to_edit_the_CURRENT_user_def_spectrum">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/user_spec_wizard.png</normaloff>:/images/images/user_spec_wizard.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Call wizard to edit the currently selected user def. spectrum</string>
+   </property>
+   <property name="toolTip">
+    <string>Call wizard to edit the user def. spectrum which you currently watch</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionCondition_Manager">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/cond_manager.png</normaloff>:/images/images/cond_manager.png</iconset>
+   </property>
+   <property name="text">
+    <string>Condition &amp;Manager</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="incrementer_managerAction">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/incr_magager.png</normaloff>:/images/images/incr_magager.png</iconset>
+   </property>
+   <property name="text">
+    <string>User-defined &amp;incrementer Manager</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="full_spectrum_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/all_spectrum.xpm</normaloff>:/images/images/all_spectrum.xpm</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Show all, full picture of spectrum</string>
+   </property>
+   <property name="shortcut">
+    <string>A</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="expand_spectrum_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/expand.xpm</normaloff>:/images/images/expand.xpm</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Expand region of spectrum marked by two markers</string>
+   </property>
+   <property name="shortcut">
+    <string>E</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="shift_left_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/shift_left.png</normaloff>:/images/images/shift_left.png</iconset>
+   </property>
+   <property name="text">
+    <string>Shift &amp;picture to see more left</string>
+   </property>
+   <property name="shortcut">
+    <string>&lt;</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="shift_right_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/shift_right.png</normaloff>:/images/images/shift_right.png</iconset>
+   </property>
+   <property name="text">
+    <string>Shift pict&amp;ure to see more right</string>
+   </property>
+   <property name="shortcut">
+    <string>&gt;</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="Yscale05_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/scale05.png</normaloff>:/images/images/scale05.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Reduce a scale of the peaks</string>
+   </property>
+   <property name="shortcut">
+    <string>-</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="Yscale2_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/scale2.png</normaloff>:/images/images/scale2.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Magnify a scale of the peaks</string>
+   </property>
+   <property name="toolTip">
+    <string>Magnify a scale of the peaks</string>
+   </property>
+   <property name="shortcut">
+    <string>+</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="Yscale_fit_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/scale_to_y.png</normaloff>:/images/images/scale_to_y.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Adjust a scale to the highest peak</string>
+   </property>
+   <property name="shortcut">
+    <string>Y</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="parameters_Action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/dial_dimensions.png</normaloff>:/images/images/dial_dimensions.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Dialog to choose the ranges  of the drawn spectrum...</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="Integrate_spectrum_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/integrate.png</normaloff>:/images/images/integrate.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Integrate spectrum between two markers</string>
+   </property>
+   <property name="shortcut">
+    <string>I</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionCopy_integration_markers_and_background_markers_to_other_spectra">
+   <property name="text">
+    <string>Cop&amp;y integration markers and background markers to other spectra</string>
+   </property>
+  </action>
+  <action name="log_scale_Action">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/log_icon.png</normaloff>:/images/images/log_icon.png</iconset>
+   </property>
+   <property name="text">
+    <string>Draw the &amp;hight of peaks in a LOGarytmic scale</string>
+   </property>
+   <property name="shortcut">
+    <string>L</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="black_white_action">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/black_white.png</normaloff>
+     <normalon>:/images/images/black_white_color.png</normalon>:/images/images/black_white.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Black and White painting</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionChange_the_binning_and_range">
+   <property name="text">
+    <string>Cha&amp;nge the binning and range...</string>
+   </property>
+  </action>
+  <action name="petrify_Action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/freeze2.png</normaloff>:/images/images/freeze2.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Clone and freeze a copy of current state of 1D spectrum</string>
+   </property>
+   <property name="toolTip">
+    <string>Clone and freeze a copy of current 1D spectrum</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionOther_tools_for_1D_operations">
+   <property name="text">
+    <string>&amp;Other tools for 1D operations...</string>
+   </property>
+  </action>
+  <action name="lupa_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/lupa.png</normaloff>:/images/images/lupa.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Zoom part of the matrix</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="show_hide_polygons_action">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/bananas.png</normaloff>:/images/images/bananas.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show/Hide polygon &amp;gates</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionShow_full_names_of_polygon_gates">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show &amp;full names of polygon gates</string>
+   </property>
+  </action>
+  <action name="matrix_projection_Action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/projection.png</normaloff>:/images/images/projection.png</iconset>
+   </property>
+   <property name="text">
+    <string>Projection of matrix onto the &amp;chosen axis</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionOther_tools_for_matrix_operations">
+   <property name="text">
+    <string>&amp;Other tools for matrix operations...</string>
+   </property>
+  </action>
+  <action name="actionAutomatic_calibration_of_germanium_detectors">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Automatic calibration of germanium detectors with gf5</string>
+   </property>
+  </action>
+  <action name="actionRead_and_install_the_frs_calibration_factors_from_an_external_file">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&amp;Read and 'install' the frs calibration factors from an external file</string>
+   </property>
+  </action>
+  <action name="actionZero_ing_a_contents_of_the_current_spectrum">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/zero_current_spec.png</normaloff>:/images/images/zero_current_spec.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Zero-ing a contents of the current spectrum</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionZero_ing_all_currently_displayed_spectra">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/zero_displayed_spec.png</normaloff>:/images/images/zero_displayed_spec.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zero-&amp;ing all currently displayed spectra</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionZero_ing_ALL_SPECTRA">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/zero_everything_spec.png</normaloff>:/images/images/zero_everything_spec.png</iconset>
+   </property>
+   <property name="text">
+    <string>Z&amp;ero-ing ALL SPECTRA</string>
+   </property>
+  </action>
+  <action name="actionZero_ing_all_displayed_spectra_no_questions_using_shorcut_Ctrl_Alt_Z">
+   <property name="text">
+    <string>Zero-ing all &amp;displayed spectra (no questions) using shorcut </string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Alt+Z</string>
+   </property>
+  </action>
+  <action name="spy_go_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/spy_continue.png</normaloff>:/images/images/spy_continue.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Spy - &quot;Continue&quot;</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="spy_pause_action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/spy_stop.png</normaloff>:/images/images/spy_stop.png</iconset>
+   </property>
+   <property name="text">
+    <string>Spy -  &quot;&amp;Pause&quot;</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSpy_Update_pause_and_run_again">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/spy_update.png</normaloff>:/images/images/spy_update.png</iconset>
+   </property>
+   <property name="text">
+    <string>Spy - &quot;&amp;Update&quot;      (pause and run again)</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSpy_update_quickly_without_saving_spectra">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/spy_update_qick.png</normaloff>:/images/images/spy_update_qick.png</iconset>
+   </property>
+   <property name="text">
+    <string>Spy - &quot;Update quickly&quot;    (without saving spectra)</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSpy_Finish_quit_the_spy">
+   <property name="text">
+    <string>Spy - &quot;&amp;Finish&quot;    (quit the spy )</string>
+   </property>
+  </action>
+  <action name="actionMatching_the_MBS_subevents">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>images/matching.png</normaloff>images/matching.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Matching the MBS subevents...</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionSelect_a_type_of_the_Doppler_correction_algorithm">
+   <property name="text">
+    <string>&amp;Doppler correction algorithm...</string>
+   </property>
+  </action>
+  <action name="addback_dlg_Action">
+   <property name="text">
+    <string>&amp;Addback in germanium clusters...</string>
+   </property>
+  </action>
+  <action name="actionN_tuple_Root_Tree_options">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;N-tuple  (&quot;Root Tree&quot;) options...</string>
+   </property>
+  </action>
+  <action name="actionInteresting_region_of_Z_and_A_Q">
+   <property name="text">
+    <string>&amp;Interesting region of Z and A/Q...</string>
+   </property>
+  </action>
+  <action name="actionVerbose_mode_show_selected_range_of_events_on_the_screen">
+   <property name="text">
+    <string>&amp;Verbose mode - (display events)</string>
+   </property>
+  </action>
+  <action name="active_stopper_munich_Action">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Active Sto&amp;pper - Munich options...</string>
+   </property>
+  </action>
+  <action name="active_stopper_optionsAction">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Active Stopper settings</string>
+   </property>
+  </action>
+  <action name="actionOther_SPY_options">
+   <property name="text">
+    <string>&amp;Other SPY options...</string>
+   </property>
+  </action>
+  <action name="actionLYCCA_settings">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>&amp;LYCCA settings...</string>
+   </property>
+  </action>
+  <action name="actionDefinition_of_Good_Germanium_detectors_data">
+   <property name="text">
+    <string>&quot;Good&quot; Eu&amp;roball Germanium data</string>
+   </property>
+  </action>
+  <action name="actionDefinition_of_Good_CATE_data">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>&quot;Good&quot; &amp;CATE detector data</string>
+   </property>
+  </action>
+  <action name="actionDefinition_of_Good_Hector_BaF_data">
+   <property name="text">
+    <string>&quot;Good&quot; &amp;HECTOR   BaF data</string>
+   </property>
+  </action>
+  <action name="actionDefinition_of_good_Miniball_data">
+   <property name="text">
+    <string>&quot;Good&quot; MINI&amp;BALL  data</string>
+   </property>
+  </action>
+  <action name="actionPath_to_the_spy_directory">
+   <property name="text">
+    <string>&amp;Path to the spy directory</string>
+   </property>
+  </action>
+  <action name="actionSetting_times_of_refreshing">
+   <property name="text">
+    <string>&amp;Setting times of refreshing</string>
+   </property>
+  </action>
+  <action name="actionTile">
+   <property name="text">
+    <string>&amp;Tile spectra windows</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+T</string>
+   </property>
+  </action>
+  <action name="actionCascade">
+   <property name="text">
+    <string>&amp;Cascade spectra windows</string>
+   </property>
+   <property name="toolTip">
+    <string>Cascade spectra windows</string>
+   </property>
+  </action>
+  <action name="about_Action">
+   <property name="text">
+    <string>&amp;About this program</string>
+   </property>
+   <property name="toolTip">
+    <string>Info about this program</string>
+   </property>
+  </action>
+  <action name="actionTip_of_the_day">
+   <property name="text">
+    <string>&amp;Tip of the day</string>
+   </property>
+  </action>
+  <action name="actionHelp_about_mouse_clicking">
+   <property name="text">
+    <string>&amp;Help about &quot;mouse clicking&quot;</string>
+   </property>
+  </action>
+  <action name="draw_scale_Action">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/draw_scale.png</normaloff>:/images/images/draw_scale.png</iconset>
+   </property>
+   <property name="text">
+    <string>Draw spectra scales  ON/OFF</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="all_spectra_Action">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/apply_all.png</normaloff>:/images/images/apply_all.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mode: Acting on all displayed spectra</string>
+   </property>
+   <property name="toolTip">
+    <string>Mode: Acting on all displayed spectra</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="current_spectrum_Action">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/apply_to_one.png</normaloff>:/images/images/apply_to_one.png</iconset>
+   </property>
+   <property name="text">
+    <string>Mode: act only on selected spectrum</string>
+   </property>
+   <property name="toolTip">
+    <string>All commands will be done only on the selected spectrum</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="apply_to_others_Action">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/do_apply_to_all.png</normaloff>:/images/images/do_apply_to_all.png</iconset>
+   </property>
+   <property name="text">
+    <string>Apply current region of view to the other spectra (1D or 2D only)</string>
+   </property>
+   <property name="toolTip">
+    <string>Apply current region of view to the other spectra (1D or 2D only)</string>
+   </property>
+   <property name="iconVisibleInMenu">
+    <bool>true</bool>
+   </property>
+  </action>
+  <action name="actionMake_tar_file_with_calibrations_and_lookup_tables">
+   <property name="text">
+    <string>&amp;Make &quot;*.tar&quot; file with calibrations and lookup tables</string>
+   </property>
+   <property name="toolTip">
+    <string>Make &quot;*.tar&quot; file with calibrations and lookup tables</string>
+   </property>
+  </action>
+  <action name="actionSpectrum_below_spectrum">
+   <property name="text">
+    <string>Spectrum &amp;below spectrum</string>
+   </property>
+   <property name="toolTip">
+    <string>Spectra one, above the other, just to compare them</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+B</string>
+   </property>
+  </action>
+  <action name="actionChoose_relevant_dialog_windows">
+   <property name="text">
+    <string>&amp;Hide not relevant detectors dialogs</string>
+   </property>
+   <property name="toolTip">
+    <string>Setting dialog windows relevant to your experiment</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string/>
+   </property>
+   <property name="toolTip">
+    <string>&quot;......empty&quot; for decorating purposes</string>
+   </property>
+  </action>
+  <action name="actionTile_with_system_function">
+   <property name="text">
+    <string>Tile &amp;with a system tile function</string>
+   </property>
+   <property name="toolTip">
+    <string>Other way of rearanging spectra on screen</string>
+   </property>
+  </action>
+  <action name="actionGUI_options">
+   <property name="text">
+    <string>&amp;GUI options</string>
+   </property>
+   <property name="toolTip">
+    <string>Some options concerning a look</string>
+   </property>
+  </action>
+  <action name="actionGalileo_prefered_ranges_of_spectra">
+   <property name="text">
+    <string>&amp;Galileo prefered ranges of spectra</string>
+   </property>
+  </action>
+  <action name="action_Good_Galileo_Germanium_data">
+   <property name="text">
+    <string>&quot;Good&quot; Galileo  Germanium data</string>
+   </property>
+  </action>
+  <action name="actionGalileo_signals_enabling">
+   <property name="text">
+    <string>Galileo signals enabling</string>
+   </property>
+   <property name="toolTip">
+    <string>Here you can define which Galileo signals are active (spectra for them will be colected)</string>
+   </property>
+  </action>
+  <action name="actionEuclides_signals_enabling">
+   <property name="text">
+    <string>&amp;EUCLIDES signals enabling</string>
+   </property>
+  </action>
+  <action name="actionNeutronwall_signals_enabling">
+   <property name="text">
+    <string>NE&amp;UTRONWALL signals enabling</string>
+   </property>
+  </action>
+  <action name="actionGood_signals_from_KRATTA_element">
+   <property name="text">
+    <string>&quot;Good&quot; signals &amp;from KRATTA element </string>
+   </property>
+  </action>
+  <action name="actionSystem_tile_Stacking_order_1">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>System tile_Stacking_&amp;order_1</string>
+   </property>
+  </action>
+  <action name="actionSystem_tile_Creation_order_0">
+   <property name="text">
+    <string>&amp;System tile Creation_order_0</string>
+   </property>
+  </action>
+  <action name="actionSystemTile_activation_history_order_2">
+   <property name="text">
+    <string>SystemTile_activation_history_order_&amp;2</string>
+   </property>
+  </action>
+  <action name="actionCustom_tiling">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/custom_tile.png</normaloff>:/images/images/custom_tile.png</iconset>
+   </property>
+   <property name="text">
+    <string>C&amp;ustom tiling of spectra windows</string>
+   </property>
+   <property name="toolTip">
+    <string>Here you can define you custom way of tiling</string>
+   </property>
+  </action>
+  <action name="actionCheck_incrementers">
+   <property name="text">
+    <string>&amp;Check if all build-in spectra have properly described incrementers</string>
+   </property>
+  </action>
+  <action name="actionAuto_scale_to_highest_peaks">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Auto scale to highest peaks</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="greware_icons.qrc"/>
+ </resources>
+ <connections/>
+</ui>

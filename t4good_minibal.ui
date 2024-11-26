@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>T4good_minibal</class>
+ <widget class="QDialog" name="T4good_minibal">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>714</width>
+    <height>635</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_4">
+   <item>
+    <widget class="QLabel" name="textLabel1">
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+     <property name="text">
+      <string>Minibal detecting crystal may deliver  signals: &lt;br&gt;&lt;font size=&quot;-1&quot;&gt;a). Energy core (segment 0),  &lt;br&gt;b). Energies of segments 1-6  &lt;br&gt;c) Time (NOT SURE YET)&lt;/font&gt;</string>
+     </property>
+     <property name="wordWrap">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <property name="verticalSpacing">
+      <number>38</number>
+     </property>
+     <item row="2" column="0">
+      <widget class="QLabel" name="textLabel1_3_3_3">
+       <property name="frameShape">
+        <enum>QFrame::Panel</enum>
+       </property>
+       <property name="text">
+        <string>&lt;font size=&quot;+2&quot;&gt;3.&lt;/font&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <layout class="QVBoxLayout" name="_6">
+       <item>
+        <widget class="QLabel" name="textLabel1_6">
+         <property name="text">
+          <string>Do you want to increment corresponding calibrated spectra with zeros?</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string>When corresponding raw data is zero...</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QVBoxLayout" name="_8">
+            <item>
+             <widget class="QCheckBox" name="checkBox_call_req_energy">
+              <property name="text">
+               <string>increment  &quot;energy calibrated&quot; spectrum with zero</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="checkBox_call_req_tim">
+              <property name="text">
+               <string>increment  &quot;time calibrated&quot; spectrum with zero</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="textLabel1_3">
+       <property name="text">
+        <string>&lt;font color=&quot;#005500&quot; size=&quot;+2&quot;&gt;Raw&lt;/font&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="textLabel1_3_2_2">
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>40</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:600; color:#005500;&quot;&gt;&amp;quot;Good&amp;quot;&lt;/span&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; color:#005500;&quot;&gt;&lt;br/&gt;thresholds&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <layout class="QVBoxLayout" name="_4">
+       <item>
+        <widget class="QLabel" name="textLabel1_2">
+         <property name="maximumSize">
+          <size>
+           <width>32767</width>
+           <height>77</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>When &lt;b&gt;at least one&lt;/b&gt; of these signals comes - the crystal is consider to be &quot;&lt;font color=&quot;#ff0000&quot;&gt;&lt;b&gt;fired&lt;/b&gt;&lt;/font&gt;&quot;&lt;br&gt;In this case &lt;b&gt;&lt;font color=&quot;#ff0000&quot;&gt;all raw&lt;/font&gt;&lt;/b&gt; spectra are incremeted &lt;br&gt;(energies of each segments raw,and time raw) and the 'fan' spectrum.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="textLabel1_3_3_2">
+       <property name="maximumSize">
+        <size>
+         <width>30</width>
+         <height>152</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Panel</enum>
+       </property>
+       <property name="text">
+        <string>&lt;font size=&quot;+2&quot;&gt;2.&lt;/font&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLabel" name="textLabel1_3_2">
+       <property name="text">
+        <string>&lt;font color=&quot;#005500&quot; size=&quot;+2&quot;&gt;Calibrated&lt;/font&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="textLabel1_3_3">
+       <property name="maximumSize">
+        <size>
+         <width>30</width>
+         <height>138</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Panel</enum>
+       </property>
+       <property name="text">
+        <string>&lt;font size=&quot;+2&quot;&gt;1.&lt;/font&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLabel" name="textLabel1_4">
+         <property name="text">
+          <string>Flag &quot;Good&quot; is set when the signals have sensible values.&lt;br&gt;Only such detecting crystals contribute to the &lt;b&gt;multiplicity&lt;/b&gt;</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignVCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="buttonGroup2">
+         <property name="title">
+          <string>To set flag 'good' as 'true' we demand:</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <layout class="QHBoxLayout" name="_16">
+            <item>
+             <widget class="QCheckBox" name="checkBox_good_core_energy">
+              <property name="text">
+               <string>the &quot;energy core calibrated&quot; value is bigger than:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushline_core_energy_good_threshold">
+              <property name="text">
+               <string>click here</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="spacer4">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>60</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="_17">
+            <item>
+             <widget class="QCheckBox" name="checkBox_good_time">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>the  &quot;time calibrated&quot; value is bigger than:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="push_time_threshold">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="text">
+               <string>click here</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="spacer5">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>178</width>
+                <height>31</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="textLabel1_3_3_4">
+       <property name="maximumSize">
+        <size>
+         <width>32</width>
+         <height>32767</height>
+        </size>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Panel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="text">
+        <string>&lt;font size=&quot;+2&quot;&gt;4.&lt;/font&gt;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignTop</set>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="textLabel1_5">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:x-large; color:#005500;&quot;&gt;Doppler &lt;br/&gt;correction&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QLabel" name="textLabel1_7">
+       <property name="text">
+        <string>&lt;html&gt;&lt;body&gt;&lt;p&gt;is prerformed when for all &amp;quot;good&amp;quot; events.&lt;br/&gt;When the algorithm make doppler correction succesfully - the&lt;span style=&quot; font-weight:600;&quot;&gt; OK&lt;/span&gt; flag is set.&lt;br/&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;(It may not be succesfull for example when we demand correct tracking&lt;br/&gt;and the multiwire chamber mw42 didn't give the position information)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="wordWrap">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>38</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="_10">
+     <item>
+      <widget class="QPushButton" name="push_default">
+       <property name="text">
+        <string>Default</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="spacer6">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Expanding</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>51</width>
+         <height>21</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="push_cancel">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Cancel</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="puss_accept">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Accept</string>
+       </property>
+       <property name="default">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>push_cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>T4good_minibal</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>601</x>
+     <y>625</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>525</x>
+     <y>616</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>puss_accept</sender>
+   <signal>clicked()</signal>
+   <receiver>T4good_minibal</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>674</x>
+     <y>621</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>697</x>
+     <y>582</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

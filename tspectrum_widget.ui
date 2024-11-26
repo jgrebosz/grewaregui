@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>widget</class>
+ <widget class="QWidget" name="TSpectrum_widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>124</width>
+    <height>49</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>30</width>
+    <height>10</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>10</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>spectrum_widget</string>
+  </property>
+  <property name="windowIconText">
+   <string>spectrum</string>
+  </property>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <includes>
+  <include location="global">qprinter.h</include>
+  <include location="global">fstream</include>
+  <include location="local">box_of_channels.h</include>
+  <include location="local">box_of_counts.h</include>
+  <include location="global">qmessagebox.h</include>
+  <include location="global">q3filedialog.h</include>
+  <include location="global">vector</include>
+  <include location="local">results_of_integration.h</include>
+  <include location="global">typeinfo</include>
+  <include location="global">qtimer.h</include>
+  <include location="local">options.h</include>
+  <include location="local">paths.h</include>
+ </includes>
+ <resources/>
+ <connections/>
+</ui>
