@@ -227,13 +227,10 @@ int T4user_spectrum_wizard::nextId() const
 //****************************************************************
 void T4user_spectrum_wizard::illegal_value( double d )
 {
-	QMessageBox::information( this,
+    showWarningMessage(
 							  "Error in value of the angle",
 							  QString("You typed the value %1, while the angle can not be bigger than 359.9, \nI will correct it into:  359.9")
-							  .arg(d),
-							  QMessageBox::Ok,
-							  QMessageBox::NoButton,
-							  QMessageBox::NoButton);
+                              .arg(d), QMessageBox::Critical);
 }
 
 //*********************************************************************
@@ -1025,13 +1022,11 @@ bool T4user_spectrum_wizard::validateCurrentPage()
 					//      cout << "Now enabled is disabled " << endl ;
 					//setNextEnabled ( currentPage (), false ) ;
 
-					QMessageBox::information(  this,
+                    showWarningMessage(
 											   QString("Error in the name of spectrum"),
 											   QString("To go to the next page, you need to specify the name of the spectrum\n"
 													   "\n(It will always start with prefix \"user_\")"),
-											   QMessageBox::Ok,
-											   QMessageBox::NoButton,
-											   QMessageBox::NoButton);
+                                               QMessageBox::Critical);
 					return false;
 				}
 				else return true;
@@ -1042,26 +1037,22 @@ bool T4user_spectrum_wizard::validateCurrentPage()
 		case page__binning_1D:
 			if(ui->lineEdit_last_bin->text().toDouble()  <= ui->lineEdit_first_bin->text().toDouble() )
 			{
-				QMessageBox::information( this,
+                showWarningMessage(
 										  "Error in the range of the spectrum",
 										  "The 'value of the right edge of the last bin' "
 										  " should be BIGGER than the 'value of the left edge of the first bin'.  "
 										  "\nPlease correct it",
-										  QMessageBox::Ok,
-										  QMessageBox::NoButton,
-										  QMessageBox::NoButton);
+                                          QMessageBox::Critical);
 				return false;
 			}
 
 			if(ui->lineEdit_bins->text().toInt()  <= 0)
 			{
-				QMessageBox::information( this,
+                showWarningMessage(
 										  "Error in the binning of the spectrum",
 										  "The 'value of how many bins' should be bigger than zero. "
 										  "\nPlease correct it",
-										  QMessageBox::Ok,
-										  QMessageBox::NoButton,
-										  QMessageBox::NoButton);
+                                          QMessageBox::Critical);
 				return false;
 			}
 			return true;
@@ -1072,26 +1063,22 @@ bool T4user_spectrum_wizard::validateCurrentPage()
 			// ---- X --------------
 			if(ui->lineEdit_bins_x2->text().toInt()  <= 0)
 			{
-				QMessageBox::information( this,
+                showWarningMessage(
 										  "Error in the X binning",
 										  "The 'value of how many X bins' \nshould be bigger than zero. "
 										  "\nPlease correct it",
-										  QMessageBox::Ok,
-										  QMessageBox::NoButton,
-										  QMessageBox::NoButton);
+                                          QMessageBox::Critical);
 				return false;
 			}
 
 			if(ui->lineEdit_last_bin_x2->text().toDouble()  <= ui->lineEdit_first_bin_x2->text().toDouble() )
 			{
-				QMessageBox::information( this,
+                showWarningMessage(
 										  "Error in the X range",
 										  "The 'value of the right edge of the X last bin ' \n"
 										  " should be BIGGER than \nthe 'value of the left edge of the X first bin'.  "
 										  "\nPlease correct it",
-										  QMessageBox::Ok,
-										  QMessageBox::NoButton,
-										  QMessageBox::NoButton);
+                                          QMessageBox::Critical);
 				return false;
 			}
 
@@ -1100,26 +1087,22 @@ bool T4user_spectrum_wizard::validateCurrentPage()
 			//------- Y -------------
 			if(ui->lineEdit_bins_y->text().toInt()  <= 0)
 			{
-				QMessageBox::information( this,
+                showWarningMessage(
 										  "Error in the Y binning",
 										  "The 'value of how many Y bins' should be bigger than zero. \n"
 										  "Please correct it",
-										  QMessageBox::Ok,
-										  QMessageBox::NoButton,
-										  QMessageBox::NoButton);
+                                          QMessageBox::Critical);
 				return false;
 			}
 
 			if(ui->lineEdit_last_bin_y->text().toDouble()  <= ui->lineEdit_first_bin_y->text().toDouble() )
 			{
-				QMessageBox::information( this,
+                showWarningMessage(
 										  "Error in the Y range of the spectrum",
 										  "The 'value of the right edge of the last Y bin' \n"
 										  " should be BIGGER than \nthe 'value of the left edge of the first Y bin'.  "
 										  "\nPlease correct it",
-										  QMessageBox::Ok,
-										  QMessageBox::NoButton,
-										  QMessageBox::NoButton);
+                                          QMessageBox::Critical);
 				return false;
 			}
 
@@ -1152,13 +1135,10 @@ bool T4user_spectrum_wizard::validateCurrentPage()
 					ui->radio_always->isChecked()
 					)
 			{
-				QMessageBox::warning (this, "It can be your logical error",
+                showWarningMessage( "It can be your logical error",
 									  "There is more than one possible combination of x,y incrementers\n"
 									  "and you selected here option: 'Always'\n"
-									  "this may have NO PHYSICAL SENSE!\nYou were warned...",
-									  QMessageBox::Ok,
-									  QMessageBox::NoButton,
-									  QMessageBox::NoButton);
+                                      "this may have NO PHYSICAL SENSE!\nYou were warned...");
 			}
 			return true;
 			//break;
@@ -1368,12 +1348,10 @@ void T4user_spectrum_wizard::selfgate_succesfully_created(string sg_name, QTable
 		 " by double clicking his 'Selfgate' column, and selecting it"
 		 " from the list of all available selfgates" ;
 
-	QMessageBox::information( this,
+    showWarningMessage(
 							  "Success",
 							  s.str().c_str(),
-							  QMessageBox::Ok,
-							  QMessageBox::NoButton,
-							  QMessageBox::NoButton);
+                              QMessageBox::Information);
 
 }
 //***********************************************************************************************************************
@@ -1447,12 +1425,9 @@ string T4user_spectrum_wizard::select_sg_name_from_disk(Tselfgate_type typ)
 
 	if(lista_cond.empty())
 	{
-		QMessageBox::warning( this, "Warning",
+        showWarningMessage( "Warning",
 							  "No selfgates of this particular type exist yet.\n"
-							  "You must create it at first",
-							  QMessageBox::Ok,
-							  QMessageBox::NoButton,
-							  QMessageBox::NoButton);
+                              "You must create it at first");
 		return "";
 
 	}
@@ -1487,16 +1462,13 @@ string T4user_spectrum_wizard::select_sg_name_from_disk(Tselfgate_type typ)
 
 
 	// user selected an item and pressed OK
-	QMessageBox::warning( this, "Warning",
+    showWarningMessage( "Warning",
 						  "Remember that...\n...the same 'Self-Gate' may be used by many incrementors "
 						  "in many different user spectra.\nBy modifying the chosen 'Self Gate' "
 						  "YOU WILL AFFECT THEM ALL.\n\n"
 						  "Perhaps this is just what you want.\n\n"
 						  "If not - consider cloning the self gate, (change its name)\n"
-						  "and then use this new 'self gate' in your particular incrementor",
-						  QMessageBox::Ok,
-						  QMessageBox::NoButton,
-						  QMessageBox::NoButton);
+                          "and then use this new 'self gate' in your particular incrementor");
 
 	return sg_name.toStdString();
 }

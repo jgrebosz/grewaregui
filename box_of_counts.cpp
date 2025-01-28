@@ -106,8 +106,11 @@ void box_of_counts::mouseMoveEvent ( QMouseEvent * event )
         return ;
     }
 
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    int now_y = event->position().y();
+#else
     int now_y = event->y();
-
+#endif
 
     appl_form_ptr->send_to_statusbar(
                 "Hint: use a mouse wheel to expand spectrum,  click and drag the scale to move a spectrum,",  10*1000   ); //  seconds on the screen
@@ -178,7 +181,12 @@ void box_of_counts:: mousePressEvent ( QMouseEvent * event )
 {
     // remembering the pressing point
 
-    last_dragged_y= event->y() ;
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    last_dragged_y = event->position().y();
+#else
+    last_dragged_y = event->y() ;
+#endif
+
     //    cout << "Pressing at point " <<  last_moved_x
     //         << " in word coordinates it is channel = "
     //         << pix2worX(last_moved_x)

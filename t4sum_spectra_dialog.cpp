@@ -4,6 +4,8 @@
 #include <QInputDialog>
 #include <QMessageBox>
 
+#include <paths.h>   // for messageboxes
+
 //**********************************************************************************
 T4sum_spectra_dialog::T4sum_spectra_dialog(QWidget *parent) :
     QDialog(parent),
@@ -49,17 +51,14 @@ void T4sum_spectra_dialog::on_pushButton_remove_row_clicked()
 
     // are you sure?
 
-    if(QMessageBox::warning(this,
+    if(askYesNoCancel(
                             "Removing the spectrum from the table",      // tile
                             QString(                                                            // message
                                                                                                 "You are going to remove the row nr %1\n which is: %2  factor %3\n"
                                                                                                 "Are you sure?").arg(nr+1).
                             arg(ui->tableWidget1->item(nr, 0)->text() ).
                             arg(ui->tableWidget1->item(nr, 1)->text() )
-                            ,
-                            QMessageBox::Yes,
-                            QMessageBox::No,
-                            QMessageBox::Cancel)
+                            )
             == QMessageBox::Yes)
     {
 

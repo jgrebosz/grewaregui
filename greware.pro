@@ -11,10 +11,11 @@ TEMPLATE = app
 # anymore in subdirectory <QtGui/...>
 greaterThan(QT_MAJOR_VERSION,4): QT += widgets
 
+
 #=========================================================
 # when DEBUG ---- uncomment this 2 lines below
-#CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant (1)
-#QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug  (2)
+# CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant (1)
+# QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug  (2)
 
 #when RELEASE    ===========================================
  CONFIG  += warn_on  static release
@@ -25,7 +26,7 @@ greaterThan(QT_MAJOR_VERSION,4): QT += widgets
 #-L /opt/Qt5.12.9/5.12.9/gcc_64/lib
 #=========================================================
 
-QMAKE_INCDIR = /usr/include/qt5/QtWidgets/
+#QMAKE_INCDIR = /usr/include/qt5/QtWidgets/
 
 QMAKE_CXXFLAGS += -std=c++17
 QMAKE_CXXFLAGS += -pedantic

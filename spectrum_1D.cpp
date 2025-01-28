@@ -34,8 +34,8 @@ extern Tpaths path;
 extern options current_options;
 #include <t4markers_manager.h>
 
-#undef COTO
-#define COTO
+//#undef COTO
+//#define COTO
 
 extern istream & zjedz(istream & plik) ;
 
@@ -230,7 +230,7 @@ void spectrum_1D::recalculate_my_geometry()
     flag_repaint_spectrum_box = 1;
     return;
 
-    // ================================================
+// ================================================
 
 #if 0
 
@@ -340,8 +340,8 @@ void spectrum_1D::expand()
     flag_repaint_spectrum_box = 1;
     //draw_all_on_screen();
     appl_form_ptr->send_to_statusbar(
-                "Tip: You can also expand  quicker:  by setting the second yellow marker with Double Click",
-                15000);
+        "Tip: You can also expand  quicker:  by setting the second yellow marker with Double Click",
+        15000);
 
 }
 //***************************************************************************
@@ -387,7 +387,7 @@ void spectrum_1D::mousePressEvent(QMouseEvent *e)
     e->accept() ;
     if(b_spectrum-> was_mouse_click())    // if it was in a spectrum field
     {
-        COTO;
+        // COTO;
         if(e->type() == QEvent::MouseButtonDblClick)
         {
             // Warning, at first widget gets a mouspress event, and then Doubleclik.
@@ -398,7 +398,7 @@ void spectrum_1D::mousePressEvent(QMouseEvent *e)
         }
         else
         {
-            COTO;
+            //  COTO;
             //   cout << "to byl single click  1D" << endl ;
             // dowiadujemy sie jaki to byl klawisz
 
@@ -456,7 +456,16 @@ void spectrum_1D::mousePressEvent(QMouseEvent *e)
                 context_Menu->addAction("Show time of last zeroing of this spectrum", this, SLOT(slot_times_of_last_zeroing() ));
 
 
-                context_Menu->exec(mapToGlobal(QPoint(e->x() ,e->y()   )));
+                context_Menu->exec(mapToGlobal(QPoint(e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                                      position().
+
+#endif
+                                                      x() ,e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                                      position().
+#endif
+                                                      y()   )));
 
                 delete context_Menu;
             }
@@ -742,10 +751,10 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
     if(name_of_spectrum.find("@over") != string::npos)
     {
         QMessageBox::warning
-                (nullptr, "Wrong spectrum" ,
-                 QString("We do not integrate an overplot spectrum\n") + name_of_spectrum.c_str(),
-                 QMessageBox::Yes | QMessageBox::Default,
-                 QMessageBox::NoButton );
+            (nullptr, "Wrong spectrum" ,
+             QString("We do not integrate an overplot spectrum\n") + name_of_spectrum.c_str(),
+             QMessageBox::Yes | QMessageBox::Default,
+             QMessageBox::NoButton );
 
         return ; // we do not integrate overplots
     }
@@ -781,8 +790,8 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
         {
             // cout << " counting in region nr " <<  obszar << ": "  << flush ;
             for(int k = typ_x_to_bin(backgr_markers[obszar])
-                ;
-                k <=  typ_x_to_bin(backgr_markers[1 + obszar]) ;   k++)
+                 ;
+                 k <=  typ_x_to_bin(backgr_markers[1 + obszar]) ;   k++)
             {
                 //suma_Xi += k ;
                 //double real_channel =(justify_to_bin_left_edge(k)* specif.waga) + specif.beg;
@@ -811,8 +820,8 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
         {
 
             for(int k = typ_x_to_bin(backgr_markers[obszar])
-                ;
-                k <=  typ_x_to_bin(backgr_markers[1 + obszar]) ;   k++)
+                 ;
+                 k <=  typ_x_to_bin(backgr_markers[1 + obszar]) ;   k++)
             {
 
                 //double z = k - xs  ;
@@ -917,7 +926,7 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
             double real_channel = (i * specif.waga) + specif.beg + (0.5 * specif.waga);
 
             tmp += (spectrum_table[i] - (int)(flag_bgr_valid ? (real_channel * bgr_slope + bgr_offset + 0.5) : 0))
-                    *  real_channel ;
+                   *  real_channel ;
 
             // specially for time calibration, we like the channel of maximum, not the centroid
             if(spectrum_table[i] > local_maximum)
@@ -938,7 +947,7 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
             double real_channel = (i * specif.waga) + specif.beg + (0.5 * specif.waga);
 
             tmp += (spectrum_table[i] + (int)(flag_bgr_valid ? (real_channel * bgr_slope + bgr_offset + 0.5) : 0))
-                    * (real_channel - centroid_channel) * (real_channel - centroid_channel);
+                   * (real_channel - centroid_channel) * (real_channel - centroid_channel);
         }
         //cout << "calcul centroid_channel_error, tmp= " << tmp ;
         centroid_channel_error = (1.0 / peak_area) * sqrt(tmp) ;
@@ -954,9 +963,9 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
             double real_channel = (i * specif.waga) + specif.beg + (0.5 * specif.waga);
 
             tmp += (spectrum_table[i] - (int)(flag_bgr_valid ?
-                                                  (real_channel * bgr_slope + bgr_offset + 0.5) : 0))
-                    *
-                    (real_channel - centroid_channel) * (real_channel - centroid_channel) ;
+                                                   (real_channel * bgr_slope + bgr_offset + 0.5) : 0))
+                   *
+                   (real_channel - centroid_channel) * (real_channel - centroid_channel) ;
         }
 
         peak_width = 2.35 * sqrt((1.0 / peak_area) * tmp);
@@ -968,16 +977,16 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
             double real_channel = (i * specif.waga) + specif.beg + (0.5 * specif.waga);
 
             tmp +=
-                    pow(
-                        (real_channel - centroid_channel) * (real_channel - centroid_channel)
-                        *  2.35 * 2.35
+                pow(
+                    (real_channel - centroid_channel) * (real_channel - centroid_channel)
+                            *  2.35 * 2.35
                         - (peak_width * peak_width)
-                        , 2  // power of 2
-                        )
-                    *
-                    (
-                        spectrum_table[i] + (int)(flag_bgr_valid ? (real_channel * bgr_slope + bgr_offset + 0.5) : 0)
-                        );
+                    , 2  // power of 2
+                    )
+                *
+                (
+                    spectrum_table[i] + (int)(flag_bgr_valid ? (real_channel * bgr_slope + bgr_offset + 0.5) : 0)
+                    );
         }
         peak_width_error = (1.0 / (2 * peak_width * peak_area)) * sqrt(tmp) ;
 
@@ -998,21 +1007,21 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
     {
         ss << "=============================== "
            <<  asctime(timeinfo)
-            << "Integration in spectrum "
-            << windowTitle().toStdString()
-            << "\nregion: [" << (first_int_channel * specif.waga) + specif.beg + (0.5 * specif.waga)
-            << " - " << (last_int_channel * specif.waga) + specif.beg + (0.5 * specif.waga)
-            << "]  has " << how_many_channels
-            << " bins.  \nRESULT :   " << (mysum - sum_tla)
-            << "\n                   (spectrum integr:  " << mysum
-            << ") - (background integr:  " << sum_tla
-            << ") \n"
+           << "Integration in spectrum "
+           << windowTitle().toStdString()
+           << "\nregion: [" << (first_int_channel * specif.waga) + specif.beg + (0.5 * specif.waga)
+           << " - " << (last_int_channel * specif.waga) + specif.beg + (0.5 * specif.waga)
+           << "]  has " << how_many_channels
+           << " bins.  \nRESULT :   " << (mysum - sum_tla)
+           << "\n                   (spectrum integr:  " << mysum
+           << ") - (background integr:  " << sum_tla
+           << ") \n"
 
-            << "peak_area = \t" << peak_area
-            << "     (+- "
-            << peak_area_error
+           << "peak_area = \t" << peak_area
+           << "     (+- "
+           << peak_area_error
 
-            << ")\n";
+           << ")\n";
 
         if(peak_area)
         {
@@ -1032,13 +1041,13 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
     else
     {
         ss << "RESULT :   " << setw(9) << (mysum - sum_tla)
-           << " ; Peak Area = " << setw(6) << peak_area
-           << "(+ -" << setprecision(3) << peak_area_error
-           << ");";
+        << " ; Peak Area = " << setw(6) << peak_area
+        << "(+ -" << setprecision(3) << peak_area_error
+        << ");";
         if(peak_area)
         {
             ss <<
-                  "Centroid = " << setw(6) << centroid_channel
+                "Centroid = " << setw(6) << centroid_channel
                << "(+ -" << setprecision(3) << centroid_channel_error
 
                << "); Width = " << setw(6) << peak_width
@@ -1431,8 +1440,9 @@ void spectrum_1D::save_as(string prefix)
 
         Tplate_spectrum::flag_repainting_allowed = true;
 
-
-        cout << "Nazwa " << fileName.toStdString() << endl ;
+        if(fileName.isEmpty())
+            return ;
+        // cout << "Nazwa " << fileName.toStdString() << endl ;
         if(fileName.endsWith ( ".spc") == false && fileName.endsWith ( ".asc") == false )
         {
             fileName.append(".spc");
@@ -1506,7 +1516,7 @@ void spectrum_1D::real_save_ascii(QString & nazwa, bool flag_radware_header)
     {
         QMessageBox::information(this, "Saving the spectrum problems" ,
                                  QString("Can't create the file %1")
-                                 .arg(nazwa),
+                                     .arg(nazwa),
                                  QMessageBox::Ok);
         return ;
     }
@@ -1533,9 +1543,9 @@ void spectrum_1D::real_save_ascii(QString & nazwa, bool flag_radware_header)
         for(unsigned int i = 0 ; i < spectrum_table.size() ; i++)
         {
             plik
-                    << specif.beg + (i * specif.waga) << "\t" // <--- first colum (bin)
-                    << spectrum_table[i]                    // <--- second value
-                    << "\n" ; //endl ;
+                << specif.beg + (i * specif.waga) << "\t" // <--- first colum (bin)
+                << spectrum_table[i]                    // <--- second value
+                << "\n" ; //endl ;
         }
         //plik << flush ;  // done by destructor
     }
@@ -1766,8 +1776,8 @@ void spectrum_1D::read_in_file(const char *name, bool this_is_first_time)
                     //         plik.read((char*) &waga, sizeof(waga)) ;
 
                     double bins = 1,    // it is double, bec this is how the spy is writing
-                            left = 0 ,
-                            right = 0  ;
+                        left = 0 ,
+                        right = 0  ;
 
                     plik.read((char*) &bins, sizeof(bins));
 
@@ -1788,7 +1798,7 @@ void spectrum_1D::read_in_file(const char *name, bool this_is_first_time)
 
                     //         double waga ;
                     //         plik.read((char*) &waga, sizeof(waga)) ;
-                    for(int i = 0 ; plik ; i++)
+                    while(plik)
                     {
                         int value ;
 
@@ -1838,7 +1848,7 @@ void spectrum_1D::read_in_file(const char *name, bool this_is_first_time)
 
 
             if(spectrum_table.size() == (unsigned) specif.bin)
-                //			if(spectrum_table.size() == specif.bin)
+            //			if(spectrum_table.size() == specif.bin)
             {
                 too_short = false ; // <--- no more tries
             }
@@ -1851,7 +1861,7 @@ void spectrum_1D::read_in_file(const char *name, bool this_is_first_time)
 
     specif.bin_y =  static_cast<int>(specif.end_y - specif.beg_y + 1);
     // find the real descriptions of the x axis (for example -200, 200)
-    COTO;
+    // COTO;
 
 
 
@@ -2015,8 +2025,8 @@ typ_x spectrum_1D::justify_to_bin_center(typ_x dana)
 
     typ_x binek = (int)((dana - specif.beg) / specif.waga)  ;
     dana = (binek * specif.waga) + specif.beg
-            +
-            0.5 * specif.waga  ; // to be always in the middle of the channel
+           +
+           0.5 * specif.waga  ; // to be always in the middle of the channel
     return dana ;
 }
 //**************************************************************************
@@ -2256,13 +2266,9 @@ void spectrum_1D::save_bg_markers_as_gate()
     if(backgr_markers.size() != 2)
     {
 
-        //    string mmm =
-        //      "To define the gate you need to set exactly 2 background markers";
-        QMessageBox::warning
-                (this, "Error" , "To define the gate you need to set exactly 2 background markers",
-                 QMessageBox::Ok,
-                 QMessageBox::NoButton ,
-                 QMessageBox::NoButton);
+            //    string mmm =
+            //      "To define the gate you need to set exactly 2 background markers";
+        showWarningMessage( "Error" , "To define the gate you need to set exactly 2 background markers");
         return ;
     }
 
@@ -2276,10 +2282,10 @@ void spectrum_1D::save_bg_markers_as_gate()
 #ifdef QUESTION_ABOUT_NAME
 
     = QInputDialog::getText(
-                "Defining the new 1D gate",
-                "Enter the name of this 1D gate:",
-                QLineEdit::Normal,
-                "GATE" /*QString::null*/ , &ok, this);
+        "Defining the new 1D gate",
+        "Enter the name of this 1D gate:",
+        QLineEdit::Normal,
+        "GATE" /*QString::null*/ , &ok, this);
 #endif
 
     if(ok && !screen_name_of_gate.isEmpty())
@@ -2292,9 +2298,9 @@ void spectrum_1D::save_bg_markers_as_gate()
         spec_name.erase(spec_name.rfind(".spc")); // removing extension ".spc"
         ostringstream ss  ;
         ss   << spec_name
-             << prefix_of_gate_1D_names    // "_gate_"
-             << screen_name_of_gate.toStdString()
-             << ".gate";																			// adding a new extension ".gate"
+           << prefix_of_gate_1D_names    // "_gate_"
+           << screen_name_of_gate.toStdString()
+           << ".gate";																			// adding a new extension ".gate"
 
         string disk_name_of_gate  = ss.str() ;
 
@@ -2470,7 +2476,7 @@ void spectrum_1D::remove_the_gate_1D()
 
     family_name.erase(family_name.rfind(".spc")) ;    // removing the .mat extension
     // cout << "this is the beginning of the  filenames " << family_name << endl ;
-
+    // COTO ;
     // looking into directory (with the filter set)
 
     // taking the spectra names from the directory - only
@@ -2490,22 +2496,20 @@ void spectrum_1D::remove_the_gate_1D()
     int gate_nr = 0 ;
     for(QStringList::Iterator it = lista.begin() ; it != lista.end() ;  ++it, gate_nr++)
     {
-        // cout << "found files : " << *it << "\n";
-        switch(QMessageBox::information(this,
-                                        "Removing the 1D gate from the disk group definition remover",
-                                        QString("Do you want to permanently delete the gate  stored "
-                                                "on the disk as\n\t %1\n"
-                                                "Are you sure \n\n").arg(*it),
-                                        "Yes", "No", "Cancel", 1))
+        // cout << "Taken from the list ->  file : " << (*it).toStdString() << endl;;
+        switch(askQuestionWithButtons(  // +
+            "Removing the 1D gate from the disk group definition remover",
+            QString("Do you want to permanently delete the gate  stored "
+                    "on the disk as\n\t %1\n"
+                    "Are you sure \n\n").arg(*it),
+            "Yes", "No", "Cancel", 2))
         {
-        case 0:   //Yes :
+        case 1:   //Yes :
         {
             string pathed_name = gpath.gates_1D + (*it).toStdString() ;
             string mmm = "Are you sure you want to delete " + pathed_name ;
-            int result = QMessageBox::warning
-                    (this, "Deleting the 1D gate" , mmm.c_str(),
-                     "Yes", "No", "Cancel");
-            if(result == 0)  // yes
+            auto result = askYesNoCancel("Deleting the 1D gate" , mmm.c_str());
+            if(result == QMessageBox::Yes)  // yes
             {
                 QFile file(pathed_name.c_str());
                 file.remove() ;
@@ -2513,14 +2517,15 @@ void spectrum_1D::remove_the_gate_1D()
 
 
         }
-            break;
+        break;
 
-        case 1:  // No:
+        case 2:  // No:
             break ;
 
         default:
-        case 2: // Cancel :
-            it = lista.end() ; // stop the loop
+        case 3: // Cancel :
+           it = lista.end() ; // stop the loop
+           it-- ;  // because the loop will now skip to the next
             break ;
 
         }
@@ -2625,7 +2630,7 @@ void spectrum_1D::remember_integration_and_bgr_markers()
     store_all_marker_on_a_disk();
     // INFO
     string msg = "The background markers are stored as a set nr " + to_string(nr) +
-            "\n\n ";
+                 "\n\n ";
     QMessageBox msgBox;
     msgBox.setText(msg.c_str() );
     msgBox.exec();
@@ -2642,7 +2647,7 @@ void spectrum_1D::paste_integration_and_bgr_markers(int set_nr)
     marker_younger = set_of_markers[i][0];
     marker_older = set_of_markers[i][1];
     b_spectrum->set_markers(marker_younger, marker_older);
-//     cout << "YELLOW = " << marker_older << " - " << marker_younger << endl;
+    //     cout << "YELLOW = " << marker_older << " - " << marker_younger << endl;
 
     backgr_markers.clear();
     for(uint b = 2 ; b < set_of_markers[i].size() ; b++)
@@ -2659,8 +2664,8 @@ string spectrum_1D::take_integration_and_bgr_markers()
     string result ;
     ostringstream s(result);
     s << "Integration markers: "
-    << marker_older << " - " << marker_younger
-    << "    Background markers: ";
+      << marker_older << " - " << marker_younger
+      << "    Background markers: ";
 
 
     auto bgs = backgr_markers;
@@ -2682,7 +2687,7 @@ void spectrum_1D::paste_integration_and_bgr_markers()
         QMessageBox msgBox;
         msgBox.setText(msg.c_str() );
         msgBox.exec();
-//        return;
+        //        return;
     }
 
 
@@ -2865,23 +2870,20 @@ bool spectrum_1D::read_in_sum_spectra(string fname)
             {
                 ostringstream warning_text ;
                 warning_text
-                        << "Can't add the spectrum " << name
-                        << " to the sum spectrum , because ist binning is mismatched.\n"
-                        << "\nDetailed explanation. The first spectrum called: " << name_0
-                        << "\nhas bins: " << bins_0
-                        << " left edge: " << left_0
-                        << " right edge: " << right_0
-                        << "\nwhile the spectrum '" << name
-                        << "\nhas bins: " << bins
-                        << " left edge: " << left
-                        << " right edge: " << right
-                        << "\nso summing of this spectrum is ignored.\nPlease change the definition of the sum spectrum!" ;
+                    << "Can't add the spectrum " << name
+                    << " to the sum spectrum , because ist binning is mismatched.\n"
+                    << "\nDetailed explanation. The first spectrum called: " << name_0
+                    << "\nhas bins: " << bins_0
+                    << " left edge: " << left_0
+                    << " right edge: " << right_0
+                    << "\nwhile the spectrum '" << name
+                    << "\nhas bins: " << bins
+                    << " left edge: " << left
+                    << " right edge: " << right
+                    << "\nso summing of this spectrum is ignored.\nPlease change the definition of the sum spectrum!" ;
 
-                QMessageBox::warning
-                        (this, "Error" , warning_text.str().c_str(),
-                         QMessageBox::Ok,
-                         QMessageBox::NoButton ,
-                         QMessageBox::NoButton);
+                showWarningMessage("Error" , warning_text.str().c_str(),
+                                   QMessageBox::Critical);
 
 
                 continue;
@@ -2975,8 +2977,8 @@ bool spectrum_1D::save_sum_spectrum(string fname)
 
 
     double bins = specif.bin,
-            left = specif.beg,
-            right = specif.end ;
+        left = specif.beg,
+        right = specif.end ;
 
     plik.write((char*) &bins, sizeof(bins));
     plik.write((char*) &left, sizeof(left));
@@ -3056,9 +3058,9 @@ void spectrum_1D::erase_nearest_tag_with_comment(double x, double y)
     {
 
         double distance =
-                sqrt(((x - nalepka[i].give_x()) * (x - nalepka[i].give_x()))
-                     + ((y - nalepka[i].give_y()) * (y - nalepka[i].give_y()))
-                     );
+            sqrt(((x - nalepka[i].give_x()) * (x - nalepka[i].give_x()))
+                 + ((y - nalepka[i].give_y()) * (y - nalepka[i].give_y()))
+                 );
         //    cout << " dist of [" << nalepka[i].give_x()
         //      << ", "<< nalepka[i].give_y()
         //      << "] "
@@ -3074,10 +3076,8 @@ void spectrum_1D::erase_nearest_tag_with_comment(double x, double y)
 
 
     string mmm = "Are you sure you want to delete TAG: "
-            + nalepka[nearest].give_info() ;
-    int result = QMessageBox::warning
-            (this, "Deleting the TAG " , mmm.c_str(),
-             QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
+                 + nalepka[nearest].give_info() ;
+    auto result = askYesNoCancel( "Deleting the TAG " , mmm.c_str() );
     if(result == QMessageBox::Yes)
     {
         // are you sure....
@@ -3092,9 +3092,8 @@ void spectrum_1D::remove_all_tags()
 {
     remember_for_undo("Remove all tags") ;
     //  string mmm = "Are you sure you want to delete all tags from this spectrum ?";
-    int result = QMessageBox::warning
-            (this, "Deleting the all TAG " , "Are you sure you want to delete all tags from this spectrum ?",
-             QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel);
+    auto result =askYesNoCancel( "Deleting the all TAG " ,
+                                 "Are you sure you want to delete all tags from this spectrum ?");
     if(result == QMessageBox::Yes)
     {
         // are you sure....
@@ -3196,7 +3195,7 @@ bool spectrum_1D::read_in_overplot_spectra(string fname, bool this_is_first_time
             plik.read((char*) &left, sizeof(left));
             plik.read((char*) &right, sizeof(right));
 
-            for(int i = 0 ; plik ; i++)
+            while(plik)
             {
                 int value ;
 
@@ -3292,7 +3291,7 @@ void spectrum_1D::name_overlay_spec_nr()
 
         QMessageBox::information(this, "Identification of the spectrum " ,
                                  QString("Spectrum nr %1 it is %2").arg(nr)
-                                 .arg(overplot_vector[nr].spec_name.c_str()),
+                                     .arg(overplot_vector[nr].spec_name.c_str()),
                                  QMessageBox::Ok);
     }
 }
@@ -3428,7 +3427,7 @@ void spectrum_1D::make_foto()
     Tfrozen_photo_dlg dlg;
     dlg.exec();
 
-    // The options could be - add or modif colour/name-comment
+// The options could be - add or modif colour/name-comment
 #endif
 
 }
@@ -3441,17 +3440,17 @@ void spectrum_1D::freezing_photo_of_spectrum()
 {
     int kol =  (int) (6 - frozen_photo_vector.size());
     kol =
-            (kol & 1 ? 0xff0000 : 0)
-            + (kol & 2 ? 0x00ff00 : 0)
-            + (kol & 4 ? 0x0000ff : 0)   ;
+        (kol & 1 ? 0xff0000 : 0)
+        + (kol & 2 ? 0x00ff00 : 0)
+        + (kol & 4 ? 0x0000ff : 0)   ;
     time_t rawtime;
     time(&rawtime);
     string when = ctime(&rawtime) ;
 
     frozen_photo_vector.push_back
-            (
-                frozen_one_spectrum(spectrum_table, when.c_str(), kol) // kolor
-                );
+        (
+            frozen_one_spectrum(spectrum_table, when.c_str(), kol) // kolor
+            );
     b_spectrum ->force_new_pixmap(true);
     //    draw_all_on_screen();
 
@@ -3470,13 +3469,13 @@ void spectrum_1D::show_list_of_incrementers()
 void spectrum_1D::show_time_of_last_zeroing()
 {
     time_t when  =
-            appl_form_ptr->give_time_of_zeroing_spectrum(name_of_spectrum);
+        appl_form_ptr->give_time_of_zeroing_spectrum(name_of_spectrum);
 
     string mess ;
     if(when)
     {
         mess =  string("Last zeroing of the spectrum ") + name_of_spectrum
-                + " was at:  " + ctime(&when) ;
+               + " was at:  " + ctime(&when) ;
     }
     else
     {
@@ -3509,7 +3508,7 @@ void spectrum_1D::read_tags_from_disk()
         return;
     }
     // loop over the tags
-    for(unsigned int i = 0 ;  ; i++)
+    for([[__maybe_unused__]]  unsigned int i = 0 ;  ; i++)
     {
         //     cout << "Reading nalepka nr " << i << endl;
         Tpinup nal;
@@ -3532,7 +3531,7 @@ void spectrum_1D::save_tags_to_disk()
     {
         //   cout << "removing the file" << name << endl;
         remove
-                (name.c_str());
+            (name.c_str());
         return;
     }
 
@@ -3690,8 +3689,8 @@ void spectrum_1D::slot_remove_all_tags()
 void spectrum_1D::slot_add_a_tag()
 {
     add_tag_with_comment (
-                b_spectrum->give_x_mouse_click(),
-                b_spectrum->give_y_mouse_click() );
+        b_spectrum->give_x_mouse_click(),
+        b_spectrum->give_y_mouse_click() );
 }
 //***************************************************************************
 void spectrum_1D::slot_add_nalepka()
@@ -3699,8 +3698,8 @@ void spectrum_1D::slot_add_nalepka()
     if ( !nalepka.size() )
         return;
     erase_nearest_tag_with_comment (
-                b_spectrum->give_x_mouse_click(),
-                b_spectrum->give_y_mouse_click() );
+        b_spectrum->give_x_mouse_click(),
+        b_spectrum->give_y_mouse_click() );
 }
 //***************************************************************************
 void spectrum_1D::slot_name_overlay_spec_nr()
@@ -3732,11 +3731,11 @@ void spectrum_1D::mouseMoveEvent ( QMouseEvent * e )
 {
 
     appl_form_ptr->send_to_statusbar(
-                QString ( "Spectrum name:    %1" )
-                .arg(
-                    give_spectrum_name().c_str()).toStdString(),
+        QString ( "Spectrum name:    %1" )
+            .arg(
+                give_spectrum_name().c_str()).toStdString(),
 
-                10*1000 ); //  seconds on the screen
+        10*1000 ); //  seconds on the screen
     e->ignore() ;
 }
 //***************************************************************************************************
@@ -3745,23 +3744,21 @@ void spectrum_1D::slot_help_about_1D_mouse_clicking()
 
     cout << "Wywolanie funkcji help" << endl;
 
-    QMessageBox::information
-            ( this, "Help information about mouse clicking on 1D spectra" ,
-              QString (
+    showWarningMessage("Help information about mouse clicking on 1D spectra" ,
+                       QString (
 
-                  "On the 1D spectrum display you may use following actions with a mouse:\n\n"
+                           "On the 1D spectrum display you may use following actions with a mouse:\n\n"
 
-                  "   *  Single click   -  to set a yellow marking line\n"
-                  //"Shift + Single click   -  correct the last \"single click marker\"\n"
-                  "   *  Double  click   -  to expand the region marked with two marking lines\n"
-                  "   *  Shift  + double click   -  Zoom OUT the region\n"
-                  "   *  Right click - show popup menu \n\n\n"
+                           "   *  Single click   -  to set a yellow marking line\n"
+                           //"Shift + Single click   -  correct the last \"single click marker\"\n"
+                           "   *  Double  click   -  to expand the region marked with two marking lines\n"
+                           "   *  Shift  + double click   -  Zoom OUT the region\n"
+                           "   *  Right click - show popup menu \n\n\n"
 
-                  "On a X-axis box (or on a Y-axis box) of the spectrum you may:\n\n"
-                  "   *  Roll a mouse wheel -  to  expand/compress the scale\n"
-                  "   *  Press a mouse and drag  - to move along this axis (if possible)\n"
-                  "\n"
-                  ) ,
-              QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
+                           "On a X-axis box (or on a Y-axis box) of the spectrum you may:\n\n"
+                           "   *  Roll a mouse wheel -  to  expand/compress the scale\n"
+                           "   *  Press a mouse and drag  - to move along this axis (if possible)\n"
+                           "\n"
+                           ), QMessageBox::Information);
 }
 //***************************************************************************************************

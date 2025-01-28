@@ -5,8 +5,10 @@
 using namespace std;
 #include <QFileDialog>
 #include <QMessageBox>
-#include <iostream>
+// #include <iostream>
 #include <tplate_spectrum.h>
+#include <paths.h> // for qmessage boxes
+
 //*********************************************************************
 T4setting_paths_dlg::T4setting_paths_dlg(QWidget *parent) :
   QDialog(parent),
@@ -55,13 +57,9 @@ void T4setting_paths_dlg::browse_dir()
 
   if(dir.exists(s+"/spectra") == false)
     {
-      QMessageBox::warning
-          (this, "Perhaps your mistatke?",
+       showWarningMessage( "Perhaps your mistake?",
            "This directory is probably not a legal spy directory \n"
-           " (as it does not have a subdirectory 'spectra' )",
-           QMessageBox::Ok,
-           QMessageBox::NoButton,
-           QMessageBox::NoButton
+           " (as it does not have a subdirectory 'spectra' )"
            );
 
     }

@@ -5,7 +5,7 @@
 #include "user_spectrum_description.h"
 #include "paths.h"
 #include <iostream>
-#include <iomanip>
+// #include <iomanip>
 #include <fstream>
 #include <sstream>
 
@@ -78,7 +78,7 @@ void T4manager_user_spectra::on_push_create_new_clicked()
         // display all current contents of the
         int last = vec_spectra.size() - 1 ;
         vec_spectra[last].name_of_spectrum
-                = is_name_unique(vec_spectra[last].name_of_spectrum, last );
+            = is_name_unique(vec_spectra[last].name_of_spectrum, last );
         vec_spectra[last].write_definitions(gpath.user_def_spectra);
         update_the_table() ;
         appl_form_ptr-> warning_spy_is_in_action();
@@ -97,8 +97,8 @@ void T4manager_user_spectra::update_the_table()
     infor += gpath.Quser_def_spectra() + "..." ;
 
     QProgressDialog progress( infor,
-                              "Abort reading", 0, how_many_items,
-                              this);
+                             "Abort reading", 0, how_many_items,
+                             this);
     progress.setMinimumDuration (5000) ; // miliseconds
     progress.setValue(2);
     qApp->processEvents();
@@ -181,10 +181,10 @@ void T4manager_user_spectra::update_the_table()
         ui->table->setItem( j, 0, new QTableWidgetItem(Qt::ItemIsUserCheckable) );  // safe !
 
         ui->table->setItem ( j, 1,
-                             new QTableWidgetItem (
-                                 vec_spectra[j].name_of_spectrum.c_str(),
-                                 Qt::ItemIsEnabled )
-                             );
+                           new QTableWidgetItem (
+                               vec_spectra[j].name_of_spectrum.c_str(),
+                               Qt::ItemIsEnabled )
+                           );
 
 
         ui->table->setItem(j, 2,
@@ -303,8 +303,8 @@ void T4manager_user_spectra::update_review()
 
             //-------------X ----------------
             string sg = (k < incrementors_x.size()) ?
-                        incrementors_x[k].second.substr(0,incrementors_x[k].second.rfind("."))
-                      : " --- " ;
+                            incrementors_x[k].second.substr(0,incrementors_x[k].second.rfind("."))
+                                                    : " --- " ;
 
             ui->review->setItem(linijka, 8, new QTableWidgetItem ((k < incrementors_x.size()) ? incrementors_x[k].first.c_str() : " --- " ));
             ui->review->setItem(linijka, 9, new QTableWidgetItem(sg.c_str() ) ) ;
@@ -313,8 +313,8 @@ void T4manager_user_spectra::update_review()
             ui->review->setItem(linijka, 10, new QTableWidgetItem ((k < incrementors_y.size()) ? incrementors_y[k].first.c_str() : " --- " ));
 
             sg = (k < incrementors_y.size()) ?
-                        incrementors_y[k].second.substr(0,incrementors_y[k].second.rfind("."))
-                      : " --- " ;
+                     incrementors_y[k].second.substr(0,incrementors_y[k].second.rfind("."))
+                                             : " --- " ;
 
             ui->review->setItem(linijka, 11, new QTableWidgetItem(sg.c_str()) ) ;
 
@@ -347,8 +347,8 @@ string T4manager_user_spectra::is_name_unique( string n, int nr )
     for(unsigned i = 0 ; i < vec_spectra.size() ; i++)
     {
         if(new_name == vec_spectra[i].name_of_spectrum
-                &&
-                i != (unsigned)nr )
+            &&
+            i != (unsigned)nr )
         {
             new_name += "A" ;
             i = 0 ; // starting again
@@ -357,15 +357,12 @@ string T4manager_user_spectra::is_name_unique( string n, int nr )
     }
     if(changed)
     {
-        QMessageBox::warning(this,
-                             "Duplicate name of the spectrum",
-                             QString("The name of the spectrum:\n\t%1\n"
-                                     "was already existing in the list, so it had to be changed into:\n"
-                                     "\t%2\n").arg(n.c_str())
-                             .arg(new_name.c_str() ),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+        showWarningMessage(
+            "Duplicate name of the spectrum",
+            QString("The name of the spectrum:\n\t%1\n"
+                    "was already existing in the list, so it had to be changed into:\n"
+                    "\t%2\n").arg(n.c_str())
+                .arg(new_name.c_str() )  );
     }
     return new_name ;
 }
@@ -396,12 +393,9 @@ void T4manager_user_spectra::on_push_remove_selected_released()
 
     if(range.count() == 0)
     {
-        QMessageBox::warning(this,
-                             "No spectrum name selected",
-                             QString("Select the spectrum by clicking once on its name\n"),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+        showWarningMessage(
+            "No spectrum name selected",
+            QString("Select the spectrum by clicking once on its name\n"));
         return ;
     }
 
@@ -429,7 +423,7 @@ void T4manager_user_spectra::on_push_remove_selected_released()
                 QMessageBox msgBox;
                 msgBox.setText("Removing the spectrum definition");
                 msgBox.setInformativeText( QString("You are going to remove the definition nr %1\nof the spectrum %2\n"
-                                                   "Are you sure?").arg(row+1).arg(vec_spectra[row].name_of_spectrum.c_str() ) ) ;
+                                                  "Are you sure?").arg(row+1).arg(vec_spectra[row].name_of_spectrum.c_str() ) ) ;
                 msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::YesToAll |  QMessageBox::No | QMessageBox::Cancel);
                 msgBox.setDefaultButton(QMessageBox::No);
                 answ = msgBox.exec();
@@ -507,12 +501,9 @@ void T4manager_user_spectra::on_push_edit_selected_clicked()
     int nr = ui->table->currentRow() ;
     if(nr >= ui->table->rowCount() || nr == -1)
     {
-        QMessageBox::warning(this,
-                             "No spectrum selected",
-                             QString(nr == -1 ? "Nothing to edit" : "Select the spectrum by clicking once on its name\n"),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+        showWarningMessage(
+            "No spectrum selected",
+            QString(nr == -1 ? "Nothing to edit" : "Select the spectrum by clicking once on its name\n"));
         return ;
     }
     row_is_selected();
@@ -523,7 +514,7 @@ void T4manager_user_spectra::on_push_edit_selected_clicked()
     if ( dlg->exec() == QDialog::Accepted )
     {
         vec_spectra[nr].name_of_spectrum
-                = is_name_unique(vec_spectra[nr].name_of_spectrum, nr);
+            = is_name_unique(vec_spectra[nr].name_of_spectrum, nr);
 
         vec_spectra[nr].write_definitions(gpath.user_def_spectra);
         update_the_table() ;
@@ -536,19 +527,16 @@ void T4manager_user_spectra::on_push_edit_selected_clicked()
 void T4manager_user_spectra::on_push_clone_clicked()
 {
 
-    QMessageBox::information(this,
-                             "Cloning the definition of the spectrum",
-                             QString("If you want to clone some spectrum\n\n"
-                                     "   1. Open it for editing (Press button: Edit Selected Spectrum)\n\n"
-                                     "   2. On the first page of the editing wizard - change the name of this spectrum\n\n"
-                                     "   3. Go to the last page of the wizard - and press Finish\n\n\n"
-                                     "Note: By this you created a new spectrum definition on the disk "
-                                     "while the original spectrum is not touched"
-                                     //"and the new-named spectrum (clone) will be stored on the disk independently\n"
-                                     ),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+    showWarningMessage(
+        "Cloning the definition of the spectrum",
+        QString("If you want to clone some spectrum\n\n"
+                "   1. Open it for editing (Press button: Edit Selected Spectrum)\n\n"
+                "   2. On the first page of the editing wizard - change the name of this spectrum\n\n"
+                "   3. Go to the last page of the wizard - and press Finish\n\n\n"
+                "Note: By this you created a new spectrum definition on the disk "
+                "while the original spectrum is not touched"
+                //"and the new-named spectrum (clone) will be stored on the disk independently\n"
+                ) );
 }
 //*****************************************************************************************
 void T4manager_user_spectra::create_condition()
@@ -600,25 +588,20 @@ void T4manager_user_spectra::make_report_file()
     if(plik)
     {
         wiad = QString("Report succesfully written as \n") +
-                (gpath.user_def_spectra+ "report_spec.txt").c_str() ;
-        QMessageBox::information(this,
-                                 "Report about user defined spectra",
-                                 wiad,
-                                 QMessageBox::Ok,
-                                 QMessageBox::NoButton,
-                                 QMessageBox::NoButton);
+               (gpath.user_def_spectra+ "report_spec.txt").c_str() ;
+        showWarningMessage(
+            "Report about user defined spectra",
+            wiad);
     }
     else
     {
         wiad = QString("Error while writing the report \n") +
-                (gpath.user_def_spectra+ "report_spec.txt").c_str() ;
+               (gpath.user_def_spectra+ "report_spec.txt").c_str() ;
 
-        QMessageBox::critical(this,
-                              "Report about user defined spectra",
-                              wiad,
-                              QMessageBox::Ok,
-                              QMessageBox::NoButton,
-                              QMessageBox::NoButton);
+        showWarningMessage(
+            "Report about user defined spectra",
+            wiad,
+            QMessageBox::Critical);
     }
     return ;
 
@@ -634,12 +617,9 @@ void T4manager_user_spectra::review_double_clicked()
     int nrc = ui->review->currentRow() ;
     if(nrc >= ui->review->rowCount())
     {
-        QMessageBox::warning(this,
-                             "No spectrum selected",
-                             QString("Select the spectrum by clicking once on its name\n"),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+        showWarningMessage(
+            "No spectrum selected",
+            QString("Select the spectrum by clicking once on its name\n") );
         return ;
     }
 
@@ -683,7 +663,7 @@ void T4manager_user_spectra::review_double_clicked()
     if ( dlg->exec() == QDialog::Accepted )
     {
         vec_spectra[which].name_of_spectrum
-                = is_name_unique(vec_spectra[which].name_of_spectrum, which);
+            = is_name_unique(vec_spectra[which].name_of_spectrum, which);
 
 
         vec_spectra[which].write_definitions(gpath.user_def_spectra);
@@ -721,15 +701,15 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
     //---------------
 
     string introduction_txt =  "This is the option to clone a spectrum which contains \n"
-                               "at most 2 pattern of characters which had to be smartly replaced\n"
-                               "Such substring will be replaced with your desired values"
-                               "(i.e. for all possible cluster crystals)\n"
-                               "By this action, the set of new spectra wiil be created.\n\n"
-                               "The replacement will be done :\n"
-                               "    1. Inside  the name of the spectrum,\n"
-                               "    2. Inside the name of any incrementer,\n"
-                               "    3. Inside the name of any used selfgates (not very useful!)\n"
-                               "    4. Inside the name of condition assigned to this spectrum_1D.\n" ;
+                              "at most 2 pattern of characters which had to be smartly replaced\n"
+                              "Such substring will be replaced with your desired values"
+                              "(i.e. for all possible cluster crystals)\n"
+                              "By this action, the set of new spectra wiil be created.\n\n"
+                              "The replacement will be done :\n"
+                              "    1. Inside  the name of the spectrum,\n"
+                              "    2. Inside the name of any incrementer,\n"
+                              "    3. Inside the name of any used selfgates (not very useful!)\n"
+                              "    4. Inside the name of condition assigned to this spectrum_1D.\n" ;
 
 
     bool flag_any_change = false;
@@ -832,16 +812,13 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
         // ready to create the new spectra
 
         string txt = /*introduction_txt + */
-                "\n\nDo you really want to create such set of clones ? ";
+            "\n\nDo you really want to create such set of clones ? ";
 
         for(auto x : filenames) {  txt += x + "   "; }
-        int result = QMessageBox::information(this,
-                                              "Cloning the spectra",
-                                              txt.c_str(),
-                                              "Yes",
-                                              "No",
-                                              "Cancel");
-        if(result != 0)  // QMessageBox::Yes
+        auto result = askYesNoCancel(
+            "Cloning the spectra",
+            txt.c_str());
+        if(result !=  QMessageBox::Yes)
         {
             return ;
         }
@@ -872,11 +849,11 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
 
 
                 string result2 =
-                        dlg.make_a_clone_from_skeleton_using_kombination(file_contents_skeleton,
-                                                                         chain_one[d],
-                                                                         chain_two[k],
-                                                                         &result_bw,
-                                                                         &flag_any_change2);
+                    dlg.make_a_clone_from_skeleton_using_kombination(file_contents_skeleton,
+                                                                     chain_one[d],
+                                                                     chain_two[k],
+                                                                     &result_bw,
+                                                                     &flag_any_change2);
 
 
                 if(!flag_any_change2) continue;
@@ -900,20 +877,21 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
                     ifstream plik_exists(new_filename.c_str());
                     if(plik_exists)
                     {
-                        int odp =  QMessageBox::question(this,
-                                                         "Overwrite ?",
-                                                         string("Spectrum called \n" +
-                                                                new_filename +
-                                                                "\nalready exist. \n Overwite it?").c_str(),
-                                                         QMessageBox::Yes,
-                                                         QMessageBox::YesAll,
-                                                         QMessageBox::No);
+                        int odp =  askQuestionWithButtons(          // +
+                            "Overwrite ?",
+                            string("Spectrum called \n" +
+                                   new_filename +
+                                   "\nalready exist. \n Overwite it?").c_str(),
+                            "Yes",
+                            "Yes to All",
+                            "No", 3);
                         switch(odp)
                         {
+                        case 1: break;   // Yes:
+                        case 2: make_checking_if_clone_exists = false ; break;   // YesAll:
+
                         default:
-                        case QMessageBox::No: continue; // break;
-                        case QMessageBox::Yes: break;
-                        case QMessageBox::YesAll: make_checking_if_clone_exists = false ; break;
+                        case 3: continue; // No  (break);
                         }
                     } // if exists
                 } // if make checking
@@ -946,12 +924,9 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
     }// end of try
     catch(error m)
     {
-        QMessageBox::warning(this,
+        showWarningMessage(
                              m.title.c_str(),
-                             m.message.c_str(),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                             m.message.c_str() );
         return;
     }
     raise();   // to the top of desktop
@@ -983,12 +958,9 @@ void T4manager_user_spectra::on_pushButton_clone_default_clicked()
     }
     else {
         // error message, that no spectrum is selected now
-        QMessageBox::information( this,
-                                  "No spectrum selected",
-                                  "No spectrum is currently displayed on screen",
-                                  QMessageBox::Ok ,
-                                  QMessageBox::NoButton,
-                                  QMessageBox::NoButton);
+        showWarningMessage(
+                                 "No spectrum selected",
+                                 "No spectrum is currently displayed on screen");
         return; // no selected spectrum
     }
 
@@ -1001,34 +973,27 @@ void T4manager_user_spectra::on_pushButton_clone_default_clicked()
         mess += "\nis a user-definded spectrum (not a build-in spectrum).\n"
                 "For cloning the user-defined spectra, please use a regular cloning procedure (available in the spectrum manager)";
 
-        QMessageBox::information( this,
-                                  "Wrong spectrum",
-                                  mess.c_str(),
-                                  QMessageBox::Ok ,
-                                  QMessageBox::NoButton,
-                                  QMessageBox::NoButton);
+        showWarningMessage(
+                                 "Wrong spectrum",
+                                 mess.c_str() );
 
         return;
     }
 
     // info asking if user want to clone this build-in spectrum
     string mess {"Procedure of creating an user defined spectrum\n"
-                 "based on the standard (build-in) spectrum begins. \n"
-                 "Now you need to answer some questions\n\n"
-                 "Currently, on the screen, there is a selected spectrum called:\n     "};
+                "based on the standard (build-in) spectrum begins. \n"
+                "Now you need to answer some questions\n\n"
+                "Currently, on the screen, there is a selected spectrum called:\n     "};
     mess += sname;
     mess += "\n\nDo you want to create a new user-defined spectrum which is similar to this build-in spectrum?\n";
 
-    auto answ = QMessageBox::information( this,
-                                          "Procedure begins... ",
-                                          mess.c_str(),
-                                          "Yes", "No", "Cancel"
-                                          /*"QMessageBox::Yes ,
-                                                                                QMessageBox::No,
-                                                                                QMessageBox::Cancel*/
-                                          );
+    auto answ = askYesNoCancel(
+                                         "Procedure begins... ",
+                                         mess.c_str()
+                                         );
 
-    if(answ != 0)
+    if(answ != QMessageBox::Yes)
         return; // if not
 
     sname = "user_" + sname;
@@ -1040,8 +1005,8 @@ void T4manager_user_spectra::on_pushButton_clone_default_clicked()
     user_spectrum_description spe;
     spe.set_name(sname);
     spe.dimmension = (dim == 1) ?
-                user_spectrum_description::spec_1D :
-                user_spectrum_description::spec_2D;
+                         user_spectrum_description::spec_1D :
+                         user_spectrum_description::spec_2D;
 
     auto specif = dokument->give_specif();
     spe.bins_x = specif.bin;
@@ -1233,7 +1198,7 @@ void T4manager_user_spectra::on_pushButton_clone_default_clicked()
 
             ostringstream my_string;
             my_string << "Here are the lists of your incrementers\n"
-                 << xi<< '\n';
+                      << xi<< '\n';
             //			plik << setfill('-');
             for(uint i = 0 ; i < nr_x ; ++i)
             {
@@ -1256,11 +1221,11 @@ void T4manager_user_spectra::on_pushButton_clone_default_clicked()
             if(flag_some_ALL) txt2 += "\tSome incrementer is of a type 'ALL.. (which is a list of many incrementors)' \n" ;
 
             txt2 += "So you must decide which combinations of X Y incrementers are going"
-                   "to be used\n"
-                   "There are 3 possiblities:\n"
-                   "   - Every x-y combination,\n"
-                   "   - Only when X & Y incrementers are from different detectors    (usefull in case 'gamma vs gamma` matrix)\n"
-                   "   - Only when X & Y incrementers are from a same detector    (usefull in case 'energy vs time' matrix)\n\n";
+                    "to be used\n"
+                    "There are 3 possiblities:\n"
+                    "   - Every x-y combination,\n"
+                    "   - Only when X & Y incrementers are from different detectors    (usefull in case 'gamma vs gamma` matrix)\n"
+                    "   - Only when X & Y incrementers are from a same detector    (usefull in case 'energy vs time' matrix)\n\n";
 
             mb2.setText(QString(txt2.c_str() ));
 
@@ -1283,15 +1248,12 @@ void T4manager_user_spectra::on_pushButton_clone_default_clicked()
     }
 
 
-    QMessageBox::information( this,
-                              "Finished the procedure of creating spectrum ",
-                              "The procedure of creating a user defined spectrum (which should be like a chosen standard spectrum)"
-                              "has just succesfully finished. \n\n"
-                              "Now look carefully at this definition and check if this is what you want",
-
-                              QMessageBox::Ok ,
-                              QMessageBox::NoButton,
-                              QMessageBox::NoButton);
+   showWarningMessage(
+                             "Finished the procedure of creating spectrum ",
+                             "The procedure of creating a user defined spectrum (which should be like a chosen standard spectrum)"
+                             "has just succesfully finished. \n\n"
+                             "Now look carefully at this definition and check if this is what you want",
+        QMessageBox::Information );
 
     // Call edit wizard for this spectrum -----------------------------------------
     //  -- opening the editor
@@ -1301,7 +1263,7 @@ void T4manager_user_spectra::on_pushButton_clone_default_clicked()
     if ( dlg->exec() == QDialog::Accepted )
     {
         spe.name_of_spectrum
-                = is_name_unique(spe.name_of_spectrum, 9999);
+            = is_name_unique(spe.name_of_spectrum, 9999);
 
         spe.write_definitions(gpath.user_def_spectra);
         update_the_table() ;
@@ -1328,15 +1290,15 @@ string T4manager_user_spectra::correct_to_the_official_incrementer(string specna
     QMessageBox  mb(this);
     mb.setWindowTitle("Incrementer with this name does not exist");
     mb.setText(
-                QString(
-                    "System build-in spectrum: \n\t%1\n"
-                    "informs that it is using incremeter called\n\t%2\n"
-                    "However, there is no official inrementer with this name.\n\n"
-                    "You must decide what to do: \n"
-                    "\t - you may skip this illegal incrementer\n"
-                    "or\n"
-                    "\t - you may choose some other incrementer from the official list\n\n").arg(specname.c_str()).arg(name.c_str())
-                );
+        QString(
+            "System build-in spectrum: \n\t%1\n"
+            "informs that it is using incremeter called\n\t%2\n"
+            "However, there is no official inrementer with this name.\n\n"
+            "You must decide what to do: \n"
+            "\t - you may skip this illegal incrementer\n"
+            "or\n"
+            "\t - you may choose some other incrementer from the official list\n\n").arg(specname.c_str()).arg(name.c_str())
+        );
 
     mb.addButton("Choose another from the list", QMessageBox::YesRole);
     mb.addButton("Skip it", QMessageBox::NoRole );

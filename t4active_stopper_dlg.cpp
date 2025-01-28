@@ -350,10 +350,8 @@ void T4active_stopper_dlg::on_buttonHelp_clicked()
             "You may define the time gate to match implantation and the decay. "
             "You may define where to search the implantation and decay subevents. "
             "You may also define how to calculate the position";
-    QMessageBox::information( this,
+    showWarningMessage(
                               "Info",
                               mess.c_str(),
-                              QMessageBox::Ok,
-                              QMessageBox::NoButton,
-                              QMessageBox::NoButton);
+                              QMessageBox::Information);
 }

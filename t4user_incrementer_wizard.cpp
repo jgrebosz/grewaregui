@@ -317,12 +317,10 @@ bool T4user_incrementer_wizard::validateCurrentPage()
             //cout << "Now enabled is disabled " << endl ;
             //setNextEnabled ( currentPage (), false ) ;
 
-            QMessageBox::information( this,
+            showWarningMessage(
                                       "Error in the name of incrementer",
                                       "To go to the next page, you need to specify the name of the incrementer\n",
-                                      QMessageBox::Ok,
-                                      QMessageBox::NoButton,
-                                      QMessageBox::NoButton);
+                                      QMessageBox::Information);
             return false;
         }
 
@@ -361,12 +359,9 @@ bool T4user_incrementer_wizard::validateCurrentPage()
         {
             if(ui->push_increm_green->text().toStdString() == PressToChoose)
             {
-                QMessageBox::warning( this,
+                showWarningMessage(
                                       "Error in the name of incrementer",
-                                      "Please select the expresion green incrementer\n",
-                                      QMessageBox::Ok,
-                                      QMessageBox::NoButton,
-                                      QMessageBox::NoButton);
+                                      "Please select the expression green incrementer\n");
                 return false;
             }
             donnor = green = ui->push_increm_green->text().toStdString();
@@ -389,13 +384,10 @@ bool T4user_incrementer_wizard::validateCurrentPage()
             s >> d;
             if(d< 0.0000001 && d > -0.0000001 && oper == "/")
             {
-                QMessageBox::warning( this,
+                showWarningMessage(
                                       "Error in the logic of the operation",
                                       "Yoor selected the operation 'Division' by 0.\n"
-                                      "It would crash the spy. \nPlease correct it",
-                                      QMessageBox::Ok,
-                                      QMessageBox::NoButton,
-                                      QMessageBox::NoButton);
+                                      "It would crash the spy. \nPlease correct it");
                 return false;
 
             }
@@ -406,12 +398,9 @@ bool T4user_incrementer_wizard::validateCurrentPage()
         {
             if(blue == PressToChoose)
             {
-                QMessageBox::warning( this,
+               showWarningMessage(
                                       "Error in the name of incrementer",
-                                      "Please select the expresion blue incrementer\n",
-                                      QMessageBox::Ok,
-                                      QMessageBox::NoButton,
-                                      QMessageBox::NoButton);
+                                      "Please select the expresion blue incrementer\n" );
                 return false;
             }
             if(ui->radioButton_green_is_incrementer->isChecked() == false) donnor = blue;

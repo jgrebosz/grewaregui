@@ -4,7 +4,34 @@
 using namespace std ;
 #include <qstring.h>
 #include <cstdlib>
+#include <QMessageBox>
 
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+#define QRegExp QRegularExpression
+#endif
+QRegularExpression zbuduj_regexpattern(const QString& pattern, bool caseSensitive );
+bool checkPattern(const QString& str, const QString& pattern, bool caseSensitive);
+
+
+int askQuestionWithButtons(const QString& title,
+                           const QString& question,
+                           const QString& option1,
+                           const QString& option2,
+                           const QString& option3,
+                           int defaultOption,
+                           QMessageBox::Icon  iconType = QMessageBox::Question,
+                           QWidget* parent = nullptr);
+
+void showWarningMessage(const QString& title, const QString& warningText,
+                        QMessageBox::Icon  iconType = QMessageBox::Warning,
+                        QWidget* parent = nullptr) ;
+
+QMessageBox::StandardButton askYesNoCancel(const QString& title,
+                                           const QString& question,
+                                           QWidget* parent = nullptr);
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class Tpaths
 {
 public:

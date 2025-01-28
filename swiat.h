@@ -165,10 +165,14 @@ public:
 	}
 	/*--------------------------------------------------------------------*/
 	/* moze sie przydac w druga strone */
-	double pix2worX(int x)      /* zamiana wsp pixelowych na world   */
-	{
-		return  ( worldLeft + (x/scaler_x)) ;
-	}
+    // double pix2worX(int x)      /* zamiana wsp pixelowych na world   */
+    // {
+    // 	return  ( worldLeft + (x/scaler_x)) ;
+    // }
+      double pix2worX(double x)      /* zamiana wsp pixelowych na world   */
+    {
+        return  ( worldLeft + (x/scaler_x)) ;
+    }
 	//--------------------------------------------------------------------
 	double pix2worY(int y)      /* zamiana y wsp pixelowa na world  */
 	{

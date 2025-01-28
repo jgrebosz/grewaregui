@@ -920,8 +920,16 @@ void   box_of_spectrum::mousePressEvent ( QMouseEvent * e )
 {
     // we set the values
 
-    x_mouse_click = typ_x ( pix2worX ( e->x() ) );
-    y_mouse_click = int ( pix2worY ( e->y() ) ) ;
+    x_mouse_click = typ_x ( pix2worX ( e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                   position().
+#endif
+                                   x() ) );
+    y_mouse_click = int ( pix2worY ( e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                 position().
+#endif
+                                 y() ) ) ;
     pressed_button_state = e->button() ;
     //    cout << "started mousepress in  box_spectrum" << endl;
     //       cout << "in mousePressEvent,   Pixl=" << e->x()

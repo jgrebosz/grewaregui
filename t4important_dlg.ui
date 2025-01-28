@@ -23,7 +23,7 @@
       <enum>QFrame::Plain</enum>
      </property>
      <property name="text">
-      <string>&lt;p align=&quot;center&quot;&gt;&lt;font color=&quot;#ff0000&quot; size=&quot;+4&quot;&gt;&lt;b&gt;Lost Synchronisation ??? &lt;/b&gt;&lt;/font&gt;&lt;/p&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Lost Synchronisation ??? (is it used?)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>

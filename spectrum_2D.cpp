@@ -85,11 +85,11 @@ void spectrum_2D::mouseMoveEvent ( QMouseEvent * e )
 {
 
     appl_form_ptr->send_to_statusbar(
-                QString ( "Matrix name:    %1" )
-                .arg(
-                    give_spectrum_name().c_str()).toStdString(),
+        QString ( "Matrix name:    %1" )
+            .arg(
+                give_spectrum_name().c_str()).toStdString(),
 
-                10*1000 ); //  seconds on the screen
+        10*1000 ); //  seconds on the screen
     e->ignore() ;
 }
 
@@ -183,8 +183,8 @@ void spectrum_2D::init()
 
     min_x = min_counts_on_map = 0 ;
 
-    //max_channel = spectrum_length-1 ;
-    //max_counts_on_map = 250 ;
+//max_channel = spectrum_length-1 ;
+//max_counts_on_map = 250 ;
 
 
 #ifdef NIGDY
@@ -241,33 +241,33 @@ void spectrum_2D::init()
     vertex v[4] =
     {
         vertex ( 10, 10 ), vertex ( 10, 60 ), vertex ( 60, 60 ) , vertex ( 60, 10 )
-    } ;
-    polygon_type plotek ;
-    for ( int i = 0 ; i < 4 ; i++ )
-    {
-        plotek.push_back ( v[i] ) ;
-    }
-    polygon_gate b ( string ( "Z=80.polyg" ), plotek );
-    banana.push_back ( b );
+} ;
+polygon_type plotek ;
+for ( int i = 0 ; i < 4 ; i++ )
+{
+    plotek.push_back ( v[i] ) ;
+}
+polygon_gate b ( string ( "Z=80.polyg" ), plotek );
+banana.push_back ( b );
 #endif //NIGDY
 
-    if(name_of_spectrum.find("monitor") != string::npos)
-    {
-        flag_auto_maximum = true;
-    }
+if(name_of_spectrum.find("monitor") != string::npos)
+{
+    flag_auto_maximum = true;
+}
 
 
-    //cout << "before finding polygons " << endl ;
-    find_polygons_with_names_as_this_marix();
-    //cout << "after finding" << endl ;
+//cout << "before finding polygons " << endl ;
+find_polygons_with_names_as_this_marix();
+//cout << "after finding" << endl ;
 
-    find_notice_in_description();
-    read_tags_from_disk();
-    // ---------- timer to refresh the spectrum from the disk ------
-    timer_refresh = new QTimer ( this );
-    connect ( timer_refresh, SIGNAL ( timeout() ),
-              this, SLOT ( re_read_spectrum() ) );
-    timer_refresh->start ( 1000 * current_options.give_realistic_refreshing_time_2D() ); // 60 seconds
+find_notice_in_description();
+read_tags_from_disk();
+// ---------- timer to refresh the spectrum from the disk ------
+timer_refresh = new QTimer ( this );
+connect ( timer_refresh, SIGNAL ( timeout() ),
+        this, SLOT ( re_read_spectrum() ) );
+timer_refresh->start ( 1000 * current_options.give_realistic_refreshing_time_2D() ); // 60 seconds
 
 }
 ////**************************************************************************
@@ -346,16 +346,16 @@ void spectrum_2D::recalculate_my_geometry()
 
 
 
-    //    if ( s.height() < 80 || flag_draw_scales == false)
-    //    {
-    //        flag_impossible_to_draw_scales = true;
-    //    }
+//    if ( s.height() < 80 || flag_draw_scales == false)
+//    {
+//        flag_impossible_to_draw_scales = true;
+//    }
 
-    //    double pixels5 =   0;
-    //    if ( flag_draw_scales  &&  !flag_impossible_to_draw_scales )
-    //    {
-    //        pixels5 = 5;
-    //    }
+//    double pixels5 =   0;
+//    if ( flag_draw_scales  &&  !flag_impossible_to_draw_scales )
+//    {
+//        pixels5 = 5;
+//    }
 
 #if 0
 
@@ -657,7 +657,7 @@ void spectrum_2D::mousePressEvent ( QMouseEvent *e )
         else if ( e->button() & Qt::RightButton )
         {
 
-            // enum options {
+                // enum options {
 
             //Q3PopupMenu *contekst_Menu = new Q3PopupMenu;
             QMenu *context_Menu = new QMenu;
@@ -685,13 +685,13 @@ void spectrum_2D::mousePressEvent ( QMouseEvent *e )
 
             strum << "Matrix point x="
                   <<   xxx
-                    << " y="
-                    <<    yyy
-                       << ",  contains value: "
-                       << value
-                          //<< ( ( value >= 32000 ) ? " (SATURATED)" : "")
+                  << " y="
+                  <<    yyy
+                  << ",  contains value: "
+                  << value
+                //<< ( ( value >= 32000 ) ? " (SATURATED)" : "")
 
-                          ;
+                ;
 
 
             b_matrix-> make_rubberband_off();
@@ -705,9 +705,9 @@ void spectrum_2D::mousePressEvent ( QMouseEvent *e )
             context_Menu->addSeparator();
 
             context_Menu->addAction (
-                        QString ( "'Crosshair cursor' mode. Click here to %1" ).arg ( b_matrix->is_crosshair_mode() ? "Stop" : "Begin" ),
-                        this,
-                        SLOT ( slot_crosshair_mode() ) ) ;
+                QString ( "'Crosshair cursor' mode. Click here to %1" ).arg ( b_matrix->is_crosshair_mode() ? "Stop" : "Begin" ),
+                this,
+                SLOT ( slot_crosshair_mode() ) ) ;
 
             //             contekst_Menu->addAction (
             //                 "Crosshair cursor RESET",
@@ -718,23 +718,23 @@ void spectrum_2D::mousePressEvent ( QMouseEvent *e )
             if ( more_than_one_polygon_selected )
             {
                 context_Menu->addAction ( "NOTE: options below are disabled when you select vertices "
-                                          " in more than one polygon", this, SLOT ( slot_no_operation () ) );
+                                        " in more than one polygon", this, SLOT ( slot_no_operation () ) );
             }
 
             QAction* ptr_delete_polygon =
-                    context_Menu->addAction ( "Delete a selected polygon gate", this, SLOT ( slot_delete_polygon () ) );
+                context_Menu->addAction ( "Delete a selected polygon gate", this, SLOT ( slot_delete_polygon () ) );
 
 
             // contekst_Menu->addAction("Add a GRID of polygon gates", this, SLOT(slot_18() ) );   // <-- nobody is  using  this
 
 
             QAction* ptr_copy_selected_polygon =
-                    context_Menu->addAction ( "Copy a selected polygon gate", this, SLOT ( slot_copy_polygon () ) );
+                context_Menu->addAction ( "Copy a selected polygon gate", this, SLOT ( slot_copy_polygon () ) );
 
             QAction* ptr_paste_polygon =
-                    context_Menu->addAction ( "Paste a polygon gate (possible even to other matrix) ", this, SLOT ( slot_paste_polygon () ) );
+                context_Menu->addAction ( "Paste a polygon gate (possible even to other matrix) ", this, SLOT ( slot_paste_polygon () ) );
             QAction* ptr_integrate_selected_polygons =
-                    context_Menu->addAction ( "Integrate the selected polygons", this, SLOT ( slot_integrate_polygon () ) );
+                context_Menu->addAction ( "Integrate the selected polygons", this, SLOT ( slot_integrate_polygon () ) );
 
             context_Menu->addSeparator();
             context_Menu->addAction ( "Z axis threshold", this, SLOT ( slot_ask_for_z_threshold () ) );
@@ -742,9 +742,9 @@ void spectrum_2D::mousePressEvent ( QMouseEvent *e )
 
             context_Menu->addAction ( "Add one new vertex (after every selected vertex) ", this, SLOT ( slot_add_vertices ( ) ) );
             QAction* ptr_delete_select_vertices =
-                    context_Menu->addAction ( "Delete selected vertices", this, SLOT ( slot_remove_vertex ()) );
+                context_Menu->addAction ( "Delete selected vertices", this, SLOT ( slot_remove_vertex ()) );
             QAction* ptr_deselect_all_vertices =
-                    context_Menu->addAction ( "Deselect all vertices", this, SLOT ( slot_deselect_all_vertices () ) );
+                context_Menu->addAction ( "Deselect all vertices", this, SLOT ( slot_deselect_all_vertices () ) );
 
             ostringstream strum2 ;
 
@@ -755,10 +755,10 @@ void spectrum_2D::mousePressEvent ( QMouseEvent *e )
             string mess = strum2.str() ;
 
             QAction* ptr_banana_undo =
-                    context_Menu->addAction ( mess.c_str() , this, SLOT ( slot_undo_banana_change () ) );
+                context_Menu->addAction ( mess.c_str() , this, SLOT ( slot_undo_banana_change () ) );
             ptr_banana_undo->setEnabled(
-                        ( b_matrix->how_many_undo_banana_possible() != 0 )
-                        );
+                ( b_matrix->how_many_undo_banana_possible() != 0 )
+                );
 
             context_Menu->addSeparator();
             context_Menu->addAction ( "Put a tag with my comment just at this point", this, SLOT ( slot_add_tag () ) );
@@ -795,7 +795,15 @@ void spectrum_2D::mousePressEvent ( QMouseEvent *e )
             //             }
             //-------------------------------------------
 
-            context_Menu->exec ( mapToGlobal ( QPoint ( e->x() ,e->y() ) ) );
+            context_Menu->exec ( mapToGlobal ( QPoint ( e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                                  position().
+#endif
+                                                  x() , e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                                  position().
+#endif
+                                                  y() ) ) );
 
             delete context_Menu;
             b_matrix-> inform_that_banana_just_deletd();
@@ -866,7 +874,7 @@ void spectrum_2D::full()
 //*******************************************************************************
 void spectrum_2D::auto_maximum()
 {
-//    cout << __func__ << endl;
+    //    cout << __func__ << endl;
 
     max_counts_on_map = 3; // minimum we make such
     for ( unsigned int i = 0 ; i < spectrum_table.size()  ; i++ )
@@ -874,9 +882,9 @@ void spectrum_2D::auto_maximum()
         if ( spectrum_table[i] > max_counts_on_map )
             max_counts_on_map  =  spectrum_table[i] ;
     }
-//     cout <<__PRETTY_FUNCTION__
-//         << "  " << name_of_spectrum
-//         << " - max counts = " << max_counts_on_map << endl;
+    //     cout <<__PRETTY_FUNCTION__
+    //         << "  " << name_of_spectrum
+    //         << " - max counts = " << max_counts_on_map << endl;
 }
 //*******************************************************************************
 void spectrum_2D::shift_right ( int divider )
@@ -1063,23 +1071,27 @@ void spectrum_2D::integrate ( T4results_of_integration *ptr )
     bool flag_threshold_z = false;
     if ( min_z_threshold > 1 )
     {
-        switch ( QMessageBox::information ( this,
-                                            "How to consider z axis threshold during integration?",
-                                            QString ( "Currently a threshold is set on Z axis of the matrix %1.\n"
-                                                      "Should I count ( for integration ) only only the points above the threshold? ( so only non-black points ) ?"
-                                                      ).arg ( give_spectrum_name().c_str() ) ,
-                                            "Only points above threshold",
-                                            "All ( even black ) points",
-                                            "Cancel", 0 ) )
+        switch (
+            askQuestionWithButtons(         // +
+                "How to consider z axis threshold during integration?",
+                QString ( "Currently a threshold is set on Z axis of the matrix %1.\n"
+                        "Should I count ( for integration ) only only the points above the threshold? ( so only non-black points ) ?"
+                        ).arg ( give_spectrum_name().c_str() ) ,
+                "Only points above threshold",
+                "All ( even black ) points",
+                "Cancel", 1)
+            )
+
+
         {
-        case 0:
+        case 1:
             flag_threshold_z = true;
             break;
-        case 1:
+        case 2:
             flag_threshold_z = false;
             break;
         default:
-        case 2:
+        case 3:
             return ;
         } // end case;
     }  // endif
@@ -1109,9 +1121,9 @@ void spectrum_2D::integrate ( T4results_of_integration *ptr )
             //                 saturated = true ;
 
             if (
-                    ( flag_threshold_z && spectrum_table[y * specif.bin + i] >= min_z_threshold )
-                    || !flag_threshold_z
-                    )
+                ( flag_threshold_z && spectrum_table[y * specif.bin + i] >= min_z_threshold )
+                || !flag_threshold_z
+                )
             {
                 sum += spectrum_table[y * specif.bin + i]    ;
                 how_many_channels++ ;
@@ -1132,23 +1144,23 @@ void spectrum_2D::integrate ( T4results_of_integration *ptr )
     ostringstream ss  ;
 
     ss
-            << "=============================== "
-            <<  asctime ( timeinfo )
-             << "Integration of visible part of 2D spectrum "
-             << windowTitle().toStdString()
-             << ( flag_threshold_z ?  "\nNOTE: only the pixels above the current  displaying threshold" : "" )
-             << ( ( flag_threshold_z == false && min_z_threshold > 1 ) ? "\nNOTE: even the pixels below the current displaying threshold" : "" )
-             << "\n ( Pixels which down-left corner is visible - are summed ) "
-             << "\nregion: "
-             << " x =[" << specif.beg + ( first_int_x_channel * specif.waga )
-             << " to  " << specif.beg + ( ( last_int_x_channel ) * specif.waga )
-             << "],   "
-             << " y =[" << specif.beg_y + ( first_int_y_channel * specif.waga_y )
-             << " to  " << specif.beg_y + ( last_int_y_channel * specif.waga_y )
-             << "],   " << how_many_channels
-             << " bins.  \nRESULT :   " << ( sum ) << "\n"
-                //             << ( saturated ? "WARNING: some bins were saturated ( >= 32000 counts ) " : "")
-                ;
+        << "=============================== "
+        <<  asctime ( timeinfo )
+        << "Integration of visible part of 2D spectrum "
+        << windowTitle().toStdString()
+        << ( flag_threshold_z ?  "\nNOTE: only the pixels above the current  displaying threshold" : "" )
+        << ( ( flag_threshold_z == false && min_z_threshold > 1 ) ? "\nNOTE: even the pixels below the current displaying threshold" : "" )
+        << "\n ( Pixels which down-left corner is visible - are summed ) "
+        << "\nregion: "
+        << " x =[" << specif.beg + ( first_int_x_channel * specif.waga )
+        << " to  " << specif.beg + ( ( last_int_x_channel ) * specif.waga )
+        << "],   "
+        << " y =[" << specif.beg_y + ( first_int_y_channel * specif.waga_y )
+        << " to  " << specif.beg_y + ( last_int_y_channel * specif.waga_y )
+        << "],   " << how_many_channels
+        << " bins.  \nRESULT :   " << ( sum ) << "\n"
+        //             << ( saturated ? "WARNING: some bins were saturated ( >= 32000 counts ) " : "")
+        ;
 
 
     statement = ss.str() ;
@@ -1163,7 +1175,7 @@ void spectrum_2D::integrate ( T4results_of_integration *ptr )
 }
 //*************************************************************************************
 void spectrum_2D::give_parameters ( typ_x * min_ch, typ_x * max_yy, typ_x * max_ch, typ_x * min_yy,
-                                    spectrum_descr *sd )
+                                  spectrum_descr *sd )
 //typ_x *sp_beg, typ_x *sp_end)
 {
 
@@ -1371,7 +1383,7 @@ void spectrum_2D::save_as ( string prefix )
 {
 
 #ifdef  NIGDY
-    // dialog to choose the name and the format
+        // dialog to choose the name and the format
     QFileDialog* fd = new QFileDialog ( this, "Save current matrix as a file ", true );
     fd->setMode ( QFileDialog::AnyFile );
     fd->setFilter ( "3 column ASCII matrices ( *.mat3asc ) " );
@@ -1394,7 +1406,7 @@ void spectrum_2D::save_as ( string prefix )
     if ( prefix.empty() )
     {
 
-        // dialog to choose the name and the format
+            // dialog to choose the name and the format
 #if 0
         QFileDialog* fd = new
                 QFileDialog ( gpath.spectra, QString::null, this,
@@ -1421,11 +1433,11 @@ void spectrum_2D::save_as ( string prefix )
         Tplate_spectrum::flag_repainting_allowed = false;
 
         fileName = QFileDialog::getSaveFileName ( this,
-                                                  tr ( "Save current matrix as a file " ),
-                                                  (gpath.Qspy_dir() + "./type_name.mat"),
-                                                  tr ( "a ) Three  column ASCII matrices ( *.mat3asc );; b ) Binary original cracow format ( *.mat ) " ),
-                                                  &filter
-                                                  );
+                                                tr ( "Save current matrix as a file " ),
+                                                (gpath.Qspy_dir() + "./type_name.mat"),
+                                                tr ( "a ) Three  column ASCII matrices ( *.mat3asc );; b ) Binary original cracow format ( *.mat ) " ),
+                                                &filter
+                                                );
 
         Tplate_spectrum::flag_repainting_allowed = true;
 
@@ -1487,15 +1499,15 @@ void spectrum_2D::real_save_ascii ( QString & nazwa , bool /* flag_radware*/ )
 {
 
     string path_filename = //gpath.spectra +
-            nazwa.toStdString();
+        nazwa.toStdString();
 
     ofstream plik ( path_filename.c_str() );
     if ( !plik )
     {
         QMessageBox::information ( this, "Saving the spectrum problems" ,
-                                   QString ( "Can't create the file %1" )
-                                   .arg ( path_filename.c_str() ),
-                                   QMessageBox::Ok );
+                                 QString ( "Can't create the file %1" )
+                                     .arg ( path_filename.c_str() ),
+                                 QMessageBox::Ok );
         return ;
     }
     else
@@ -1696,9 +1708,9 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
             //                                    << ", sqrt = " <<sqrt(spectrum_table.size()) << endl ;
 
             if ( spectrum_table.size() == ( unsigned ) ( specif.bin * specif.bin_y )
-                 ||
-                 spectrum_table.size() == (( unsigned ) ( specif.bin * specif.bin_y ) *2)  // in case flag_this_is_32bit_cell ???
-                 )
+                ||
+                spectrum_table.size() == (( unsigned ) ( specif.bin * specif.bin_y ) *2)  // in case flag_this_is_32bit_cell ???
+                )
             {
                 too_short = false ; // <--- no more tries, because GOOD!
             }
@@ -1706,13 +1718,13 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
             {
                 static int counter = 0 ;
                 if( !(++counter % 100) ) cout << "problem with reading matrix "
-                                              << path_filename
-                                              << "should be "
-                                              << specif.bin * specif.bin_y
-                                              << "pixels, but it was read "
-                                              << spectrum_table.size()
-                                              << ", another try.. "
-                                              << n_try << endl;
+                         << path_filename
+                         << "should be "
+                         << specif.bin * specif.bin_y
+                         << "pixels, but it was read "
+                         << spectrum_table.size()
+                         << ", another try.. "
+                         << n_try << endl;
                 continue; // another try
             }
             //   specif.bin = (int) (sqrt( (double)spectrum_table.size()));
@@ -1780,8 +1792,8 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 
             if ( current_options.give_preference_asking_about_refreshing_big_matrices() )
                 if ( flag_ask_if_refresh_the_huge_matrices &&
-                     (policy == not_decided || policy == skip_one || policy == refresh_one)
-                     )
+                    (policy == not_decided || policy == skip_one || policy == refresh_one)
+                    )
                 {
                     QMessageBox  mb;
                     mb.setText(mess.c_str());
@@ -2014,8 +2026,8 @@ typ_x spectrum_2D::justify_to_bin_center ( typ_x dana )
     // here we can adjust it to real bin position
     int binek = static_cast<int> ( ( dana - specif.beg ) / specif.waga )  ;
     dana = ( binek * specif.waga ) + specif.beg
-            +
-            0.5 * specif.waga  ; // to be always in the  middle of the channel
+           +
+           0.5 * specif.waga  ; // to be always in the  middle of the channel
     return dana ;
 }
 
@@ -2068,8 +2080,8 @@ void spectrum_2D::paint_all ( QPainter *  /* piorko*/ )
     -------*/
 
     if(flag_auto_maximum) auto_maximum(); // JG- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//    static int licznik;
-//    cout << "Tutaj dałem full zrobic to lepiej!!!!!!!!! " << licznik++ << endl;
+    //    static int licznik;
+    //    cout << "Tutaj dałem full zrobic to lepiej!!!!!!!!! " << licznik++ << endl;
 
     // Note: if we have to draw pixels  0-100, the the last pixel will start at 100 and finish at 100.9999
     // so the real range of picture should be  min_y : max_y+waga_y
@@ -2196,10 +2208,10 @@ void spectrum_2D::error_more_than_one_polygon_selected()
 {
 
     QMessageBox::information ( this, "I dont know which polygon you mean !" ,
-                               QString ( "There are vertices selected in more than one polygons now, "
-                                         "so I don't know which polygon you mean !  "
-                                         " please select vertices in only ONE polygon" ) ,
-                               QMessageBox::Ok );
+                             QString ( "There are vertices selected in more than one polygons now, "
+                                     "so I don't know which polygon you mean !  "
+                                     " please select vertices in only ONE polygon" ) ,
+                             QMessageBox::Ok );
 
 }
 //*************************************************************************
@@ -2337,17 +2349,17 @@ bool spectrum_2D::find_polygons_with_names_as_this_marix()
         screen_name.replace ( nr, 999, "" ); // removing ".poly" extension
 
         screen_name.replace ( 0,
-                              family_name.length(),
-                              "" );
+                            family_name.length(),
+                            "" );
 
         screen_name.replace ( 0,
-                              prefix_of_polygon_names.length(),   // removing "_polygon_"
-                              "" );
+                            prefix_of_polygon_names.length(),   // removing "_polygon_"
+                            "" );
         // cout << "so far screen name = " << screen_name << endl ;
 
         polygon_gate b ( screen_name,  // screen name
-                         disk_name,   // disk name
-                         fence );
+                       disk_name,   // disk name
+                       fence );
 
 
         //cout << "Before pushing to vector " << screen_name << endl;
@@ -2386,10 +2398,10 @@ void  spectrum_2D::add_new_polygon()
 
     bool ok;
     QString screen_name_of_polygon = QInputDialog::getText ( this, tr ( "Adding the new polygon gate" ),
-                                                             tr ( "Enter the name of this polygon gate:" ),
-                                                             QLineEdit::Normal,
-                                                             QDir::home().dirName(),
-                                                             &ok );
+                                                           tr ( "Enter the name of this polygon gate:" ),
+                                                           QLineEdit::Normal,
+                                                           QDir::home().dirName(),
+                                                           &ok );
 
 
 
@@ -2405,9 +2417,9 @@ void  spectrum_2D::add_new_polygon()
         matr_name.erase ( matr_name.rfind ( ".mat" ) );
         ostringstream ss  ;
         ss   << matr_name
-             << prefix_of_polygon_names    // "_polygon_"
-             << screen_name_of_polygon.toStdString()
-             << ".poly"   ;// << ends ;
+           << prefix_of_polygon_names    // "_polygon_"
+           << screen_name_of_polygon.toStdString()
+           << ".poly"   ;// << ends ;
         string disk_name_of_polygon  = ss.str() ;
 
 
@@ -2422,10 +2434,10 @@ void  spectrum_2D::add_new_polygon()
         typ_x wys_win = max_y - min_y ;
 
         polygon_gate b ( screen,
-                         disk_name_of_polygon,
-                         min_x + 0.3 * szer_win, max_y - 0.3 * wys_win,
-                         max_x - 0.3 * szer_win, min_y + 0.3 * wys_win
-                         );
+                       disk_name_of_polygon,
+                       min_x + 0.3 * szer_win, max_y - 0.3 * wys_win,
+                       max_x - 0.3 * szer_win, min_y + 0.3 * wys_win
+                       );
 
 
         //cout << "Before pushing to vector " << screen << endl;
@@ -2437,13 +2449,13 @@ void  spectrum_2D::add_new_polygon()
         //  << endl ;
         banana[m].save_to_disk();
 
-        //cout << "succesfully created new polygon" << endl ;
+//cout << "succesfully created new polygon" << endl ;
 #else
 
         QMessageBox::information ( this, "Creating the  polygon" ,
-                                   QString ( "Now start clicking in the  places where you would  like  to have vertices of your polygon\n"
-                                             "The polygon  will be automatically closed (and finished) when  you Double click" ) ,
-                                   QMessageBox::Ok );
+                                 QString ( "Now start clicking in the  places where you would  like  to have vertices of your polygon\n"
+                                         "The polygon  will be automatically closed (and finished) when  you Double click" ) ,
+                                 QMessageBox::Ok );
 
 
         b_matrix->drawing_new_banana_mode ( screen, disk_name_of_polygon );
@@ -2511,34 +2523,24 @@ string spectrum_2D::projection ( int axis_x )
             {
                 poly_ptr = &banana[i] ;
                 string tekst =  string ( "Currently a  polygon called " ) + poly_ptr->screen_name +
-                        " is selected. Do you want a projection  of points only from the polygon?";
+                               " is selected. Do you want a projection  of points only from the polygon?";
 
-                switch ( QMessageBox::information ( this,
-                                                    "Do you want a conditional projection?",
-                                                    QString ( tekst.c_str() ) ,
-                                                    "Only points from the  polygon",
-                                                    "All points visible on  the matrix",
-                                                    "Cancel", 0 ) )
-
-
-                    //                        int QMessageBox::information(QWidget * parent,
-                    //                                                     const QString & title,
-                    //                                                     const QString & text,
-                    //                                                     const QString & button0Text,
-                    //                                                     const QString & button1Text = QString(),
-                    //                                                     const QString & button2Text = QString(),
-                    //                                                     int defaultButtonNumber = 0,
-                    //                                                     int escapeButtonNumber = -1)
-
+                switch ( askQuestionWithButtons(        // +
+                    "Do you want a conditional projection?",
+                    QString ( tekst.c_str() ) ,
+                    "Only points from the  polygon",
+                    "All points visible on  the matrix",
+                    "Cancel", 1 )
+                        )
                 {
-                case  0:
+                case  1:
                     break;
-                case 1:
+                case 2:
                     poly_ptr = nullptr ;
                     break;
 
                 default: // ?
-                case 2:
+                case 3:
                     return "";
                 }
 
@@ -2552,24 +2554,24 @@ string spectrum_2D::projection ( int axis_x )
     bool flag_threshold_z = false;
     if ( min_z_threshold > 1 )
     {
-        switch ( QMessageBox::information ( this,
-                                            "How to consider z axis threshold during projecting?",
-                                            QString ( "Currently a threshold is set on Z axis of the matrix %1.\n"
-                                                      "Should I use (for projecting) only only the points above the threshold? (so only non-black points)?"
-                                                      ).arg ( give_spectrum_name().c_str() ) ,
-                                            "Only points above threshold",
-                                            "All (even black) points",
-                                            "Cancel", 0 ) )
+        switch (askQuestionWithButtons(         // +
+            "How to consider z axis threshold during projecting?",
+            QString ( "Currently a threshold is set on Z axis of the matrix %1.\n"
+                    "Should I use (for projecting) only only the points above the threshold? (so only non-black points)?"
+                    ).arg ( give_spectrum_name().c_str() ) ,
+            "Only points above threshold",
+            "All (even black) points",
+            "Cancel", 1 ) )
         {
-        case 0:
+        case 1:
             flag_threshold_z = true;
             break;
-        case 1:
+        case 2:
             flag_threshold_z = false;
             break;
 
         default: // ?
-        case 2:
+        case 3:
             return "";
         } // end case;
     }  // endif
@@ -2630,9 +2632,9 @@ string spectrum_2D::projection ( int axis_x )
                 }
                 int ch = ( y * specif.bin ) + x;
                 if ( ( flag_threshold_z && ( spectrum_table[ch] >= min_z_threshold ) ) // when threshold active, and this point is above
-                     ||
-                     !flag_threshold_z                               // or when we do not care of threshold
-                     )
+                    ||
+                    !flag_threshold_z                               // or when we do not care of threshold
+                    )
                 {
                     proj[x - first_int_x_channel] += spectrum_table[ch];
                 }
@@ -2664,9 +2666,9 @@ string spectrum_2D::projection ( int axis_x )
 
                 int  ch = ( y * specif.bin ) + x;
                 if ( ( flag_threshold_z && ( spectrum_table[ch] >= min_z_threshold ) ) // when threshold active, and this point is above
-                     ||
-                     !flag_threshold_z                               // or when we do not care of threshold
-                     )
+                    ||
+                    !flag_threshold_z                               // or when we do not care of threshold
+                    )
                 {
                     proj[y - first_int_y_channel] += spectrum_table[ch];
                 }
@@ -2820,10 +2822,10 @@ void spectrum_2D::integrate_polygon ( polygon_gate &g )
     //    double alfa_c = acos(delta_x / length) * 360 / (2 * M_PI);
 
     cout  << " delta_y = " << delta_y
-          << " delta_x = " << delta_x
-          << " length = " << length
-          << "\n sin degree " << alfa_s
-          << endl;
+         << " delta_x = " << delta_x
+         << " length = " << length
+         << "\n sin degree " << alfa_s
+         << endl;
 
     // When the angle is > 90 wee need some correction  ;
     // firsta quart does need any correcitona
@@ -2854,20 +2856,20 @@ void spectrum_2D::integrate_polygon ( polygon_gate &g )
     ostringstream ss  ;
 
     ss
-            << "=============================== "
-            <<  asctime ( timeinfo )
-             << "Integration of part of 2D spectrum "
-             << windowTitle().toStdString()
-             << "\ninside polygon " << g.screen_name
-             <<  "\n" << how_many_channels
-              << " bins had 'down left corner' inside the polygon"
-              << "\nRESULT :   " << ( sum ) << "\n"
+        << "=============================== "
+        <<  asctime ( timeinfo )
+        << "Integration of part of 2D spectrum "
+        << windowTitle().toStdString()
+        << "\ninside polygon " << g.screen_name
+        <<  "\n" << how_many_channels
+        << " bins had 'down left corner' inside the polygon"
+        << "\nRESULT :   " << ( sum ) << "\n"
 
-                 //             << ( ( saturation ) ? "Warning: Some bins were SATURATED  (>=32000)" : "")
-              << ( ( min_z_threshold > 1 )? "\nCurrently existing Z threshold was not used while this integration\n" : "")
-              << "\nThe first vector of this poligon gate has angle to X axis [degrees] = "
-              << alfa_s
-              << "   (so to Y axis it is: " << (90 - alfa_s) << " )";
+        //             << ( ( saturation ) ? "Warning: Some bins were SATURATED  (>=32000)" : "")
+        << ( ( min_z_threshold > 1 )? "\nCurrently existing Z threshold was not used while this integration\n" : "")
+        << "\nThe first vector of this poligon gate has angle to X axis [degrees] = "
+        << alfa_s
+        << "   (so to Y axis it is: " << (90 - alfa_s) << " )";
     //  << ends ;
 
     statement = ss.str() ;
@@ -2951,17 +2953,15 @@ void spectrum_2D::paste_polygon()
 {
     // is it in the range of the matrix ?
     if ( clipboard_polygon->give_maxX() >= max_x
-         ||
-         clipboard_polygon->give_minX() <= min_x
-         ||
-         clipboard_polygon->give_maxY() >= max_y
-         ||
-         clipboard_polygon->give_minY() <= min_y )
+        ||
+        clipboard_polygon->give_minX() <= min_x
+        ||
+        clipboard_polygon->give_maxY() >= max_y
+        ||
+        clipboard_polygon->give_minY() <= min_y )
     {
-        int answer = QMessageBox::warning
-                ( this, "Polygon may be partly outside " ,
-                  "The pasted polygon may have some (all?) vertices outside the current view of the matrix",
-                  QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+        auto answer = askYesNoCancel( "Polygon may be partly outside " ,
+                                     "The pasted polygon may have some (all?) vertices outside the current view of the matrix");
         if ( answer != QMessageBox::Yes )
         {
             return;
@@ -2979,11 +2979,11 @@ void spectrum_2D::paste_polygon()
     {
         ok = false ;
         screen_name_of_polygon
-                = QInputDialog::getText ( this,
-                                          "Polygon name is not unique",
-                                          "Polygon with such a name already exist here, enter the new name ",
-                                          QLineEdit::Normal,
-                                          clipboard_polygon->screen_name.c_str() , &ok );
+            = QInputDialog::getText ( this,
+                                    "Polygon name is not unique",
+                                    "Polygon with such a name already exist here, enter the new name ",
+                                    QLineEdit::Normal,
+                                    clipboard_polygon->screen_name.c_str() , &ok );
 
 
         //        QInputDialog::getText(this, tr("Adding the new polygon gate"),
@@ -3002,11 +3002,11 @@ void spectrum_2D::paste_polygon()
 
     if ( !is_polygon_name_unique ( screen_name_of_polygon.toStdString() ) )
     {
-        QMessageBox::warning
-                ( this, "Choose another name for the pasted polygon" ,
-                  screen_name_of_polygon + " - there is already poligon with this name on this matrix, sorry.\n"
-                                           "Try pasting once more and choose another name",
-                  QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton );
+        showWarningMessage(
+            "Choose another name for the pasted polygon" ,
+            screen_name_of_polygon + " - there is already poligon with this name on this matrix, sorry.\n"
+                                     "Try pasting once more and choose another name"
+            );
         ok = false ;
     }
     //  cout << "Possible to paste this polygon: "<<   screen_name_of_polygon
@@ -3024,9 +3024,9 @@ void spectrum_2D::paste_polygon()
         matr_name.erase ( matr_name.rfind ( ".mat" ) );
         ostringstream ss  ;
         ss   << matr_name
-             << prefix_of_polygon_names    // "_polygon_"
-             << screen_name_of_polygon.toStdString()
-             << ".poly"   ;
+           << prefix_of_polygon_names    // "_polygon_"
+           << screen_name_of_polygon.toStdString()
+           << ".poly"   ;
 
         clipboard_polygon->disk_name  = ss.str() ;
         //to fit to the size of current window
@@ -3073,12 +3073,12 @@ void spectrum_2D::grid_of_polygons()    //
 
     bool ok;
     QString screen_name_of_polygon
-            = QInputDialog::getText ( this,
-                                      "Adding the grid of many polygon gates",
-                                      "You are going to create many polygon gates which will cover the whole visible part of this matrix\n"
-                                      "Enter the name of this polygon gate:",
-                                      QLineEdit::Normal,
-                                      QString(), &ok );
+        = QInputDialog::getText ( this,
+                                "Adding the grid of many polygon gates",
+                                "You are going to create many polygon gates which will cover the whole visible part of this matrix\n"
+                                "Enter the name of this polygon gate:",
+                                QLineEdit::Normal,
+                                QString(), &ok );
 
     if ( ! ( ok && !screen_name_of_polygon.isEmpty() ) )
         return ;
@@ -3091,22 +3091,22 @@ void spectrum_2D::grid_of_polygons()    //
 
 
     how_many_x = QInputDialog::getInt( this,
-                                       "Columns of the poligon grid",
-                                       "Your grid may have N rows and M columns\n"
-                                       "How many columns of polygons? ",
-                                       how_many_x, 1, 100, 1,
-                                       &ok );
+                                      "Columns of the poligon grid",
+                                      "Your grid may have N rows and M columns\n"
+                                      "How many columns of polygons? ",
+                                      how_many_x, 1, 100, 1,
+                                      &ok );
 
     if ( !ok )
         return ;
 
 
     how_many_y = QInputDialog::getInt ( this,
-                                        "Rows of the poligon grid",
-                                        "Your grid may have N rows and M columns\n"
-                                        "How many rows of polygons? : ",
-                                        how_many_y, 1, 100, 1,
-                                        &ok );
+                                      "Rows of the poligon grid",
+                                      "Your grid may have N rows and M columns\n"
+                                      "How many rows of polygons? : ",
+                                      how_many_y, 1, 100, 1,
+                                      &ok );
 
     if ( !ok )
         return ;
@@ -3159,10 +3159,10 @@ void spectrum_2D::grid_of_polygons()    //
             ofstream s ( pname.c_str() ) ;
 
             s
-                    << ax << "\t" << ay << "\n"
-                    << bx << "\t" << by << "\n"
-                    << cx << "\t" << cy << "\n"
-                    << dx << "\t" << dy << endl;
+                << ax << "\t" << ay << "\n"
+                << bx << "\t" << by << "\n"
+                << cx << "\t" << cy << "\n"
+                << dx << "\t" << dy << endl;
 
             s.close() ;
 
@@ -3205,9 +3205,9 @@ void spectrum_2D::ask_z_threshold()
     int old_z_min = b_matrix->give_z_threshold();
     bool ok;
     int value = QInputDialog::getInt ( this,
-                                       "Setting the threshold for z axis (counts)",
-                                       "Type the threshold value, [below which all points of matrix are drawn as black]\n(1 - means no threshold)",
-                                       old_z_min, 1, 2147483647, 1, &ok );
+                                     "Setting the threshold for z axis (counts)",
+                                     "Type the threshold value, [below which all points of matrix are drawn as black]\n(1 - means no threshold)",
+                                     old_z_min, 1, 2147483647, 1, &ok );
     if ( ok )
     {
         // user entered something and pressed OK
@@ -3232,9 +3232,9 @@ void spectrum_2D::add_tag_with_comment ( double x, double y )
     // lst << "" ;
     bool ok;
     QString res = QInputDialog::getItem ( this,
-                                          "Adding a tag with a comment",
-                                          "Type your comment string or choose the old one to edit it:",
-                                          lst, lst.size() - 1 , true, &ok );
+                                        "Adding a tag with a comment",
+                                        "Type your comment string or choose the old one to edit it:",
+                                        lst, lst.size() - 1 , true, &ok );
     if ( ok )
     {
         // user selected an item and pressed OK
@@ -3266,9 +3266,9 @@ void spectrum_2D::erase_nearest_tag_with_comment ( double x, double y )
     {
 
         double distance =
-                sqrt ( ( ( x - nalepka[i].give_x() ) * ( x - nalepka[i].give_x() ) )
-                       + ( ( y - nalepka[i].give_y() ) * ( y - nalepka[i].give_y() ) )
-                       );
+            sqrt ( ( ( x - nalepka[i].give_x() ) * ( x - nalepka[i].give_x() ) )
+                 + ( ( y - nalepka[i].give_y() ) * ( y - nalepka[i].give_y() ) )
+                 );
         //    cout << " dist of [" << nalepka[i].give_x()
         //      << ", "<< nalepka[i].give_y()
         //      << "] "
@@ -3283,10 +3283,8 @@ void spectrum_2D::erase_nearest_tag_with_comment ( double x, double y )
 
 
     string mmm = "Are you sure you want to delete TAG: "
-            + nalepka[nearest].give_info() ;
-    int result = QMessageBox::warning
-            ( this, "Deleting the TAG " , mmm.c_str(),
-              QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+                 + nalepka[nearest].give_info() ;
+    auto result = askYesNoCancel( "Deleting the TAG " , mmm.c_str());
     if ( result == QMessageBox::Yes )
     {
         // are you sure....
@@ -3302,9 +3300,8 @@ void spectrum_2D::remove_all_tags()
 {
     //remember_for_undo("Remove all tags") ;
     //  string mmm = "Are you sure you want to delete all tags from this spectrum ?";
-    int result = QMessageBox::warning
-            ( this, "Deleting the all TAG " , "Are you sure you want to delete all tags from this spectrum ?",
-              QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+    auto result =askYesNoCancel("Deleting the all TAG " ,
+                                 "Are you sure you want to delete all tags from this spectrum ?"    );
     if ( result == QMessageBox::Yes )
     {
         // are you sure....
@@ -3385,11 +3382,9 @@ bool spectrum_2D::is_possible_to_erase_this_polygon ( string banana_name )
         mmm += list_of_conditions_which_uses;
         mmm += "\n(You can delete a condition - using the the condtion manager)";
 
-        QMessageBox::critical ( this, "Impossible to delete the polygon gate",
-                                mmm.c_str(),
-                                QMessageBox::Ok | QMessageBox::Default,
-                                QMessageBox::NoButton,
-                                QMessageBox::NoButton ); // error
+        showWarningMessage( "Impossible to delete the polygon gate",
+                           mmm.c_str(),
+                           QMessageBox::Critical); // critical error
 
     }// end if impossible
     return possible;
@@ -3398,30 +3393,30 @@ bool spectrum_2D::is_possible_to_erase_this_polygon ( string banana_name )
 void spectrum_2D::show_list_of_incrementers()
 {
     QMessageBox::information ( this, "List of X and Y incrementers of this 2D spectrum",
-                               list_of_incrementers_of_this_spectrum.c_str(),
-                               QMessageBox::Ok );
+                             list_of_incrementers_of_this_spectrum.c_str(),
+                             QMessageBox::Ok );
 
 }
 //***********************************************************************
 void spectrum_2D::show_time_of_last_zeroing()
 {
     time_t when  =
-            appl_form_ptr->give_time_of_zeroing_spectrum ( name_of_spectrum );
+        appl_form_ptr->give_time_of_zeroing_spectrum ( name_of_spectrum );
 
     string mess ;
     if ( when )
     {
         mess =  string ( "Last zeroing of the spectrum " ) + name_of_spectrum
-                + " was at:  " + ctime ( &when ) ;
+               + " was at:  " + ctime ( &when ) ;
     }
     else
     {
         mess = "Sorry, an information about the zeroing of this spectrum is currently not available";
     }
     QMessageBox::information ( this,
-                               "Time of last zeroing",
-                               mess.c_str(),
-                               QMessageBox::Ok );
+                             "Time of last zeroing",
+                             mess.c_str(),
+                             QMessageBox::Ok );
 }
 //*******************************************************************
 void spectrum_2D::draw_scale_or_not ( bool stan )
@@ -3469,7 +3464,7 @@ void spectrum_2D::save_tags_to_disk()
     {
         //   cout << "removing the file" << name << endl;
         remove
-                ( name.c_str() );
+            ( name.c_str() );
         return;
     }
 
@@ -3507,14 +3502,12 @@ void spectrum_2D::slot_delete_polygon()
             {
                 // removing from the disk file
                 string mmm = "The polygon named:\n "
-                        + banana[i].screen_name
-                        + " \nhas a disk name: \n"
-                        + ( gpath.polygons + banana[i].disk_name )
-                        + " \nwill be removed from the program.\nAre you sure ?" ;
+                             + banana[i].screen_name
+                             + " \nhas a disk name: \n"
+                             + ( gpath.polygons + banana[i].disk_name )
+                             + " \nwill be removed from the program.\nAre you sure ?" ;
 
-                int result = QMessageBox::warning
-                        ( this, "Deleting the polygon gate" , mmm.c_str(),
-                          QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+                auto result = askYesNoCancel("Deleting the polygon gate" , mmm.c_str());
                 if ( result == QMessageBox::Yes )
                 {
                     banana[i].remove_from_disk() ;
@@ -3543,17 +3536,16 @@ void spectrum_2D::slot_remove_vertex ( )
     case 0:
         // warning - no selected vertices
         QMessageBox::information ( this, "No selected vertices !" ,
-                                   QString ( "At first please select one vertex by clicking on it." ) ,
-                                   QMessageBox::Ok );
+                                 QString ( "At first please select one vertex by clicking on it." ) ,
+                                 QMessageBox::Ok );
         break ;
     default :  // warning: more than one seleced
     {
-        int result = QMessageBox::warning
-                ( this,
-                  "More than one vertex selected,   are you sure ?" ,
-                  QString ( "Now, %1 vertices are selected. Do you really remove all of them?"
-                            )  .arg ( total_vertices_selected ),
-                  QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+        auto result = askYesNoCancel(
+            "More than one vertex selected,   are you sure ?" ,
+            QString ( "Now, %1 vertices are selected. Do you really remove all of them?"
+                    )  .arg ( total_vertices_selected )
+            );
 
 
         if ( result != QMessageBox::Yes )
@@ -3584,19 +3576,18 @@ void spectrum_2D::slot_add_vertices ( )
     case 0:
         // warning - no selected vertices
         QMessageBox::information
-                ( this,
-                  "No selected vertices !" ,
-                  QString ( "At first please select one vertex by clicking on it." ) ,
-                  QMessageBox::Ok );
+            ( this,
+             "No selected vertices !" ,
+             QString ( "At first please select one vertex by clicking on it." ) ,
+             QMessageBox::Ok );
         break ;
 
     default :  // warning: more than one seleced
     {
-        int result = QMessageBox::warning
-                ( this, "Warning" ,
-                  QString ( "Now, %1 vertices are selected. Do you really want to put a new vertex after "
-                            "EACH of them ? " )  .arg ( total_vertices_selected ),
-                  QMessageBox::Yes, QMessageBox::No, QMessageBox::Cancel );
+        auto result = askYesNoCancel( "Warning" ,
+                                     QString ( "Now, %1 vertices are selected. Do you really want to put a new vertex after "
+                                             "EACH of them ? " )  .arg ( total_vertices_selected )
+                                     );
         if ( result != QMessageBox::Yes )
             break ;
         // else = no break here
@@ -3675,79 +3666,77 @@ void spectrum_2D::slot_copy_polygon()
 void spectrum_2D::slot_help_about_moving_vertices()
 {
 
-    QMessageBox::information
-            ( this, "Help information about changing position of vertices" ,
-              QString ( "You may:\n"
-                        "   - move just one vertex of a polygon,\n"
-                        "   - move all selected vertices of a polygon,\n"
-                        "   - move a whole polygon.\n\n\n "
+    showWarningMessage(
+        "Help information about changing position of vertices" ,
+        QString ( "You may:\n"
+                "   - move just one vertex of a polygon,\n"
+                "   - move all selected vertices of a polygon,\n"
+                "   - move a whole polygon.\n\n\n "
 
-                        "To move just one vertex:\n"
-                        "     - just clik on it and drag to a new position\n\n\n"
+                "To move just one vertex:\n"
+                "     - just clik on it and drag to a new position\n\n\n"
 
-                        "To move whole polygon \n"
-                        "     - Just clik on any vertex (while pressing Ctrl) and start draging a polygon to a new position\n\n\n"
+                "To move whole polygon \n"
+                "     - Just clik on any vertex (while pressing Ctrl) and start draging a polygon to a new position\n\n\n"
 
-                        "To move only some selected vertices:\n"
-                        "     1. Click on a first chosen vertex\n"
-                        "           (it will become white)\n"
-                        "     2. Press Shift key while clicking on all next chosen vertices\n"
-                        "           (they will also become white)\n"
-                        "     3. Press Ctrl + Shift key and click (next to some vertex) and start dragging into new position\n\n\n"
-                        "Remember: you can always UNDO this operation (it is another option of popup menu)"
-                        ) ,
-              QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
+                "To move only some selected vertices:\n"
+                "     1. Click on a first chosen vertex\n"
+                "           (it will become white)\n"
+                "     2. Press Shift key while clicking on all next chosen vertices\n"
+                "           (they will also become white)\n"
+                "     3. Press Ctrl + Shift key and click (next to some vertex) and start dragging into new position\n\n\n"
+                "Remember: you can always UNDO this operation (it is another option of popup menu)"
+                ) ,
+        QMessageBox::Information);
 }
 //****************************************************************************************************
 void spectrum_2D::slot_help_about_selecting_vertices()
 {
 
-    QMessageBox::information
-            ( this, "Help information about selecting vertices of polygon" ,
-              QString ( "You may:\n"
-                        "   - select vertices just by clicking on them\n"
-                        "   - select vertices by a marking a region using a `rubber band`.\n\n\n"
+    showWarningMessage("Help information about selecting vertices of polygon" ,
+                       QString ( "You may:\n"
+                               "   - select vertices just by clicking on them\n"
+                               "   - select vertices by a marking a region using a `rubber band`.\n\n\n"
 
-                        "To select just one vertex:\n"
-                        "     - Just clik on it. All other vertices will become un-selected\n\n"
+                               "To select just one vertex:\n"
+                               "     - Just clik on it. All other vertices will become un-selected\n\n"
 
-                        "To continue selecting next vertices:\n"
-                        "     - Pressing Shift - clik on next vertices.\n\n\n"
+                               "To continue selecting next vertices:\n"
+                               "     - Pressing Shift - clik on next vertices.\n\n\n"
 
-                        "USING A RUBBERBAND (more convenient) -----------------------------------------\n\n"
+                               "USING A RUBBERBAND (more convenient) -----------------------------------------\n\n"
 
-                        "You may also mark a region where all vertices should be selected\n"
-                        "     - Click a mouse and dragg \n"
-                        "       You will see a red-line marked region. When you finish:\n"
-                        "                - all vertices inside this region will become selected, \n"
-                        "                - all outside this region will become un-selected.\n\n\n"
+                               "You may also mark a region where all vertices should be selected\n"
+                               "     - Click a mouse and dragg \n"
+                               "       You will see a red-line marked region. When you finish:\n"
+                               "                - all vertices inside this region will become selected, \n"
+                               "                - all outside this region will become un-selected.\n\n\n"
 
-                        "You may also mark a region where all vertices should be selected\n"
-                        "without un-selecting the others:\n"
-                        "     - Press Shift while Clicking a mouse and dragging\n"
-                        "       You will see a red-line marked region. When you finish:\n"
-                        "                 - all vertices inside this region will become selected, \n"
-                        "                 - all outside this region will become as they were before.\n\n\n"
-                        "To deselect all vertices - just mark a small rubberband region in a neutral place."
-                        ) ,
-              QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
+                               "You may also mark a region where all vertices should be selected\n"
+                               "without un-selecting the others:\n"
+                               "     - Press Shift while Clicking a mouse and dragging\n"
+                               "       You will see a red-line marked region. When you finish:\n"
+                               "                 - all vertices inside this region will become selected, \n"
+                               "                 - all outside this region will become as they were before.\n\n\n"
+                               "To deselect all vertices - just mark a small rubberband region in a neutral place."
+                               ) ,
+                       QMessageBox::Information);
 }
 //***************************************************************************************************
 void spectrum_2D::slot_help_about_mouse_clicking()
 {
-    QMessageBox::information
-            ( this, "Help information about mouse clicking on 2D spectra" ,
-              QString (
-                  "On the 2D spectrum display you may use following actions with a mouse:\n\n"
-                  "   *  Double  click   -  to zoom IN the region around the clicked place\n"
-                  "   *  Shift double  click   -  to zoom OUT the region around the clicked place\n"
-                  "   *  Right click - to see a context popup menu\n\n\n"
-                  "On a X-axis box (or on a Y-axis box) of the 2D spectrum you may:\n\n"
-                  "   *  Roll a mouse wheel -  to  expand/compress the scale\n"
-                  "   *  Press a mouse and drag  - to move along this axis (if possible)\n"
-                  "\n"
-                  ) ,
-              QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
+    showWarningMessage( "Help information about mouse clicking on 2D spectra" ,
+                       QString (
+                           "On the 2D spectrum display you may use following actions with a mouse:\n\n"
+                           "   *  Double  click   -  to zoom IN the region around the clicked place\n"
+                           "   *  Shift double  click   -  to zoom OUT the region around the clicked place\n"
+                           "   *  Right click - to see a context popup menu\n\n\n"
+                           "On a X-axis box (or on a Y-axis box) of the 2D spectrum you may:\n\n"
+                           "   *  Roll a mouse wheel -  to  expand/compress the scale\n"
+                           "   *  Press a mouse and drag  - to move along this axis (if possible)\n"
+                           "\n"
+                           ) ,
+                       QMessageBox::Information);
 }
 //***************************************************************************************************
 void spectrum_2D::set_layout_normal()
@@ -3804,3 +3793,111 @@ void spectrum_2D::set_layout_without_scale()
 
 }
 //***************************************************************************
+int askQuestionWithButtons(const QString& title,            // +
+                           const QString& question,
+                           const QString& option1,
+                           const QString& option2,
+                           const QString& option3,
+                           int defaultOption,
+                           QMessageBox::Icon  iconType,
+                           QWidget* parent)
+{
+    // Tworzymy QMessageBox z pytaniem
+    QMessageBox messageBox(parent);
+    messageBox.setIcon(iconType);
+    messageBox.setWindowTitle(title);   // Ustawienie tytułu
+
+    messageBox.setText(question);
+
+    // Dodajemy trzy przyciski odpowiedzi
+    QPushButton* button1 =  messageBox.addButton(option1, QMessageBox::ActionRole);
+    QAbstractButton* abutton1 = (QAbstractButton*) button1;
+
+    QPushButton*  button2 = messageBox.addButton(option2, QMessageBox::ActionRole);
+    QAbstractButton* abutton2 = (QAbstractButton*) button2;
+
+    QPushButton*  button3 = messageBox.addButton(option3, QMessageBox::ActionRole);
+    QAbstractButton* abutton3 = (QAbstractButton*) button3;
+
+    // Ustawiamy domyślnie zaznaczony przycisk
+    switch (defaultOption) {
+    case 1:
+        messageBox.setDefaultButton( button1);
+        break;
+    case 2:
+        messageBox.setDefaultButton(button2);
+        break;
+    case 3:
+        messageBox.setDefaultButton(button3);
+        break;
+    default:
+        // Nie ustawiamy domyślnego przycisku, jeśli numer nie jest 1-3
+        break;
+    }
+
+    // Wyświetlamy okno dialogowe
+    messageBox.exec();
+
+    // Sprawdzamy, który przycisk został naciśnięty, i zwracamy odpowiedni numer
+    if (messageBox.clickedButton() == abutton1) {
+        return 1;
+    } else if (messageBox.clickedButton() == abutton2) {
+        return 2;
+    } else if (messageBox.clickedButton() == abutton3) {
+        return 3;
+    }
+
+    return -1; // Wartość domyślna w przypadku błędu
+}
+//*************************************************************************************
+void showWarningMessage(const QString& title, const QString& warningText,
+                        QMessageBox::Icon  iconType,
+                        QWidget* parent )
+{
+    // Tworzymy QMessageBox z ostrzeżeniem
+    QMessageBox messageBox(parent);
+    messageBox.setIcon(iconType);      // Ustawienie ikony na "Warning"
+    messageBox.setWindowTitle(title);             // Ustawienie tytułu okna
+    messageBox.setText(warningText);              // Ustawienie tekstu ostrzeżenia
+
+    // Dodanie przycisku OK
+    messageBox.addButton(QMessageBox::Ok);
+
+    // Wyświetlenie okna dialogowego
+    messageBox.exec();
+}
+//*************************************************************************************
+QMessageBox::StandardButton askYesNoCancel(const QString& title,
+                                           const QString& question,
+                                           QWidget* parent)
+{
+    // Tworzymy QMessageBox z pytaniem
+    QMessageBox messageBox(parent);
+    messageBox.setIcon(QMessageBox::Question);   // Ikona pytania
+    messageBox.setWindowTitle(title);           // Tytuł okna
+    messageBox.setText(question);               // Treść pytania
+
+    // Dodanie trzech przycisków: Yes, No, Cancel
+    QPushButton* yesButton = messageBox.addButton(QMessageBox::Yes);
+    QPushButton* noButton = messageBox.addButton(QMessageBox::No);
+    QPushButton* cancelButton = messageBox.addButton(QMessageBox::Cancel);
+
+    // Ustawienie domyślnego przycisku (opcjonalnie)
+    messageBox.setDefaultButton(QMessageBox::No);
+
+    // Wyświetlenie okna dialogowego i czekanie na odpowiedź użytkownika
+    messageBox.exec();
+
+    // Zwracanie typu przycisku wybranego przez użytkownika
+    if (messageBox.clickedButton() == (QAbstractButton*) yesButton) {
+        return QMessageBox::Yes;
+    } else if (messageBox.clickedButton() == (QAbstractButton*)noButton) {
+        return QMessageBox::No;
+    } else if (messageBox.clickedButton() == (QAbstractButton*) cancelButton) {
+        return QMessageBox::Cancel;
+    }
+
+    // Jeśli nie można określić przycisku (teoretycznie nie powinno się zdarzyć)
+    return QMessageBox::NoButton;
+}
+//*****************************************************************************************************

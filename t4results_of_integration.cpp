@@ -75,17 +75,17 @@ void T4results_of_integration::on_pushButton_save_to_file_clicked()
         QIODevice::OpenMode   flags_to_open = QIODevice::WriteOnly ;
         if(file.exists() )
         {
-            switch(QMessageBox::information ( this, "File exists",
+            switch(askQuestionWithButtons( "File exists",           // +
                                               "File exists, Overwrite it or append ?",
                                               "Overwrite",
                                               "Append",
                                               "Cancel",
-                                              2)
+                                              3)
                    ) // int defaultButtonNumber = 0,
             {
-            case 0:
-                break ;
             case 1:
+                break ;
+            case 2:
                 flags_to_open = (QIODevice::WriteOnly | QIODevice::Append);
                 break ;
             default:

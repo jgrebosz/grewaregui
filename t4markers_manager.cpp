@@ -171,11 +171,9 @@ void t4markers_manager::on_pushButton_insert_clicked()
     // present it and ask if this is what you want to include
     string msg = "The current markers are: \n" + txt ;
     msg += "\n\nDo you want to inser them to this list?";
-    int result = QMessageBox::information
-            (this, "Inserting markers" , msg.c_str(),
-             "Yes", "No", "Cancel");
+    auto result =askYesNoCancel("Inserting markers" , msg.c_str());
 
-    if(result == 0)  // yes
+    if(result == QMessageBox::Yes)  // yes
     {
        // include and save it on a disk
        widmo_ptr->remember_integration_and_bgr_markers();

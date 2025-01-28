@@ -4,6 +4,8 @@
 *.Release
 *.user
 moc_*
+ui_*
+*.idx
 *.pro.user*
 *.spc
 callgrind*

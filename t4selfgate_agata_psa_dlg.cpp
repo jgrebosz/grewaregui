@@ -2,6 +2,7 @@
 #include "ui_t4selfgate_agata_psa_dlg.h"
 
 #include <QMessageBox>
+#include "paths.h"
 
 //************************************************************************************
 T4selfgate_agata_psa_dlg::T4selfgate_agata_psa_dlg(QWidget *parent) :
@@ -166,11 +167,9 @@ void T4selfgate_agata_psa_dlg::accept()
     if(ui->lineEdit_name->text() == "" )
     {
 
-        QMessageBox::critical( this, "The name is missing",
+        showWarningMessage( "The name is missing",
                                "Please specify the (unique) name of this 'self-gate' ",
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton);  // error
+                               QMessageBox::Critical);  // error
         return ;
     }
     QDialog::accept();

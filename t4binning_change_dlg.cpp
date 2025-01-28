@@ -120,16 +120,17 @@ bool T4binning_change_dlg::check_binning_on_the_disk_file()
     if(difference)
     {
 
-        switch( QMessageBox::warning( this, "Strange difference",
-                                      "The spectrum in Cracow has currently different binning that the file on the disk\n"
-                                      "This may happen if you just changed the binning, but did not run the SPY again\n"
+        switch( askQuestionWithButtons( "Strange difference",       // +
+                                      "The spectrum in Greware has currently different binning that the file on the disk\n"
+                                      "This may happen if you just changed the binning, but did not run the SPY again yet\n"
                                       "- so the SPY still does not know, about the last change.\n\n"
                                       "No probem, but tell me know which version of binning should I display now:"
                                       ,
                                       "Newer, disk version - (hence not updated yet)",
-                                      "Older version, (which I see in cracow)", 0, 0, 1 ) )
+                                      "Older version, (which I see in cracow)",
+                                       "Cancel", 1) )
         {
-        case 0: // The user clicked the Newer, disk version
+        case 1: // The user clicked the Newer, disk version
             //
             spde.bin  = bx;
             spde.beg = x0;
@@ -143,7 +144,7 @@ bool T4binning_change_dlg::check_binning_on_the_disk_file()
             break;
 
         default:
-        case 1: // The user clicked the Quit or pressed Escape
+        case 2: // The user clicked the Quit or pressed Escape
             // exit
             break;
         }

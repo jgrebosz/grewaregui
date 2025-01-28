@@ -89,14 +89,11 @@ void T4manager_user_incrementers::edit_existing()
     int nr = ui->table->currentRow() ;
     if(nr >= ui->table->rowCount() || nr == -1)
     {
-        QMessageBox::warning(this,
+        showWarningMessage(
                              "No incrementer selected",
                              QString(nr == -1 ?
                                          "Nothing to edit" :
-                                         "Select the incrementer by clicking once on its name\n"),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                                         "Select the incrementer by clicking once on its name\n"));
         return ;
     }
     row_is_selected();
@@ -251,15 +248,12 @@ string T4manager_user_incrementers::is_name_unique( string n, int nr )
     }
     if(changed)
     {
-        QMessageBox::warning(this,
+       showWarningMessage(
                              "Duplicate name of the incrementer",
                              QString("The name of the incrementer:\n\t%1\n"
                                      "was already existing in the list, so it had to be changed into:\n"
                                      "\t%2\n").arg(n.c_str())
-                             .arg(new_name.c_str()),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                             .arg(new_name.c_str()) );
     }
     return new_name ;
 }
@@ -660,11 +654,9 @@ bool T4manager_user_incrementers::is_possible_to_remove_this_incrementer( string
         mmm += list_of_spectra_which_uses;
         mmm += "\n\n(You can delete a user_defined spectrum - using the the User Defined Spectrum Manager)";
 
-        QMessageBox::critical( this, "Impossible to delete the incrementer",
+        showWarningMessage("Impossible to delete the incrementer",
                                mmm.c_str(),
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton);  // error
+                               QMessageBox::Critical);  // error
 
     }// end if impossible
 
@@ -684,11 +676,9 @@ bool T4manager_user_incrementers::is_possible_to_remove_this_incrementer( string
         mmm += list_of_conditions_which_use;
         mmm += "\n\n(You can delete or modify a condition - using the the User Defined Condition Manager)";
 
-        QMessageBox::critical( this, "Impossible to delete the incrementer",
+        showWarningMessage("Impossible to delete the incrementer",
                                mmm.c_str(),
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton);  // error
+                               QMessageBox::Critical);  // error
 
     }// end if impossible
 
@@ -711,11 +701,9 @@ bool T4manager_user_incrementers::is_possible_to_remove_this_incrementer( string
         mmm += list_of_incrementers_which_uses;
         mmm += "\n\n(You must change this first )";
 
-        QMessageBox::critical( this, "Impossible to delete the incrementer",
+        showWarningMessage( "Impossible to delete the incrementer",
                                mmm.c_str(),
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton);  // error
+                               QMessageBox::Critical);  // error
 
     }// end if impossible
 
@@ -791,7 +779,7 @@ void T4manager_user_incrementers::cloning_A_1_()
       */
         }
 
-        int result = QMessageBox::information(this,
+        auto  result = askYesNoCancel(
                                               "Cloning the _A_1_ incrementer ",
                                               "This is the option to clone a incrementer  which contains the substring \"_A_1_\"\n "
                                               "Such substring will be replaced with _A_2_ , _A_3_, ... , _R_7_"
@@ -803,11 +791,7 @@ void T4manager_user_incrementers::cloning_A_1_()
                                               "    2. Inside the name of any incrementer (variable) ,\n"
                                               "    3. Inside the name of any other incrementer refered in this incrementer.\n"
 
-                                              "\n\nDo you really want to create such set of 104 clones ? ",
-
-                                              QMessageBox::Yes,
-                                              QMessageBox::No,
-                                              QMessageBox::Cancel);
+                                              "\n\nDo you really want to create such set of 104 clones ? ");
         if(result != QMessageBox::Yes )
         {
             return ;
@@ -872,22 +856,23 @@ void T4manager_user_incrementers::cloning_A_1_()
                 "ABCDEFGJKLMNPQR"  ; // : "ABCDGJKL" ;
 
         string mess = "Which set of detectors do you have?";
-        int  odp = QMessageBox::information(this, "Set of Detectors", mess.c_str(),
+        int  odp = askQuestionWithButtons( "Set of Detectors", mess.c_str(),            //+
                                             "ABCDEFGJKLMNPQR",
-                                            "ABCDGJKL",  "Cancel",
-                                            0 );
+                                            "ABCDGJKL",
+                                            "Cancel",
+                                            1 );
 
         switch(odp)
         {
-        case 0:
+        case 1:
         default:
             break;
 
-        case 1:
+        case 2:
             markers = "ABCDGJKL" ;
             break;
 
-        case 2:
+        case 3:
             raise();
             return;
             break;
@@ -937,17 +922,18 @@ void T4manager_user_incrementers::cloning_A_1_()
                     if(plik_exists)
                     {
                         string pyt = "Condition named  \n" + new_filename + "\nalready exist. \n Overwite it?";
-                        int odp2 =  QMessageBox::question(this,
+                        int odp2 = askQuestionWithButtons(      // +
                                                           "Overwrite ?", pyt.c_str(),
-                                                          QMessageBox::Yes,
-                                                          QMessageBox::YesAll,
-                                                          QMessageBox::No);
+                                                          "Yes",
+                                                          "Yes to all",
+                                                          "No", 3);
                         switch(odp2)
                         {
+                        case 1:  break;   // QMessageBox::Yes:
+                        case 2: make_checking_if_clone_exists = false ; break; // QMessageBox::YesAll:
+
                         default:
-                        case QMessageBox::No: continue; break;
-                        case QMessageBox::Yes: break;
-                        case QMessageBox::YesAll: make_checking_if_clone_exists = false ; break;
+                        case 3: continue; break; // QMessageBox::No:
                         }
                     } // if exists
                 } // if make checking
@@ -977,12 +963,9 @@ void T4manager_user_incrementers::cloning_A_1_()
     }// end of try
     catch(error m)
     {
-        QMessageBox::warning(this,
+        showWarningMessage(
                              m.title.c_str() ,
-                             m.message.c_str(),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                             m.message.c_str());
         return;
     }
     if(flag_any_changes)appl_form_ptr-> warning_spy_is_in_action();
@@ -1009,12 +992,9 @@ void T4manager_user_incrementers::on_review_cellDoubleClicked(int row, int /*col
     //int row = ui->review->currentRow() ;
     if(row >= ui->review->rowCount())
     {
-        QMessageBox::warning(this,
+        showWarningMessage(
                              "No incrementer selected",
-                             QString("Select the spectrum by clicking once on its name\n"),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                             QString("Select the spectrum by clicking once on its name\n") );
         return ;
     }
 
@@ -1084,12 +1064,9 @@ void T4manager_user_incrementers::on_push_remove_selected_clicked()
 
     if(range.count() == 0)
     {
-        QMessageBox::warning(this,
+        showWarningMessage(
                              "No condition selected",
-                             QString("Select the condition by clicking once on its name\n"),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                             QString("Select the condition by clicking once on its name\n") );
         return ;
     }
 
@@ -1207,17 +1184,14 @@ void T4manager_user_incrementers::on_push_clone_clicked()
 {
 
 
-    QMessageBox::information(this,
+    showWarningMessage(
                              "Cloning the definition of the incrementer",
                              QString("If you want to clone some incrementer\n\n"
                                      "   1. Open it for editing (Press button: Edit Selected incrementer)\n\n"
                                      "   2. On the first page of the editing wizard - change the name of the incrementer\n\n\n"
                                      "Note: By this the original incrementer will not be affected, "
                                      "(its definition is already on the disk)\n"
-                                     "and the new-named incrementer (clone) will be stored on the disk independently\n"),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                                     "and the new-named incrementer (clone) will be stored on the disk independently\n") );
 
 
 }

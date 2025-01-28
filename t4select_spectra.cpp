@@ -24,8 +24,33 @@ extern appl_form  *appl_form_ptr;
 #include <QCompleter>
 
 #include "t4sum_spectra_dialog.h"
-#include <stack>
+// #include <stack>
 
+// #define QRegExp QRegularExpression
+//********************************************************************************************************
+bool checkPattern(const QString& str, const QString& pattern, bool caseSensitive)
+{
+    QRegularExpression regex = zbuduj_regexpattern(pattern, caseSensitive);
+
+    // Sprawdzamy dopasowanie
+    QRegularExpressionMatch match = regex.match(str);
+    return match.hasMatch();
+}
+//********************************************************************************************************
+QRegularExpression zbuduj_regexpattern(const QString& pattern, bool caseSensitive)
+{
+    // Zamiana gwiazdki "*" na wyrażenie regularne ".*"
+    QString regexPattern = pattern;
+    regexPattern.replace('*', ".*");
+
+    // Tworzymy obiekt QRegularExpression z przekształconego wzorca
+    QRegularExpression::PatternOptions options =
+        caseSensitive ? QRegularExpression::NoPatternOption: QRegularExpression::CaseInsensitiveOption ;
+    QRegularExpression regex(regexPattern, options);
+
+    return regex;
+}
+//***************************************************************************************************
 #define WHERE  //  cout << __func__ << " in line " << __LINE__ << endl;
 
 string ROWS_COLUMNS_KEYWORD ("rows_columns");
@@ -243,11 +268,8 @@ void T4select_spectra::show_chosen_spectra()
                                            "More than 70 spectra on the screen - it is not recommended (hence generally possible)\n\n"
                                            ).arg ( ui->ListBox_chosen-> count() );
 
-        QMessageBox::warning ( this, " This would make the program very slow !!! ",
-                               list_of_spectra,
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton );
+         showWarningMessage(" This would make the program very slow !!! ",
+                               list_of_spectra);
         // return ;
     }
 
@@ -524,11 +546,23 @@ void T4select_spectra::selected_filter()
     //cout << "current   filter text  is now: [" << filtr.toStdString() << "]" << endl;
     ui->ListBox_available->clear();
 
+#if  (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    QStringList found = all_spectra_names.filter (
+         zbuduj_regexpattern(filtr, flag_case_sensitive)
+
+        // QRegExp ( filtr,
+        //         flag_case_sensitive?   Qt::CaseSensitive : Qt::CaseInsensitive,
+        //         QRegExp::Wildcard )
+        );
+#else
+
+
     QStringList found = all_spectra_names.filter (
                 QRegExp ( filtr,
                           flag_case_sensitive?   Qt::CaseSensitive : Qt::CaseInsensitive,
                           QRegExp::Wildcard )
                 );
+#endif
     //    QStringList found = all_spectra_names.filter ( QRegExp ( filtr, Qt::CaseSensitive,QRegExp::RegExp2 ) );
 
 
@@ -540,9 +574,13 @@ void T4select_spectra::selected_filter()
         QStringList antifiltered;
 
         for (auto str: found) {
-            if (str.contains( QRegExp ( antifilter,
-                                        flag_case_sensitive?   Qt::CaseSensitive : Qt::CaseInsensitive,
-                                        QRegExp::Wildcard )))
+            if (str.contains( QRegularExpression ( antifilter,
+                                     //   flag_case_sensitive?   Qt::CaseSensitive : Qt::CaseInsensitive
+                                     QRegularExpression::CaseInsensitiveOption
+                                     //,
+                                       // QRegExp::Wildcard
+                                    // QRegExp::DefaultWildcardConversion
+                                     )))
             {    /* result += str;*/ }
             else
                 antifiltered += str;
@@ -584,13 +622,13 @@ void T4select_spectra::delete_group()
     if ( ok )
     {
         // user selected an item and pressed OK
-        switch ( QMessageBox::information ( this,
+        switch ( askYesNoCancel(
                                             "Cracow  group definition remover",
                                             QString ( "You are going to delete the definition for the group \n\t %1\n"
-                                                      "Are you sure \n\n" ).arg ( res ),
-                                            "Yes","No", "Cancel", 1 ) )
+                                                      "Are you sure \n\n" ).arg ( res )
+                                            ) )
         {
-        case 0:  // Yes :
+        case QMessageBox::Yes:  // Yes :
             katalog.remove ( res );
             refresh_defined_groups();
             break;
@@ -710,13 +748,11 @@ void T4select_spectra::zeroing_choosen_spectra()
                       "which are currently on the list 'spectra choosen to display'\n\n"
                       "ARE YOU SURE  ?" ).arg ( ui->ListBox_chosen-> count() );
 
-    switch ( QMessageBox::warning ( this, " 'Zero-ing' online spectra, ARE YOU SURE ? ",
-                                    list_of_spectra,
-                                    "Yes","No","Cancel", 1 ) )
+    switch ( askYesNoCancel (" 'Zero-ing' online spectra, ARE YOU SURE ? ",list_of_spectra) )
     {
     default: break;
 
-    case 0: //Yes :
+    case QMessageBox::Yes: //Yes :
 
         //cout << "Spectrum to zero = " <<   dokument->caption() << endl;
         string command_file = gpath.commands + "spy_spectra_for_zeroing.command";
@@ -803,13 +839,10 @@ void T4select_spectra::create_the_sum_spectrum()
 
     if(ui->ListBox_chosen->count() == 0 )
     {
-        QMessageBox::information ( this,
+        showWarningMessage(
                                    "Empty list of spectra?",
                                    "The sum spectrum - is build on a set of currently chosen spectra.\n"
-                                   "Now this list is empty - so no sense im making a sum",
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton);
+                                   "Now this list is empty - so no sense im making a sum");
         return ;
     }
 
@@ -856,22 +889,22 @@ void T4select_spectra::create_the_sum_spectrum()
         {
 
 
-            switch ( QMessageBox::information ( this,
+            switch ( askQuestionWithButtons(            // +
                                                 "Such sum spectrum already exists",
                                                 "The sum spectrum definition with such a name was already defined\n"
                                                 "Would you like to update the old definition or create the new",
-                                                //"( Yes => all, No => only the one selected)",
-                                                "Edit the previous definition",  // QMessageBox::Yes | QMessageBox::Default,
-                                                "create the NEW definition",   // QMessageBox::No,
-                                                "Cancel", 1 ) )
+
+                                                "Edit the previous definition",  // 1
+                                                "create the NEW definition",   // 2
+                                                "Cancel", 2 ) )
 
             {
-            //case QMessageBox::Yes :
-            case 0 :
+
+            case 1 :
                 use_from_disk = true;
                 break ;
-                //case QMessageBox::No :
-            case 1:
+
+            case 2:
                 use_from_disk = false;
                 break ;
 
@@ -922,13 +955,11 @@ void T4select_spectra::create_the_sum_spectrum()
 
                 if ( poz != ( spec_name.length() - 4 ) )
                 {
-                    QMessageBox::critical ( this,
+                   showWarningMessage(
                                             "Sum spectra creator warning",
                                             QString ( "The spectrum %1 is not a 1D spectrum with the extension '*.spc'\n"
                                                       "Please remove it from the list and start again" ).arg ( spec_name.c_str() ),
-                                            QMessageBox::Ok,
-                                            QMessageBox::NoButton,
-                                            QMessageBox::NoButton );
+                                            QMessageBox::Critical);
 
                     // remove the file
                     remove
@@ -946,13 +977,11 @@ void T4select_spectra::create_the_sum_spectrum()
 
                 if ( poz != string::npos )
                 {
-                    QMessageBox::critical ( this,
+                    showWarningMessage(
                                             "Sum spectra creator warning",
                                             QString ( "The spectrum %1 is already a sum spectrum. You can not nest the summing\n"
                                                       "Please remove it from the list and start again" ).arg ( spec_name.c_str() ),
-                                            QMessageBox::Yes,
-                                            QMessageBox::NoButton,
-                                            QMessageBox::NoButton );
+                                            QMessageBox::Critical);
                     // remove the file
                     remove
                             ( fname.toStdString().c_str() );
@@ -976,7 +1005,7 @@ void T4select_spectra::create_the_sum_spectrum()
                     {
                         if ( bin != bin_first ||  beg != beg_first ||  end != end_first )
                         {
-                            QMessageBox::critical ( this,
+                            showWarningMessage(
                                                     "Sum spectra creator warning",
                                                     QString ( "The spectrum %1 has not the same binning as the first one on the list\n\n"
                                                               "%2\nhas bins = %3, begin = %4, end = %5\n\n"
@@ -986,9 +1015,7 @@ void T4select_spectra::create_the_sum_spectrum()
                                                     .arg ( spec_name.c_str() ).arg ( bin ).arg ( beg ).arg ( end )
                                                     .arg ( spec_first.c_str() ).arg ( bin_first ).arg ( beg_first ).arg ( end_first )
                                                     ,
-                                                    QMessageBox::Ok,
-                                                    QMessageBox::NoButton,
-                                                    QMessageBox::NoButton );
+                                                    QMessageBox::Critical );
                             // remove the file
                             remove
                                     ( fname.toStdString().c_str() );
@@ -1031,7 +1058,7 @@ void T4select_spectra::create_the_sum_spectrum()
 
 
             // inform about succes ==================================
-            QMessageBox::information ( this,
+            showWarningMessage(
                                        "Sum spectra creator",
                                        QString ( "SUCCES\n\nThe sum spectrum definition %1 was succesfully created.\n\n"
                                                  "Note: \n"
@@ -1039,15 +1066,12 @@ void T4select_spectra::create_the_sum_spectrum()
                                                  "which will be summed every 10 seconds and the result will be displayed on the screen. \n"
                                                  "If you want to save such a spectrum as a real spectrum,\n"
                                                  "just choose File->SaveAs from the main menu bar).\n\n"
-                                                 ).arg ( fname ),
-                                       QMessageBox::Ok,
-                                       QMessageBox::NoButton,
-                                       QMessageBox::NoButton );
+                                                 ).arg ( fname ));
 
             int how_many = ui->ListBox_chosen-> count() ;
 
             if ( how_many > 40 )
-                QMessageBox::warning ( this,
+                showWarningMessage(
                                        "This Sum spectrum can slow down the communication with you",
                                        QString ( "The sum spectrum %1 \ndemands summing %2 spectra\n\n"
                                                  "Warning: \n"
@@ -1055,10 +1079,7 @@ void T4select_spectra::create_the_sum_spectrum()
                                                  "the communication between you and the cracow gui \n"
                                                  "If you really need such a spectrum, consider producing it direcly in the SPY\n"
 
-                                                 ).arg ( fname ).arg ( how_many ),
-                                       QMessageBox::Ok,
-                                       QMessageBox::NoButton,
-                                       QMessageBox::NoButton );
+                                                 ).arg ( fname ).arg ( how_many ));
         } // end of the sum dialog accepted
 
         ui->ListBox_available->addItem(  krotka_nazwa_sumu);
@@ -1194,20 +1215,17 @@ void T4select_spectra::select_chosen_as_ascii()
 {
     if(ui->ListBox_chosen->count() == 0 )
     {
-        QMessageBox::information ( this,
+        showWarningMessage(
                                    "Empty list of spectra?",
                                    "The list of currently chosen spectra is empty now\n"
-                                   " - so no sense in saving",
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton);
+                                   " - so no sense in saving");
         return ;
     }
 
 
-    int answ ;
-    switch ( answ =
-             QMessageBox::information ( this,
+    //int answ ;
+    switch (
+             askYesNoCancel(
                                         "Copy binary spectra into ASCII format",
                                         QString (
                                             "This option takes chosen 1D binary spectra (*.spc) \n"
@@ -1232,26 +1250,23 @@ void T4select_spectra::select_chosen_as_ascii()
 
                                             "The result spectra (*.asc) will be stored in the same directory:\n " + gpath.Qspectra()
                                             + "\n\nDo you want to create an ASCII version of the chosen spectra ?"
-                                            ),
-
-                                        "Yes","No","Cancel", 1 ) )
+                                            ) ) )
     {
     default: break;
 
-    case 0:// Yes :
+    case QMessageBox::Yes:  // Yes :
 
         bool flag_radware = false;
-        int odp = QMessageBox::information ( this, "Do you want Radware header?",
+        auto odp =askYesNoCancel("Do you want Radware header?",
                                              QString (
                                                  "If it is a 1D spectrum you may have so called Radware header\n"
                                                  "Do you want a Radware header in 1D spectra?"
-                                                 ),
-                                             "Yes","No","Cancel", 1 );
+                                                 ));
 
-        if ( odp == 2 ) // nr 2 is cancel
+        if ( odp == QMessageBox::Cancel ) // nr 2 is cancel
             return;
 
-        if ( odp == 0 ) // nr. 0 is: QMessageBox::Yes
+        if ( odp == QMessageBox::Yes)
             flag_radware = true;
 
 
@@ -1293,24 +1308,20 @@ void T4select_spectra::select_chosen_as_ascii()
                     ifstream we ( old_name.toStdString(), ios::binary );
                     if ( !we )
                     {
-                        QMessageBox::critical ( this,
+                         showWarningMessage(
                                                 "Error while opening output file",
                                                 QString ( "The spectrum file %1 can not be opened" ).arg ( old_name ),
-                                                QMessageBox::Ok,
-                                                QMessageBox::NoButton,
-                                                QMessageBox::NoButton );
+                                                QMessageBox::Critical);
                         return ;
                     }
 
                     ofstream wy ( new_name.toStdString() );
                     if ( !wy )
                     {
-                        QMessageBox::critical ( this,
+                         showWarningMessage(
                                                 "Error while opening output file",
                                                 QString ( "The spectrum file %1 can not be created" ).arg ( new_name ),
-                                                QMessageBox::Ok,
-                                                QMessageBox::NoButton,
-                                                QMessageBox::NoButton );
+                                                QMessageBox::Critical);
                         return ;
                     }
 
@@ -1359,13 +1370,10 @@ void T4select_spectra::create_the_overplot_spectrum()
 {
     if(ui->ListBox_chosen->count() == 0 )
     {
-        QMessageBox::information ( this,
+         showWarningMessage(
                                    "Empty list of spectra?",
                                    "The overlay spectrum - is build on a set of currently chosen spectra.\n"
-                                   "Now this list is empty - so no sense im making an overlay",
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton);
+                                   "Now this list is empty - so no sense im making an overlay");
         return ;
     }
 
@@ -1420,13 +1428,11 @@ void T4select_spectra::create_the_overplot_spectrum()
             //cout << "poz = " << (int) poz << endl ;
             if ( poz != ( spec_name.length() - 4 ) )
             {
-                QMessageBox::critical ( this,
+                 showWarningMessage(
                                         "Overlay spectra creator warning",
                                         QString ( "The spectrum %1 is not a 1D spectrum with the extension '*.spc'\n"
                                                   "Please remove it from the list and start again" ).arg ( spec_name.c_str() ),
-                                        QMessageBox::Ok,
-                                        QMessageBox::NoButton,
-                                        QMessageBox::NoButton );
+                                        QMessageBox::Critical);
                 // remove the file
                 remove ( fname.toStdString().c_str() );
                 // refreshing the list with all available spectra
@@ -1438,13 +1444,11 @@ void T4select_spectra::create_the_overplot_spectrum()
             // cout << "poz = " << (int) poz << endl ;
             if ( poz != string::npos )
             {
-                QMessageBox::critical ( this,
+                 showWarningMessage(
                                         "overlay spectra creator warning",
                                         QString ( "The spectrum %1 is a quasi-spectrum. You can not use @ spectra to overlay\n"
                                                   "Please remove it from the list and start again" ).arg ( spec_name.c_str() ),
-                                        QMessageBox::Yes,
-                                        QMessageBox::NoButton,
-                                        QMessageBox::NoButton );
+                                        QMessageBox::Critical);
                 // remove the file
                 remove
                         ( fname.toStdString().c_str() );
@@ -1495,30 +1499,24 @@ void T4select_spectra::create_the_overplot_spectrum()
         ui->ListBox_available->addItem(  krotka_nazwa_overplotu);
         ui->ListBox_available->sortItems();
         // inform about succses
-        QMessageBox::information ( this,
+        showWarningMessage(
                                    "Overlay spectrum creator",
                                    QString ( "SUCCES\n\nThe overlay spectrum %1 was succesfully created.\n\n"
                                              "Note: \n"
                                              "Actually the overlay spectrum is just a list of names of spectra\n"
                                              "which will be overlayed every 1 minue and the result will be displayed on the screen. \n"
-                                             ).arg ( fname ),
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton );
+                                             ).arg ( fname ), QMessageBox::Information );
 
         int how_many = ui->ListBox_chosen-> count() ;
 
         if ( how_many > 40 )
-            QMessageBox::warning ( this,
+             showWarningMessage(
                                    "This overlay spectrum can slow down the communication with you",
                                    QString ( "The overlay spectrum %1 \ndemands painting on the screen  %2 spectra\n\n"
                                              "Warning: \n"
                                              "overlayming hundreds of spectra (every minute) can dramatically slow down\n"
                                              "the communication between you and the cracow gui \n"
-                                             ).arg ( fname ).arg ( how_many ),
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton );
+                                             ).arg ( fname ).arg ( how_many ));
         // refreshing the list with all available spectra
         // selected_filter();  <-- not needed anymore
     }
@@ -1588,18 +1586,17 @@ void T4select_spectra::zero_all_available_spectra()
 {
     QString list_of_spectra= "You are going to erase the contents of the ALL the   online SPY spectra'\n\n"
                              "ARE YOU SURE  ?";
-    switch ( QMessageBox::warning ( this, " 'Zero-ing' online spectra, ARE YOU SURE ? ",
-                                    list_of_spectra,
-                                    "Yes","No","Cancel", 1 ) )
+    switch ( askYesNoCancel(" 'Zero-ing' online spectra, ARE YOU SURE ? ",
+                                    list_of_spectra
+                                   ) )
     {
     default: break;
 
-    case 0:   // Yes :
-        switch ( QMessageBox::warning ( this, " 'Zeroing ALL analysis specta  ",
-                                        "Not only those filtered spectra, but ALL spectra will be zero-ed, ARE YOU SURE ?",
-                                        "Yes","No", "Cancel", 1 ) )
+    case QMessageBox::Yes:   // Yes :
+        switch ( askYesNoCancel(  " 'Zeroing ALL analysis specta  ",
+                                        "Not only those filtered spectra, but ALL spectra will be zero-ed, ARE YOU SURE ?") )
         {
-        case 0:   // Yes :
+        case QMessageBox::Yes:     // Yes :
         {
             // cout << "Spectrum to zero = " <<   dokument->caption() << endl;
             string command_file = gpath.commands + "spy_spectra_for_zeroing.command";
@@ -1992,3 +1989,6 @@ void T4select_spectra::on_checkBox_enable_drag_toggled(bool checked)
 
     }
 }
+
+
+

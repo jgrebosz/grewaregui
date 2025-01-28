@@ -4,6 +4,8 @@
 #include <string>
 using namespace std;
 
+
+
 class options
 {
     int refreshing_time_1D_spectra ;

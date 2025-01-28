@@ -5,6 +5,7 @@
 using namespace std;
 
 #include "t4picture_angle.h"
+#include "paths.h"
 #include <QMessageBox>
 
 
@@ -154,11 +155,9 @@ void T4selfgate_miniball_dlg::accept()
     if(ui->lineEdit_name->text() == "" )
     {
 
-        QMessageBox::critical( this, "The name is missing",
+        showWarningMessage( "The name is missing",
                                "Please specify the (unique) name of this 'self-gate' ",
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton);  // error
+                               QMessageBox::Critical);  // error
         return ;
     }
     QDialog::accept();

@@ -132,12 +132,9 @@ void T4manager_user_conditions::on_push_remove_selected_clicked()
 
     if(range.count() == 0)
     {
-        QMessageBox::warning(this,
+        showWarningMessage(
                              "No condition selected",
-                             QString("Select the condition by clicking once on its name\n"),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                             QString("Select the condition by clicking once on its name\n") );
         return ;
     }
 
@@ -255,14 +252,11 @@ void T4manager_user_conditions::on_push_edit_selected_condition_clicked()
     int nr = ui->table->currentRow() ;
     if(nr >= ui->table->rowCount() || nr == -1)
     {
-        QMessageBox::warning(this,
+        showWarningMessage(
                              "No condition selected",
                              QString(nr == -1 ?
 										 "No condition was selected to edit" :
-                                         "Select the condition by clicking once on its name\n"),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                                         "Select the condition by clicking once on its name\n") );
         return ;
     }
     row_is_selected();
@@ -403,7 +397,7 @@ void T4manager_user_conditions::update_the_table()
 void T4manager_user_conditions::on_push_How_to_clone_clicked()
 {
 
-    QMessageBox::information(this,
+    showWarningMessage(
                              "Cloning the definition of the condition",
                              QString("If you want to clone some condition\n\n"
                                      "   1. Open it for editing (Press button: Edit Selected condition)\n\n"
@@ -411,9 +405,7 @@ void T4manager_user_conditions::on_push_How_to_clone_clicked()
                                      "Note: By this the original condition will not be affected, "
                                      "(its definition is already on the disk)\n"
                                      "and the new-named condition (clone) will be stored on the disk independently\n"),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                             QMessageBox::Information);
 
 }
 //********************************************************************************
@@ -436,15 +428,12 @@ string T4manager_user_conditions::is_name_unique( string n, int nr )
     }
     if(changed)
     {
-        QMessageBox::warning(this,
+        showWarningMessage(
                              "Duplicate name of the condition",
                              QString("The name of the condition:\n\t%1\n"
                                      "was already existing in the list, so it had to be changed into:\n"
                                      "\t%2\n").arg(n.c_str())
-                             .arg(new_name.c_str()),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                             .arg(new_name.c_str()));
     }
     return new_name ;
 }
@@ -754,24 +743,20 @@ void T4manager_user_conditions::on_push_Save_review_as_file_clicked()
     {
         wiad = QString("Report succesfully written as \n") +
                 (gpath.conditions+ "report_conditions.txt").c_str() ;
-        QMessageBox::information(this,
+       showWarningMessage(
                                  "Report about user defined conditions",
                                  wiad,
-                                 QMessageBox::Ok,
-                                 QMessageBox::NoButton,
-                                 QMessageBox::NoButton);
+                                 QMessageBox::Information);
     }
     else
     {
         wiad = QString("Error while writing the report \n") +
                 (gpath.conditions+ "report_conditions.txt").c_str() ;
 
-        QMessageBox::critical(this,
+        showWarningMessage(
                               "Report about user defined  conditions",
                               wiad,
-                              QMessageBox::Ok,
-                              QMessageBox::NoButton,
-                              QMessageBox::NoButton);
+                              QMessageBox::Critical);
     }
     return ;
 
@@ -866,11 +851,9 @@ bool T4manager_user_conditions::is_possible_to_remove_this_condition( string con
         mmm += list_of_spectra_which_uses;
         mmm += "\n(You can delete a user_defined spectrum - using the the User Defined Spectrum Manager)";
 
-        QMessageBox::critical( this, "Impossible to delete the condition",
+        showWarningMessage("Impossible to delete the condition",
                                mmm.c_str(),
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton);  // error
+                               QMessageBox::Critical);  // error
 
     }// end if impossible
 
@@ -937,11 +920,9 @@ bool T4manager_user_conditions::is_possible_to_remove_this_condition( string con
             mmm += list_of_conditions_which_uses;
             mmm += "\n(You must delete them first )";
 
-            QMessageBox::critical( this, "Impossible to delete the condition",
+            showWarningMessage( "Impossible to delete the condition",
                                    mmm.c_str(),
-                                   QMessageBox::Ok | QMessageBox::Default,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton);  // error
+                                   QMessageBox::Critical);  // error
 
         }// end if impossible
 
@@ -1291,13 +1272,10 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
                 "\n\nDo you really want to create such set of clones ? ";
 
         for(auto x : filenames) {  txt += x + "   "; }
-        int result = QMessageBox::information(this,
+        auto result = askYesNoCancel(
                                           "Cloning the spectra",
-                                          txt.c_str(),
-											  "Yes",
-											  "No",
-											  "Cancel");
-		if(result != 0)   // QMessageBox::Yes )
+                                          txt.c_str());
+        if(result != QMessageBox::Yes )
         {
             return ;
         }
@@ -1356,20 +1334,21 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
                     ifstream plik_exists(new_filename.c_str());
                     if(plik_exists)
                     {
-                        int odp =  QMessageBox::question(this,
+                        int odp =  askQuestionWithButtons(          // +
                                                          "Overwrite ?",
                                                          string("Condition called \n" +
                                                                 new_filename +
                                                                 "\nalready exist. \n Overwite it?").c_str(),
-                                                         QMessageBox::Yes,
-                                                         QMessageBox::YesAll,
-                                                         QMessageBox::No);
+                                                         "Yes",
+                                                         "Yest to all",
+                                                         "No", 3);
                         switch(odp)
                         {
+                        case 1: break;   // QMessageBox::Yes:
+                        case 2: make_checking_if_clone_exists = false ; break; // QMessageBox::YesAll:
+
                         default:
-                        case QMessageBox::No: continue; break;
-                        case QMessageBox::Yes: break;
-                        case QMessageBox::YesAll: make_checking_if_clone_exists = false ; break;
+                        case 3: continue; break;  // QMessageBox::No:
                         }
                     } // if exists
                 } // if make checking
@@ -1402,12 +1381,9 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
     }// end of try
     catch(error m)
     {
-        QMessageBox::warning(this,
+       showWarningMessage(
                              m.title.c_str(),
-                             m.message.c_str(),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
+                             m.message.c_str() );
         return;
     }
 
@@ -1458,12 +1434,10 @@ void T4manager_user_conditions::make_new_row_in_review_if_needed(int row)
 
 }
 //********************************************************************************************
-void T4manager_user_conditions::on_review_cellDoubleClicked(int row, int column)
+void T4manager_user_conditions::on_review_cellDoubleClicked(int row, [[__maybe_unused__]] int column)
 {
     //    cout << "on_review_cellDoubleClicked(int row, int column)" << endl;
     //      cout << "Dbl click on the row " << row << endl;
-
-    column = column ; // fake
 
     string last_legal_name ;
     for(int i = 0 ; i <= row ; i ++)

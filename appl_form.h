@@ -33,7 +33,7 @@ class appl_form : public QMainWindow
     Q_OBJECT
 
 public:
-	appl_form(QWidget *parent = nullptr);
+    appl_form(QWidget *parent = nullptr);
     appl_form(const appl_form&) = delete;
     appl_form& operator=(const appl_form&) = delete;
     ~appl_form();
@@ -47,19 +47,19 @@ public:
     void zeroing_really_on_disk (string name)   ;
     void save_times_of_zeroing_on_disk();
     void addSubWindow(Tplate_spectrum * s, Qt::WindowFlags windowFlags) ;
-//    void addSubWindow(Tplate_spectrum * s, Qt::WindowFlags windowFlags = nullptr ) ;
+    //    void addSubWindow(Tplate_spectrum * s, Qt::WindowFlags windowFlags = nullptr ) ;
     bool give_flag_draw_spectra_scales() { return flag_draw_spectra_scales ; }
 
-//    void on_action_fileNew_triggered();
-//    void on_action_fileNew_activated();
+    //    void on_action_fileNew_triggered();
+    //    void on_action_fileNew_activated();
     void if_needed_apply_to_other_spectra(){
         if(flag_act_on_all_spectra) apply_to_other_spectra();
     }
-	  QMdiArea * give_workspace() { return area;}
+    QMdiArea * give_workspace() { return area;}
 
 public slots:
 
-        void on_actionCustom_tiling_triggered();
+    void on_actionCustom_tiling_triggered();
 
 private slots:
     void on_actionSelecting_the_spectra_triggered();
@@ -139,9 +139,10 @@ private slots:
 
     void on_actionAutomatic_calibration_of_germanium_detectors_triggered();
 
-   // void on_actionMake_tar_file_with_calibatrions_and_lookup_tables_triggered();
+    // void on_actionMake_tar_file_with_calibatrions_and_lookup_tables_triggered();
 
-    void on_Combo_app_group_activated(const QString &groupName);
+    void on_Combo_app_group_textActivated(const QString &groupName);
+    // void on_Combo_app_group_activated(const QString &groupName);
     void check_status_of_spy();
     void check_synchro_of_spy();
     void enable_some_actions ( int typ );
@@ -199,7 +200,7 @@ private slots:
 
     void on_spy_go_action_triggered();
 
-//    void on_actionZero_ing_a_contents_of_the_current_spectrum_triggered();
+    //    void on_actionZero_ing_a_contents_of_the_current_spectrum_triggered();
 
     void on_actionTile_with_system_function_triggered();
 
@@ -208,7 +209,7 @@ private slots:
     void on_actionZero_ing_a_contents_of_the_current_spectrum_triggered();
 
     void resizeEvent ( QResizeEvent * event );
-//    void on_actionShow_full_names_of_polygon_gates_triggered();
+    //    void on_actionShow_full_names_of_polygon_gates_triggered();
 
     void on_actionGUI_options_triggered();
 
@@ -230,13 +231,12 @@ private slots:
 
     void on_actionSystemTile_activation_history_order_2_triggered();
 
+    void on_actionMake_tar_file_with_calibrations_and_lookup_tables_triggered();
 
-
-	void on_actionMake_tar_file_with_calibrations_and_lookup_tables_triggered();
-
-	void on_actionCheck_incrementers_triggered();
+    void on_actionCheck_incrementers_triggered();
 
     void on_actionAuto_scale_to_highest_peaks_toggled(bool stan);
+
 
 private:
     Ui::appl_form *ui;
@@ -244,7 +244,6 @@ private:
 protected:
 
     void remove_existing_spectra_windows();
-
     void save_names_of_spectra_currently_watched();
     void refresh_combo_groups();
     void set_current_undo_text_in_menu();
@@ -259,7 +258,7 @@ protected:
     void read_last_spectra_selection_after_crash();
 
     void make_Custom_tiling(int how_many_spec, int vert_rows, int horiz_columns);
-	std::vector<std::string> suggest_incrementer(T4incrementer_selector *dlg, std::string filter);
+    std::vector<std::string> suggest_incrementer(T4incrementer_selector *dlg, std::string filter);
     //    void ScrollBar_poziomy_widma_nextPage();
     //    void ScrollBar_poziomy_widma_prevPage() ;
     //    void ScrollBar_poziomy_widma_prevLine();
@@ -267,17 +266,17 @@ protected:
     //    void ScrollBar_pionowy_widma_sliderMoved ( int value_bottom );
 
 
-void common_galileo_signals_dialog(string input_file,
-                                   string label_detector, string label_color,
-                                   string label_first_threshold,
-                                   bool flag_second_thr,
-                                   string label_second_threshold,
-                                   bool flag_geometry,
-                                   bool flag_second_calibration,
-                                   string first_calibration_txt,
-                                   string second_calibration_txt,
-                                   string header,
-                                   string outfname);
+    void common_galileo_signals_dialog(string input_file,
+                                       string label_detector, string label_color,
+                                       string label_first_threshold,
+                                       bool flag_second_thr,
+                                       string label_second_threshold,
+                                       bool flag_geometry,
+                                       bool flag_second_calibration,
+                                       string first_calibration_txt,
+                                       string second_calibration_txt,
+                                       string header,
+                                       string outfname);
 
 
     bool flag_draw_spectra_scales;
@@ -294,13 +293,11 @@ void common_galileo_signals_dialog(string input_file,
     bool flag_log_scale = 0;
     bool flag_reaction_for_scroll_slider_event;
 
-	QMdiArea *area;
+    QMdiArea *area;
     //    T4select_spectra * ss;
     bool flag_act_on_all_spectra;
     bool flag_display_previously_displayed_spectra = false;
     vector<string> last_spectra_selection ;
-
-
 
 };
 /////////////////////////////////////////////////////////////

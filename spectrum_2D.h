@@ -5,6 +5,7 @@
 #include <qevent.h>
 #include <QGridLayout>
 
+#include "qmessagebox.h"
 #include "tplate_spectrum.h"
 
 #include <box_of_matrix.h>

@@ -29,15 +29,13 @@ T4general_selector::T4general_selector(QWidget *parent) :
     if(!plik)
     {
         QString mess = "I can not open the file "
-                + nam
-                + "to read the list of possible incrementors. "
-                "Are you sure that the path to the spy spectra is correct ?";
+                       + nam
+                       + "to read the list of possible incrementors. "
+                         "Are you sure that the path to the spy spectra is correct ?";
 
-        QMessageBox::critical( this, " List of possible variables not found",
-                               mess,
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton);  // error
+        showWarningMessage( " List of possible variables not found",
+                              mess,
+                              QMessageBox::Critical);  // error
         return ;
     }
 
@@ -70,9 +68,13 @@ void T4general_selector::filter_changed()
     // separate the * parts
 
     QStringList found = list_of_all_increm.filter(
-//                QRegExp(filter, Qt::CaseInsensitive)
-                QRegExp ( filter, Qt::CaseInsensitive,QRegExp::Wildcard )
-                );
+#if  (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+
+        zbuduj_regexpattern(filter, false)
+#else
+        QRegExp ( filter, Qt::CaseInsensitive,QRegExp::Wildcard )
+#endif
+        );
 
     ui->listBox_filtered->clear();
     ui->listBox_filtered->addItems(found) ;
@@ -102,7 +104,7 @@ void T4general_selector::set_multi_selection( bool multi )
                                                QAbstractItemView::SingleSelection) ;
 
     ui->textLabel_one_more->setText(multi ?  "Select one or more items" :
-                                             "Select only one item");
+                                        "Select only one item");
 }
 //*********************************************************************************************
 void T4general_selector::change_title( QString str )
@@ -146,7 +148,7 @@ void T4general_selector::add_all_user_incrementers_to_the_list()
         string name_c = x.toStdString();
         int pos = name_c.rfind(".") ;
         name_c.erase(pos) ;
-//        cout << "Increment to be added: " << name_c << endl;
+        //        cout << "Increment to be added: " << name_c << endl;
         list_of_all_increm += name_c.c_str() ;
     }
     list_of_all_increm.removeDuplicates();
@@ -162,7 +164,13 @@ void T4general_selector::add_all_user_incrementers_to_the_list()
 void T4general_selector::on_lineEdit_filter_textChanged(const QString &filter)
 {
     last_filter = filter;
-    QStringList found = list_of_all_increm.filter(QRegExp(filter, Qt::CaseInsensitive, QRegExp::Wildcard)  );
+    QStringList found = list_of_all_increm.filter(
+#if  (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+        zbuduj_regexpattern(filter, false)
+#else
+        QRegExp(filter, Qt::CaseInsensitive, QRegExp::Wildcard)
+#endif
+        );
 
     ui->listBox_filtered->clear();
     ui->listBox_filtered->addItems(found) ;

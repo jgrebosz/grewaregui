@@ -8,7 +8,6 @@
 using namespace std;
 
 #include <unistd.h>
-#include <stdio.h>
 
 
 #include <QTimer>
@@ -100,6 +99,8 @@ appl_form::appl_form ( QWidget *parent_w )
     // which was made in the wrong colour profile.
     // No harm at all, but would be nice to stop this warning
 
+    // cout << "version = " << hex << QT_VERSION << endl;
+
     ui->setupUi ( this );
 
     //=============== init () ===========
@@ -117,11 +118,11 @@ appl_form::appl_form ( QWidget *parent_w )
     // so far we do not change anything in menus
 
     connect ( ui->mdiArea, SIGNAL ( subWindowActivated ( QMdiSubWindow* ) ),
-              this, SLOT ( updateMenus() ) );
+            this, SLOT ( updateMenus() ) );
 
     // but we update actions icons in toolbox, bec. some actions are for 1D, some other for 2D
     connect ( ui->mdiArea, SIGNAL ( subWindowActivated ( QMdiSubWindow* ) ),
-              this, SLOT ( updateActions() ) );
+            this, SLOT ( updateActions() ) );
 
 
     // chnage font for everybody
@@ -146,16 +147,11 @@ appl_form::appl_form ( QWidget *parent_w )
     {
 
         show() ;
-        QMessageBox::warning
-                (this, "Where is spy working directory?",
-                 "Directory \n\n     " + gpath.Qspy_dir() +
-                 "\n\n is probably NOT a legal spy directory \n"
-                 " (as it does not have a subdirectory 'spectra' )\n\n"
-                 "The next dialong window will help you to define location of spy",
-                 QMessageBox::Ok,
-                 QMessageBox::NoButton,
-                 QMessageBox::NoButton
-                 );
+        showWarningMessage( "Where is spy working directory?",
+                           "Directory \n\n     " + gpath.Qspy_dir() +
+                               "\n\n is probably NOT a legal spy directory \n"
+                               " (as it does not have a subdirectory 'spectra' )\n\n"
+                               "The next dialong window will help you to define location of spy");
 
         //cout << "wrong directory tree - no spectrua subdirectory" << endl;
         set_paths();
@@ -194,7 +190,7 @@ appl_form::appl_form ( QWidget *parent_w )
 
     spy_works_timer = new QTimer ( this );
     connect ( spy_works_timer, SIGNAL ( timeout() ),
-              this, SLOT ( check_status_of_spy() ) );
+            this, SLOT ( check_status_of_spy() ) );
 
     spy_works_timer->start ( 1 * 1000 ) ; // 1000 is 1 second
 
@@ -205,7 +201,7 @@ appl_form::appl_form ( QWidget *parent_w )
     // timer "watchdog" of spy errors (in GSI - "synchronisation lost" )
     synchro_check_timer = new QTimer ( this );
     connect ( synchro_check_timer, SIGNAL ( timeout() ),
-              this, SLOT ( check_synchro_of_spy() ) );
+            this, SLOT ( check_synchro_of_spy() ) );
 
     synchro_check_timer ->start ( 1 * 1000 ) ; // 1000 is 1 second
 
@@ -327,17 +323,17 @@ void appl_form::on_actionSelecting_the_spectra_triggered()
 
             // the real action of this loop
             connect (
-                        dokument, SIGNAL ( spec_update_scrolls_and_sliders() ),
-                        this, SLOT ( appl_update_scrolls_and_sliders() )
-                        );
+                dokument, SIGNAL ( spec_update_scrolls_and_sliders() ),
+                this, SLOT ( appl_update_scrolls_and_sliders() )
+                );
 
             //             cout << "******** before connecting in selected combo groups"
             //                  << dokument->caption().toStdString() << endl ;
 
             connect (
-                        dokument, SIGNAL ( enable_selected_actions ( int ) ),
-                        this, SLOT ( enable_some_actions ( int ) )
-                        );
+                dokument, SIGNAL ( enable_selected_actions ( int ) ),
+                this, SLOT ( enable_some_actions ( int ) )
+                );
             // dokument  = ( Tplate_spectrum * ) windows[nr_dok++];  // .next() ;
             //  dokument->setFocus();
         }
@@ -712,8 +708,8 @@ void appl_form::warning_spy_is_in_action()
     //     "Your new settings will be applied when you start it again or just \n"
     //     "press the UPDATE icon ",
 
-    //#if FINAL
-    if ( ui->spy_pause_action->isEnabled() )
+        //#if FINAL
+        if ( ui->spy_pause_action->isEnabled() )
     {
         T4update_info_dlg dlg;
         if ( dlg.exec() == QDialog::Accepted )
@@ -861,21 +857,21 @@ void appl_form::on_actionTile_triggered()
         //        windows[i]->update();
     }
 
-    //    cout << "Moje tile"
-    //         << " width " << width()
-    //         << " ws->height() = " << ws->height()
-    //         << endl;
+//    cout << "Moje tile"
+//         << " width " << width()
+//         << " ws->height() = " << ws->height()
+//         << endl;
 
-    //        for ( int i = 0 ; i < windows.count()  ; i++ )
-    //        {
-    //            //        auto wsk = (windows[i] );
-    //            //wsk->resize( 400,100);
-    //            cout << " x: " << windows[i]->x()
-    //            << " y: " << windows[i]->y()
-    //            << " width: " << windows[i]->width()
-    //            << " height: " << windows[i]->height()
-    //                    << endl;
-    //        }
+//        for ( int i = 0 ; i < windows.count()  ; i++ )
+//        {
+//            //        auto wsk = (windows[i] );
+//            //wsk->resize( 400,100);
+//            cout << " x: " << windows[i]->x()
+//            << " y: " << windows[i]->y()
+//            << " width: " << windows[i]->width()
+//            << " height: " << windows[i]->height()
+//                    << endl;
+//        }
 #endif
 }
 //********************************************************************
@@ -916,10 +912,10 @@ void appl_form::on_actionCascade_triggered()
         if(windows[i] == nullptr) continue;
 
         windows[i]->setGeometry(
-                    i * horizontal_distance + (column *column_distance),
-                    y * vertical_distance,
-                    spec_width,
-                    spec_hight );
+            i * horizontal_distance + (column *column_distance),
+            y * vertical_distance,
+            spec_width,
+            spec_hight );
     }
 }
 //***********************************************************************
@@ -1141,10 +1137,10 @@ void appl_form::apply_to_other_spectra()
             {
                 //                cout << "orig = " << orig_1D << " curr = " << curr_1D << endl ;
                 if (
-                        ( orig_1D  && curr_1D )  // both are 1D
-                        ||                                     //  OR
-                        ( orig_1D == nullptr && curr_1D == nullptr ) // both are 2D
-                        )
+                    ( orig_1D  && curr_1D )  // both are 1D
+                    ||                                     //  OR
+                    ( orig_1D == nullptr && curr_1D == nullptr ) // both are 2D
+                    )
                 {
                     //                    cout << "this is the same type of spectrum" << endl;
                     dokument-> set_parameters ( min_x, max_yy,  max_x, min_yy );
@@ -1385,22 +1381,24 @@ void appl_form::on_actionSave_as_triggered()
     bool flag_all = false ;
     if ( flag_act_on_all_spectra )
     {
-        switch ( QMessageBox::information ( this,
-                                            " Saving As - of many spectra ?",
-                                            "Currently you are in mode 'work on many spectra'.\nDo you want to save  all "
-                                            "displayed spectra?  \n",
-                                            //"( Yes => all, No => only the one selected)",
-                                            "ALL displayed spectra",  // QMessageBox::Yes | QMessageBox::Default,
-                                            "only one, SELECTED spectrum",   // QMessageBox::No,
-                                            "Cancel", 1 ) )
+        switch (  askQuestionWithButtons( // +
+            " Saving As - of many spectra ?",
+
+            "Currently you are in mode 'work on many spectra'.\nDo you want to save  all "
+            "displayed spectra?  \n",
+
+
+            "ALL displayed spectra",  // QMessageBox::Yes | QMessageBox::Default,
+            "only one, SELECTED spectrum",   // QMessageBox::No,
+            "Cancel", 2) )
 
         {
 
-        case 0 : // Yes
+        case 1 : // ALL
             flag_all = true;
             break ;
 
-        case 1:   // No
+        case 2:   // just selected
             flag_all = false;
             break ;
 
@@ -1422,19 +1420,19 @@ void appl_form::on_actionSave_as_triggered()
 
         bool ok;
         QString text = QInputDialog::getText ( this,
-                                               "Choosing the prefix for spectra names",
+                                             "Choosing the prefix for spectra names",
 
 
-                                               "You are going to save many files. "
-                                               "All of them will be saved in an original cracow binary format \n\n"
-                                               "Their new names will be constructed as follows:"
-                                               "       prefix+old_name\n"
-                                               "\n"
-                                               //"(if you give prefix empty - you will be asked for all particular spectrum file name)"
-                                               "Enter the text for prefix: ",
-                                               QLineEdit::Normal,
-                                               "prefix_",
-                                               &ok );
+                                             "You are going to save many files. "
+                                             "All of them will be saved in an original cracow binary format \n\n"
+                                             "Their new names will be constructed as follows:"
+                                             "       prefix+old_name\n"
+                                             "\n"
+                                             //"(if you give prefix empty - you will be asked for all particular spectrum file name)"
+                                             "Enter the text for prefix: ",
+                                             QLineEdit::Normal,
+                                             "prefix_",
+                                             &ok );
         if ( ok && !text.isEmpty() )
         {
             QList <QMdiSubWindow*> windows = area->subWindowList()  ;
@@ -1478,18 +1476,18 @@ void appl_form::on_actionDefine_snapshot_program_to_print_triggered()
     //	QInputDialog::setCancelButtonText("AAA");
 
     QString text = dlg.getText (this,
-                                "Choose the snapshoot program",
-                                "Specify here some Linux system program, which you choose for making a snapshot of the screen.\n"
-                                "It mybye a `gimp` or a `spectacle`, or a 'ksnapshot' or any other.\n\n"
-                                "Note: if you are using greware while being logged (by ssh) from other computer\n"
-                                "some snapshot programs may behave strange: \n"
-                                "Instead making snapshot of your screen,\n"
-                                "they will make a snapshot of a screen of the original computer screen.\n"
-                                "So if you work by ssh - try to choose another program.\n\n\n"
-                                "Enter name of the snapshot program:  ",
-                                QLineEdit::Normal,
-                                printer_call_line,
-                                &ok );
+                               "Choose the snapshoot program",
+                               "Specify here some Linux system program, which you choose for making a snapshot of the screen.\n"
+                               "It mybye a `gimp` or a `spectacle`, or a 'ksnapshot' or any other.\n\n"
+                               "Note: if you are using greware while being logged (by ssh) from other computer\n"
+                               "some snapshot programs may behave strange: \n"
+                               "Instead making snapshot of your screen,\n"
+                               "they will make a snapshot of a screen of the original computer screen.\n"
+                               "So if you work by ssh - try to choose another program.\n\n\n"
+                               "Enter name of the snapshot program:  ",
+                               QLineEdit::Normal,
+                               printer_call_line,
+                               &ok );
     if ( ok && !text.isEmpty() )
     {
         // user entered something and pressed OK
@@ -1511,12 +1509,10 @@ void appl_form::on_actionCall_wizard_to_edit_the_CURRENT_user_def_spectrum_trigg
     // finding the selected spectrum
     if ( !it_is_user_def_spectrum() )
     {
-        QMessageBox::warning ( this,
-                               "No spectrum selected",
-                               QString ( "Current spectrum is not the user defined" ),
-                               QMessageBox::Ok,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton );
+        showWarningMessage(
+            "No spectrum selected",
+            QString ( "Current spectrum is not the user defined" )
+            );
         return ;
     }
 
@@ -1536,15 +1532,12 @@ void appl_form::on_actionCall_wizard_to_edit_the_CURRENT_user_def_spectrum_trigg
     naz += user_spec_ext ;
     if ( us.read_from ( gpath.user_def_spectra + naz ) == false )
     {
-        QMessageBox::warning ( this,
-                               "Error while reading the definition",
-                               QString ( "Most probably the definition of such user spectrum does not exist anymore \n\n(%1)\n"
-                                         "This may happen if you are watching a spectrum which was stored on the disk long time ago, and its definition is already deleted"
-                                         "\nTry to edit it using the 'user spectra manager' (There you can find all currently known definitions)" )
-                               .arg ( ( gpath.user_def_spectra + naz ).c_str() ),
-                               QMessageBox::Ok,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton );
+        showWarningMessage(
+            "Error while reading the definition",
+            QString ( "Most probably the definition of such user spectrum does not exist anymore \n\n(%1)\n"
+                    "This may happen if you are watching a spectrum which was stored on the disk long time ago, and its definition is already deleted"
+                    "\nTry to edit it using the 'user spectra manager' (There you can find all currently known definitions)" )
+                .arg ( ( gpath.user_def_spectra + naz ).c_str() ) );
         return ;
     }
 
@@ -1614,12 +1607,11 @@ void appl_form::on_actionChange_the_binning_and_range_triggered()
         string sname = doc->give_spectrum_name();   //    (caption() );
         if ( sname.substr ( 0, 4 ) == "user" )
         {
-            QMessageBox::critical ( this, "Do it in a different way",
-                                    "To change the binning of the user defined spectrum, please use:\n\n"
-                                    "  'Edit -> Call wizard to edit CURRENT user def. spectrum' ",
-                                    QMessageBox::Ok | QMessageBox::Default,
-                                    QMessageBox::NoButton,
-                                    QMessageBox::NoButton ); // error
+            showWarningMessage("Do it in a different way",
+                               "To change the binning of the user defined spectrum, please use:\n\n"
+                               "  'Edit -> Call wizard to edit CURRENT user def. spectrum' ",
+                               QMessageBox::Critical
+                               ); // error
             return;
         }
 
@@ -1686,57 +1678,55 @@ void appl_form::on_actionZero_ing_all_displayed_spectra_no_questions_using_shorc
 //********************************************************************************************
 void appl_form::on_actionOther_tools_for_1D_operations_triggered()
 {
-    QMessageBox::information ( this, "Use context sensitive menu",
-                               "To have other tools for working with the 1D spectra\n"
-                               " - Setting background markers\n - Creating default gate,\n"
-                               " - Putting markers in the precise channel\n"
-                               " - Rebining  on screen\n - Putting Tags  on the spectrum\n"
-                               "please right click on the spectrum picture - you will see the context sensitive popup menu",
-                               QMessageBox::Ok, QMessageBox::NoButton , QMessageBox::NoButton );
+    showWarningMessage("Use context sensitive menu",
+                       "To have other tools for working with the 1D spectra\n"
+                       " - Setting background markers\n - Creating default gate,\n"
+                       " - Putting markers in the precise channel\n"
+                       " - Rebining  on screen\n - Putting Tags  on the spectrum\n"
+                       "please right click on the spectrum picture - you will see the context sensitive popup menu");
 }
 //********************************************************************************************
 void appl_form::on_actionOther_tools_for_matrix_operations_triggered()
 {
-    QMessageBox::information ( this, "Use context sensitive menu",
-                               "To have other tools for working with matrices\n"
-                               " - Polygon gates creating, cloning, modyfing vertices, etc\n"
-                               " - Integrating the contents of the polygon  gates\n"
-                               "please right click on the spectrum picture - you will see the context sensitive popup menu",
-                               QMessageBox::Ok, QMessageBox::NoButton , QMessageBox::NoButton );
+    showWarningMessage( "Use context sensitive menu",
+                       "To have other tools for working with matrices\n"
+                       " - Polygon gates creating, cloning, modyfing vertices, etc\n"
+                       " - Integrating the contents of the polygon  gates\n"
+                       "please right click on the spectrum picture - you will see the context sensitive popup menu");
 }
 //********************************************************************************************
 void appl_form::on_actionHelp_about_mouse_clicking_triggered()
 {
     string clicking_explanations =
-            //"MOUSE CLICKING during SPECTRA (1D, 2D) DISPLAY\n\n"
+        //"MOUSE CLICKING during SPECTRA (1D, 2D) DISPLAY\n\n"
 
-            "============ In 1D spectrum: ============\n\n"
+        "============ In 1D spectrum: ============\n\n"
 
-            "Single click   -  set a yellow marking line\n"
-            //"Shift + Single click   -  correct the last \"single click marker\"\n"
-            "Double  click   -  expand the region marked with two marking lines\n"
-            "Shift  double click   -  Zoom OUT the region\n"
-            "Right click - popup menu for background markers, etc.\n\n"
-            "NEW: if you use a mouse ROLL on any scale (channels, or counts) you expand/compress the scale\n"
-            "NEW: if you press a mouse and DRAG - on any scale (channels, or counts) you shift the scale\n"
-            "\n"
+        "Single click   -  set a yellow marking line\n"
+        //"Shift + Single click   -  correct the last \"single click marker\"\n"
+        "Double  click   -  expand the region marked with two marking lines\n"
+        "Shift  double click   -  Zoom OUT the region\n"
+        "Right click - popup menu for background markers, etc.\n\n"
+        "NEW: if you use a mouse ROLL on any scale (channels, or counts) you expand/compress the scale\n"
+        "NEW: if you press a mouse and DRAG - on any scale (channels, or counts) you shift the scale\n"
+        "\n"
 
-            "============ In 2D spectrum: ============\n\n"
-            "Double  click   -  zoom IN the region around the clicked place\n"
-            "Shift double  click   -  zoom OUT the region around the clicked place\n"
-            "Right click - popup menu for bananaa gates,  background markers, etc.\n\n"
-            "NEW: if you use a mouse ROLL on any scale (horizontal or vertical) you expand/compress the scale\n"
-            "NEW: if you press a mouse and DRAG - on any scale (horizontal or vertical) you shift the scale\n"
-            "\n"
+        "============ In 2D spectrum: ============\n\n"
+        "Double  click   -  zoom IN the region around the clicked place\n"
+        "Shift double  click   -  zoom OUT the region around the clicked place\n"
+        "Right click - popup menu for bananaa gates,  background markers, etc.\n\n"
+        "NEW: if you use a mouse ROLL on any scale (horizontal or vertical) you expand/compress the scale\n"
+        "NEW: if you press a mouse and DRAG - on any scale (horizontal or vertical) you shift the scale\n"
+        "\n"
 
 
-            "--- clicking on a polygon -----\n"
-            "Single click  on the vertex of  polygon  gate - selects the vertex of  polygon,\n"
-            "Shift single click  on the vertex of  polygon  gate -selects additional vertex of this polygon\n"
-            "Click vertex and drag - moves the vertex of polygon\n"
-            "Ctrl + Click on vertex (and drag) - moves a whole polygon\n"
-            "Ctrl + Shift + Click on vertex (and drag) - moves selected vertices only\n\n"
-            "(Remember -  in a popup menu (right click) you have an UNDO for  moving vertices)\n";
+        "--- clicking on a polygon -----\n"
+        "Single click  on the vertex of  polygon  gate - selects the vertex of  polygon,\n"
+        "Shift single click  on the vertex of  polygon  gate -selects additional vertex of this polygon\n"
+        "Click vertex and drag - moves the vertex of polygon\n"
+        "Ctrl + Click on vertex (and drag) - moves a whole polygon\n"
+        "Ctrl + Shift + Click on vertex (and drag) - moves selected vertices only\n\n"
+        "(Remember -  in a popup menu (right click) you have an UNDO for  moving vertices)\n";
 
     T4info_dlg * dlg = new T4info_dlg ;
     dlg->set_parameter ( clicking_explanations.c_str() );
@@ -1783,20 +1773,20 @@ void appl_form::on_petrify_Action_triggered()
     bool flag_all = false ;
     if ( flag_act_on_all_spectra )
     {
-        switch ( QMessageBox::information ( this,
-                                            " Freezing shadows  of  many spectra ?",
-                                            "Currently you are in mode 'work on many spectra'.\nDo you want to freeze shadows of all "
-                                            "displayed spectra?  \n",
-                                            //"( Yes => all, No => only the one selected)",
-                                            "ALL displayed spectra",  // QMessageBox::Yes | QMessageBox::Default,
-                                            "only one, SELECTED spectrum",   // QMessageBox::No,
-                                            "Cancel", 1 ) )
+        switch ( askQuestionWithButtons(    // +
+            " Freezing shadows  of  many spectra ?",
+            "Currently you are in mode 'work on many spectra'.\nDo you want to freeze shadows of all "
+            "displayed spectra?  \n",
+
+            "ALL displayed spectra",  // QMessageBox::Yes | QMessageBox::Default,
+            "only one, SELECTED spectrum",   // QMessageBox::No,
+            "Cancel", 2 ) )
 
         {
-        case 0 : // Yes
+        case 1 : // Yes
             flag_all = true;
             break ;
-        case 1:   // No
+        case 2:   // No
             flag_all = false;
             break ;
         default:
@@ -1828,17 +1818,18 @@ void appl_form::on_actionZero_ing_ALL_SPECTRA_triggered()
     QString list_of_spectra = "You are going to erase the contents of the ALL the   online SPY spectra'\n\n"
                               "ARE YOU SURE  ?";
 
-    switch ( QMessageBox::warning ( this, " 'Zero-ing' online spectra, ARE YOU SURE ? ",
-                                    list_of_spectra,
-                                    "Yes", "No", "Cancel", 1 ) )
+    switch (askQuestionWithButtons(         // +
+        " 'Zero-ing' online spectra, ARE YOU SURE ? ",
+        list_of_spectra,
+        "Yes", "No", "Cancel", 2 ) )
     {
-    case 0:   // Yes :
+    case 1:   // Yes :
 
-        switch ( QMessageBox::warning ( this, " 'Zeroing ALL analysis specta  ",
-                                        "Not only those shown spectra shown on the screen, but ALL spectra will be zero-ed, ARE YOU SURE ?",
-                                        "Yes", "No", "Cancel", 1 ) )
+        switch (askQuestionWithButtons(" 'Zeroing ALL analysis specta  ",   // +
+                                       "Not only those shown spectra shown on the screen, but ALL spectra will be zero-ed, ARE YOU SURE ?",
+                                       "Yes", "No", "Cancel", 2 ) )
         {
-        case 0:   // Yes :
+        case 1:   // Yes :
         {
             // cout << "Spectrum to zero = " <<   dokument->caption() << endl;
             string command_file = gpath.commands + "spy_spectra_for_zeroing.command";
@@ -1863,7 +1854,7 @@ void appl_form::on_actionZero_ing_ALL_SPECTRA_triggered()
             //                                               this );
             //                    progress.setMinimumDuration ( 5000 ) ; // miliseconds
             //                    progress.setValue ( 0 );
-            int counter = 0;
+            [[__maybe_unused__]] int counter = 0;
 
             if ( ! is_spy_running() )
             {
@@ -2023,15 +2014,15 @@ void appl_form::adjust_program_to_experiment_type()
 
     }
 
-    // chwilowo $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+// chwilowo $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 
-    //    ui->actionMatching_the_MBS_subevents->setVisible ( true );
-    //    ui->active_stopper_munich_Action->setVisible ( true ); // disable munich
-    //    ui->active_stopper_optionsAction->setVisible ( true ); // disable active stopper
-    //    ui->actionDefinition_of_Good_CATE_data->setVisible ( true );
-    //    ui->actionDefinition_of_good_Miniball_data->setVisible ( true );
-    //    ui->actionRead_and_install_the_frs_calibration_factors_from_an_external_file->setVisible ( true );
-    //    ui->active_stopper_optionsAction->setVisible ( true ); // disable active stopper
+//    ui->actionMatching_the_MBS_subevents->setVisible ( true );
+//    ui->active_stopper_munich_Action->setVisible ( true ); // disable munich
+//    ui->active_stopper_optionsAction->setVisible ( true ); // disable active stopper
+//    ui->actionDefinition_of_Good_CATE_data->setVisible ( true );
+//    ui->actionDefinition_of_good_Miniball_data->setVisible ( true );
+//    ui->actionRead_and_install_the_frs_calibration_factors_from_an_external_file->setVisible ( true );
+//    ui->active_stopper_optionsAction->setVisible ( true ); // disable active stopper
 
 #endif   // false
 }
@@ -2084,39 +2075,39 @@ void appl_form::on_actionMake_tar_file_with_calibrations_and_lookup_tables_trigg
     string date ;
     ostringstream s ( date ) ;
     s
-            << "20" << setw ( 2 ) << setfill ( '0' ) << timeinfo->tm_year + ( 1900 - 2000 ) << "_"
-            << setw ( 2 ) << ( timeinfo->tm_mon + 1 ) << "_"
-            << setw ( 2 ) << timeinfo->tm_mday << "_"
-            << setw ( 2 ) << timeinfo->tm_hour << "-"
-            << setw ( 2 ) << timeinfo->tm_min << "-"
-            << setw ( 2 ) << timeinfo->tm_sec ;
+        << "20" << setw ( 2 ) << setfill ( '0' ) << timeinfo->tm_year + ( 1900 - 2000 ) << "_"
+        << setw ( 2 ) << ( timeinfo->tm_mon + 1 ) << "_"
+        << setw ( 2 ) << timeinfo->tm_mday << "_"
+        << setw ( 2 ) << timeinfo->tm_hour << "-"
+        << setw ( 2 ) << timeinfo->tm_min << "-"
+        << setw ( 2 ) << timeinfo->tm_sec ;
     string godzina = s.str() ;
     string zip_filename = "calibration_and_lookuptable_files_" + godzina + ".gz";
     //   cout   << "-->" << zip_filename << "<---"  << "-->" << godzina << "<---"
     //   << endl;
     string message = "You are going to create the tar  archive file \n"
                      "containing all the calibration files and lookup_table files found in directories:\n\t" +
-            gpath.calibration + "*  \n\t" +
-            gpath.mbs_settings + "* \n\n" +
-            "The file will be placed in directory:  " + gpath.spy_dir +
-            "\nand called \n\t"  + zip_filename  + "\n\nDo you want this? \n\n";
-    int odp = QMessageBox::information ( this,
-                                         "Archiving the essential files",
-                                         QString ( message.c_str() ),
-                                         "Yes",
-                                         "No",
-                                         "Cancel",
-                                         1 ); // default is No
+                     gpath.calibration + "*  \n\t" +
+                     gpath.mbs_settings + "* \n\n" +
+                     "The file will be placed in directory:  " + gpath.spy_dir +
+                     "\nand called \n\t"  + zip_filename  + "\n\nDo you want this? \n\n";
+    int odp = askQuestionWithButtons(       // +
+        "Archiving the essential files",
+        QString ( message.c_str() ),
+        "Yes",
+        "No",
+        "Cancel",
+        2 ); // default is No
     switch ( odp )
     {
     default:
         break;
-    case 0:   // Yes
+    case 1:   // Yes
         string command_line = "cd " + gpath.spy_dir + "\n "
-                // + "pwd \n"
-                +	"tar -czvf "  + zip_filename  + "   " +
-                gpath.calibration + "*  " +
-                gpath.mbs_settings + "*" ;
+                              // + "pwd \n"
+                              +	"tar -czvf "  + zip_filename  + "   " +
+                              gpath.calibration + "*  " +
+                              gpath.mbs_settings + "*" ;
 
         cout << "command was: " << command_line << endl;
         int resp = system ( command_line.c_str() );
@@ -2127,10 +2118,10 @@ void appl_form::on_actionMake_tar_file_with_calibrations_and_lookup_tables_trigg
 
         message = "The file \n   " + zip_filename + " \nhas been saved in a directory\n   " + gpath.spy_dir ;
         QMessageBox::information ( this,
-                                   "Archiving the essential files",
-                                   QString ( message.c_str() ),
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton);
+                                 "Archiving the essential files",
+                                 QString ( message.c_str() ),
+                                 QMessageBox::Ok,
+                                 QMessageBox::NoButton);
     }
 }
 //********************************************************************************************
@@ -2193,7 +2184,7 @@ void appl_form::set_visibility_of_spy_options_dialogs()
 void appl_form::read_last_spectra_selection_after_crash()
 {
     string command_file = gpath.commands +
-            "spectra_currently_watched.names";
+                          "spectra_currently_watched.names";
     ifstream plik ( command_file.c_str() );
     if ( !plik )
     {
@@ -2361,7 +2352,7 @@ void appl_form::save_times_of_zeroing_on_disk()
     const unsigned int max_length_of_name = 200;
 
     map<string, time_t >::iterator it =
-            map_of_zeroing.begin();
+        map_of_zeroing.begin();
 
     for ( ; it != map_of_zeroing.end() ; it++ )
     {
@@ -2380,8 +2371,13 @@ void appl_form::save_times_of_zeroing_on_disk()
     }
 }
 //****************************************************************************************
-void appl_form::on_Combo_app_group_activated ( const QString & groupName )
+void appl_form::on_Combo_app_group_textActivated(const QString &groupName)
 {
+    //     on_Combo_app_group_activated (arg1 );
+    // }
+    // //****************************************************************************************
+    // void appl_form::on_Combo_app_group_activated ( const QString & groupName )
+    // {
     ui->Combo_app_group->setEnabled ( false );
     QApplication::setOverrideCursor ( QCursor ( Qt::WaitCursor ) );
 
@@ -2439,15 +2435,15 @@ void appl_form::on_Combo_app_group_activated ( const QString & groupName )
             area->addSubWindow ( s, Qt::Window );
             // now conect all spectra
             connect (
-                        s, SIGNAL ( spec_update_scrolls_and_sliders() ),
-                        this, SLOT ( appl_update_scrolls_and_sliders() )
-                        );
+                s, SIGNAL ( spec_update_scrolls_and_sliders() ),
+                this, SLOT ( appl_update_scrolls_and_sliders() )
+                );
 
             //cout << "before connecting in selected combo groups" << endl ;
             connect (
-                        s, SIGNAL ( enable_selected_actions ( int ) ),
-                        this, SLOT ( enable_some_actions ( int ) )
-                        );
+                s, SIGNAL ( enable_selected_actions ( int ) ),
+                this, SLOT ( enable_some_actions ( int ) )
+                );
 
             // the name is taken form t
             s->set_the_name ( nazwa );
@@ -2667,7 +2663,7 @@ void appl_form::appl_update_scrolls_and_sliders()
     if(now - last == 0) return ;  // the same second
     last  = now ;
     //--------------------------------------------------
-    static int busy = 0 ;
+    [[__maybe_unused__]]   static int busy = 0 ;
     //    if(busy){
     //        for(int i = 0 ; i < 1000 ; i++) sin(sin(i)) ;
     //        return;
@@ -2688,9 +2684,9 @@ void appl_form::appl_update_scrolls_and_sliders()
 
     Tplate_spectrum * doc = ( Tplate_spectrum * ) ( area-> currentSubWindow()->widget() );
     if ( doc
-         &&
-         flag_reaction_for_scroll_slider_event == false
-         )
+        &&
+        flag_reaction_for_scroll_slider_event == false
+        )
     {
 
         //cout << "flag_reaction_for_scroll_slider_event..  Trying to react ..." << endl ;
@@ -2825,10 +2821,10 @@ void appl_form::appl_update_scrolls_and_sliders()
 
         // when we see on the picture higher than the highest peak - ther is on slider
         if (
-                max_yy <= spectrum_end_y
-                &&
-                min_yy >= spectrum_beg_y
-                )
+            max_yy <= spectrum_end_y
+            &&
+            min_yy >= spectrum_beg_y
+            )
         {
             typ_x visible_part =  max_yy - min_yy ;
             typ_x till2 = - ( spectrum_beg_y ) - ( visible_part ) ;
@@ -3068,11 +3064,11 @@ void appl_form::on_actionSetting_times_of_refreshing_triggered()
     T4setting_times_dlg  *dlg = new T4setting_times_dlg ;
 
     dlg->set_times (
-                current_options.give_user_refreshing_time_1D(),
-                current_options.give_user_refreshing_time_2D(),
-                current_options.give_refreshing_time_sum_1D(),
-                current_options.give_preference_asking_about_refreshing_big_matrices()
-                );
+        current_options.give_user_refreshing_time_1D(),
+        current_options.give_user_refreshing_time_2D(),
+        current_options.give_refreshing_time_sum_1D(),
+        current_options.give_preference_asking_about_refreshing_big_matrices()
+        );
 
     if ( dlg->exec() == QDialog::Accepted )
     {
@@ -3108,20 +3104,20 @@ void appl_form::on_Integrate_spectrum_action_triggered()
 
     if ( flag_act_on_all_spectra && (how_many_spectra_are_on_the_screen > 1))
     {
-        switch ( QMessageBox::information ( this,
-                                            " Integration of many spectra ?",
-                                            "Currently you are in mode 'work on many spectra'.\nDo you want to integrate all "
-                                            "displayed spectra?  \n",
-                                            //"( Yes => all, No => only the one selected)",
-                                            "ALL displayed spectra",  // QMessageBox::Yes | QMessageBox::Default,
-                                            "only one, SELECTED spectrum",   // QMessageBox::No,
-                                            "Cancel", 1 ) )
+        switch ( askQuestionWithButtons(            // +
+            " Integration of many spectra ?",
+            "Currently you are in mode 'work on many spectra'.\nDo you want to integrate all "
+            "displayed spectra?  \n",
+            //"( Yes => all, No => only the one selected)",
+            "ALL displayed spectra",  // QMessageBox::Yes | QMessageBox::Default,
+            "only one, SELECTED spectrum",   // QMessageBox::No,
+            "Cancel", 2 ) )
         {
-        case 0 : // Yes
+        case 1 : // Yes
             flag_all = true;
             break ;
 
-        case 1:   // No
+        case 2:   // No
             flag_all = false;
             break ;
 
@@ -3175,24 +3171,24 @@ void appl_form::on_matrix_projection_Action_triggered()
     if ( doc )
     {
         int x_axis = 0 ;
-        switch ( QMessageBox::information ( this,
-                                            " Projection of the fragment of the selected matrix",
-                                            QString (
-                                                "!!! NEW: if one polygon is selcted - you can use it here as a gate !!!\n\n"
-                                                "You are going to make the projection of the VISIBLE FRAGMENT "
-                                                "of currently selected matrix\n"
-                                                "%1\n Please specify on which axis"
-                                                ).arg ( doc->give_spectrum_name().c_str() ) ,
+        switch (askQuestionWithButtons(         // +
+            " Projection of the fragment of the selected matrix",
+            QString (
+                "!!! NEW: if one polygon is selcted - you can use it here as a gate !!!\n\n"
+                "You are going to make the projection of the VISIBLE FRAGMENT "
+                "of currently selected matrix\n"
+                "%1\n Please specify on which axis"
+                ).arg ( doc->give_spectrum_name().c_str() ) ,
 
-                                            "Projection on X axis",  // QMessageBox::Yes | QMessageBox::Default,
-                                            "Projection on Y axis",   // QMessageBox::No,
-                                            "Cancel", 2 ) )
+            "Projection on X axis",  // QMessageBox::Yes | QMessageBox::Default,
+            "Projection on Y axis",   // QMessageBox::No,
+            "Cancel", 3 ) )
         {
-        case 0 :
+        case 1 :
             x_axis = 1 ;
             break ;
 
-        case 1:
+        case 2:
             x_axis = 0 ;
             break ;
 
@@ -3228,15 +3224,15 @@ void appl_form::on_matrix_projection_Action_triggered()
             auto win =  area->addSubWindow ( s, Qt::Window );
             // now conect all spectra
             connect (
-                        s, SIGNAL ( spec_update_scrolls_and_sliders() ),
-                        this, SLOT ( appl_update_scrolls_and_sliders() )
-                        );
+                s, SIGNAL ( spec_update_scrolls_and_sliders() ),
+                this, SLOT ( appl_update_scrolls_and_sliders() )
+                );
 
             //cout << "before connecting in selected combo groups" << endl ;
             connect (
-                        s, SIGNAL ( enable_selected_actions ( int ) ),
-                        this, SLOT ( enable_some_actions ( int ) )
-                        );
+                s, SIGNAL ( enable_selected_actions ( int ) ),
+                this, SLOT ( enable_some_actions ( int ) )
+                );
 
             // the name is taken form t
             s->set_the_name ( name_of_projection );
@@ -3344,14 +3340,14 @@ void appl_form::on_user_spec_wizard_Action_triggered()
 {
 #ifdef FINAL
     QMessageBox::information ( this, "EXPERIMENTAL",
-                               "This part of software is a UNIQUE, NEW, FEATURE invented by Jurek Grebosz\n\n"
-                               "\n\n\nIf you use this software not only to monitor your experiment, \nbut also for the 'physics' data analysis\n"
-                               "please do not forget to cite this software in your papers.\n\n"
-                               " 'Cracow Package'\n"
-                               "J. Grebosz, Comp. Phys. Comm. 176   251 (2007)\n",
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton );
+                             "This part of software is a UNIQUE, NEW, FEATURE invented by Jurek Grebosz\n\n"
+                             "\n\n\nIf you use this software not only to monitor your experiment, \nbut also for the 'physics' data analysis\n"
+                             "please do not forget to cite this software in your papers.\n\n"
+                             " 'Cracow Package'\n"
+                             "J. Grebosz, Comp. Phys. Comm. 176   251 (2007)\n",
+                             QMessageBox::Ok | QMessageBox::Default,
+                             QMessageBox::NoButton,
+                             QMessageBox::NoButton );
 #endif // FINAL
     T4manager_user_spectra dlg;
     //    int result =
@@ -3386,25 +3382,25 @@ void appl_form::on_actionChoose_relevant_dialog_windows_triggered()
 {
     // making list of available dialogs
     vector<QAction *> vec =
-    {
-        ui-> actionMatching_the_MBS_subevents,
-        ui->actionSelect_a_type_of_the_Doppler_correction_algorithm,
-        ui->addback_dlg_Action,
-        ui->actionInteresting_region_of_Z_and_A_Q,
-        ui->actionGalileo_prefered_ranges_of_spectra,
-        ui->active_stopper_munich_Action,
-        ui->active_stopper_optionsAction,
-        ui->actionLYCCA_settings,
-        ui->actionDefinition_of_Good_Germanium_detectors_data,
-        ui->actionDefinition_of_Good_CATE_data,
-        ui->actionDefinition_of_Good_Hector_BaF_data,
-        ui->actionDefinition_of_good_Miniball_data,
-        ui->actionGalileo_signals_enabling,
-        ui->actionGood_signals_from_KRATTA_element,
-        ui->action_Good_Galileo_Germanium_data,
-        ui->actionEuclides_signals_enabling,
-        ui->actionNeutronwall_signals_enabling
-    };
+        {
+            ui-> actionMatching_the_MBS_subevents,
+            ui->actionSelect_a_type_of_the_Doppler_correction_algorithm,
+            ui->addback_dlg_Action,
+            ui->actionInteresting_region_of_Z_and_A_Q,
+            ui->actionGalileo_prefered_ranges_of_spectra,
+            ui->active_stopper_munich_Action,
+            ui->active_stopper_optionsAction,
+            ui->actionLYCCA_settings,
+            ui->actionDefinition_of_Good_Germanium_detectors_data,
+            ui->actionDefinition_of_Good_CATE_data,
+            ui->actionDefinition_of_Good_Hector_BaF_data,
+            ui->actionDefinition_of_good_Miniball_data,
+            ui->actionGalileo_signals_enabling,
+            ui->actionGood_signals_from_KRATTA_element,
+            ui->action_Good_Galileo_Germanium_data,
+            ui->actionEuclides_signals_enabling,
+            ui->actionNeutronwall_signals_enabling
+        };
 
     T4options_visibility dlg;
     dlg.set_parameters(vec, 2);
@@ -3413,34 +3409,34 @@ void appl_form::on_actionChoose_relevant_dialog_windows_triggered()
 //*******************************************************************************************************
 void appl_form::on_actionSpy_Finish_quit_the_spy_triggered()
 {
-    int odp = QMessageBox::information ( this,
-                                         "Sending the request to the SPY",
-                                         QString ( "You are going to finish the work of the SPY program\n"
-                                                   "Are you sure \n\n" ),
-                                         "Yes",
-                                         "No",
-                                         "Brutal YES - no saving spectra",
-                                         //"Cancel",
-                                         1 ); // default is No
+    int odp = askQuestionWithButtons(           // +
+        "Sending the request to the SPY",
+        QString ( "You are going to finish the work of the SPY program\n"
+                "Are you sure \n\n" ),
+        "Yes",
+        "No",
+        "Brutal YES - no saving spectra",
+        //"Cancel",
+        2 ); // default is No
 
     switch ( odp )
     {
     default: // No?
         break;
 
-    case 0:   // Yes
-    case 2:  // Yes, brutal
+    case 1:   // Yes
+    case 3:  // Yes, brutal
         string command_file = gpath.commands + "spy_finish.command";
         ofstream plik ( command_file.c_str() );
         if ( !plik )
         {
             cout << "problem in openning the file" << command_file << endl;
         }
-        if ( odp == 0 )
+        if ( odp == 1 )
         {
             plik << "finish" << endl;
         }
-        else if ( odp == 2 )
+        else if ( odp == 3 )
         {
             plik << "brutalfinish" << endl;
         }
@@ -3515,18 +3511,18 @@ void appl_form::on_spy_go_action_triggered()        // void appl_form::spy_conti
 void appl_form::on_actionZero_ing_all_currently_displayed_spectra_triggered()
 {
     QString list_of_spectra= "You are going to erase the contents of "
-                             "\nall currently displayed  online SPY spectra \n"
-                             "ARE YOU SURE?";
-    switch ( QMessageBox::warning ( this, " 'Zero-ing' online spectra, ARE YOU SURE? ",
-                                    list_of_spectra,
-                                    "Yes",
-                                    "No",
-                                    "Cancel",
-                                    2 ) )  // Default
+                              "\nall currently displayed  online SPY spectra \n"
+                              "ARE YOU SURE?";
+    switch ( askQuestionWithButtons( " 'Zero-ing' online spectra, ARE YOU SURE? ",  // +
+                                   list_of_spectra,
+                                   "Yes",
+                                   "No",
+                                   "Cancel",
+                                   3 ) )  // Default
     {
     default: // No?
         break;
-    case 0:  // Yes :
+    case 1:  // Yes :
         //            Tplate_spectrum * doc = ( Tplate_spectrum * ) ws-> currentSubWindow()->widget();
         ostringstream robot;
 
@@ -3568,19 +3564,19 @@ void appl_form::on_actionZero_ing_a_contents_of_the_current_spectrum_triggered()
     {
         cout << "Spectrum to zero = " <<  doc->give_spectrum_name() << endl;
         QString list_of_spectra= QString ( "You are going to erase the contents of the"
-                                           " online SPY spectrum\n %1\n"
-                                           "ARE YOU SURE?" ).arg ( doc->give_spectrum_name().c_str() );
+                                          " online SPY spectrum\n %1\n"
+                                          "ARE YOU SURE?" ).arg ( doc->give_spectrum_name().c_str() );
 
-        int odp = QMessageBox::warning ( this, " 'Zero-ing' online spectra, ARE YOU SURE? ",
+        int odp = askQuestionWithButtons(" 'Zero-ing' online spectra, ARE YOU SURE? ",  // +
                                          list_of_spectra,
                                          "Yes",
                                          "No",
                                          "Cancel",
-                                         2  // Default
+                                         3  // Default
                                          );
         switch ( odp )
         {
-        case 0:    // Yes
+        case 1:    // Yes
         {
             string command_file = gpath.commands + "spy_spectra_for_zeroing.command";
             ofstream plik ( command_file.c_str() );
@@ -3629,8 +3625,8 @@ void appl_form::on_actionGUI_options_triggered()
         if(option)
         {
             option << "background_colour_of_1D_spectrum  " << background_colour_of_1D_spectrum.red()
-                   << "  "  << background_colour_of_1D_spectrum.green()
-                   << "  "  << background_colour_of_1D_spectrum.blue() << endl;
+            << "  "  << background_colour_of_1D_spectrum.green()
+            << "  "  << background_colour_of_1D_spectrum.blue() << endl;
             option << "general_font_size   " << general_font_size << endl;
         }
 
@@ -3663,7 +3659,7 @@ void appl_form::on_actionGalileo_signals_enabling_triggered()
     string outfname = gpath.calibration + "galil_look_new.txt";
     string fname = gpath.calibration + "galileo_lookup_table_and_calibration.txt";
     string header =
-            "//  channel  channel_enable   name_of_the_detector  Alpha_thresholds theta(deg)  phi(deg) domain id";
+        "//  channel  channel_enable   name_of_the_detector  Alpha_thresholds theta(deg)  phi(deg) domain id";
 
     common_galileo_signals_dialog(fname, "Galileo germanium detectors",
                                   "color: rgb(0, 255, 234);\nbackground-color: rgb(0, 17, 255);", // blue
@@ -3685,10 +3681,10 @@ void appl_form::on_actionEuclides_signals_enabling_triggered()
     string fname = gpath.calibration + "euclides_lookup_table_and_calibration.txt";
 
     string header =
-            "//chanel channel_enable detector_name alpha_low_thrs alpha_up_thrs "
-            "theta phi "
-            "cal_order_sub0 calibr_factors_sub0 "
-            "cal_order_sub1 calibr_factors_sub1\n" ;
+        "//chanel channel_enable detector_name alpha_low_thrs alpha_up_thrs "
+        "theta phi "
+        "cal_order_sub0 calibr_factors_sub0 "
+        "cal_order_sub1 calibr_factors_sub1\n" ;
 
     //---------
     common_galileo_signals_dialog(fname,
@@ -3723,14 +3719,8 @@ void appl_form::common_galileo_signals_dialog(string input_file,
     if(!infile) {
         cerr << "Can't open input file" << input_file<< endl;
         string mess = "Can't open calibration file: " + input_file ;
-        QMessageBox::warning ( this,
-                               " Can't open file",
-                               mess.c_str(),
-                               "OK",
-                               "",
-                               "Cancel",
-                               2  // Default
-                               );
+        showWarningMessage(
+            " Can't open file", mess.c_str(), QMessageBox::Critical );
 
         return;
     }
@@ -3741,8 +3731,8 @@ void appl_form::common_galileo_signals_dialog(string input_file,
         {
             // in case of the galileo germanium detectors
             Tfile_line_det_cal_lookup linijka { flag_second_thr, // no second threshold
-                        flag_geometry,// geometry present
-                        flag_second_calibration} ;
+                                              flag_geometry,// geometry present
+                                              flag_second_calibration} ;
             linijka.read_in(infile);
             // cout << linijka << endl;
             full_file.push_back(linijka);
@@ -3771,23 +3761,23 @@ void appl_form::common_galileo_signals_dialog(string input_file,
 
             // saving header
             string top {
-                "// This is a Lookup table and calibration file for galileo detectors\n"
-                "//===================================================================\n"
-                "//\n"
-                "// Note:\n"
-                "//    1. Everything after two slashes (//) till the end of the line is\n"
-                "//       treated as a COMMENT\n"
-                "//    2. Empty lines, newlines, spaces, tabulators are ignored\n"
-                "//    3. Keywords (names of the parameters) can be typed lowercase\n"
-                "//       or uppercase, as you wish.\n"
-                "//\n"
-                "//       Advice: for your own sake, use rather uppercase 'L' instead\n"
-                "//       of lowercase 'l'\n"
-                "//       (because 'l' is too similar to '1')\n"
-                "//    4. If a channel is disabled (0) then we don't read anything else\n"
-                "//       after so the empty_?? are just here to make it easier to read\n"
-                "//====================================================================\n"
-                "// Channel channel_enable name_of_detector  ComptonThres  theta phi cal_order calibr_factors\n"};
+                       "// This is a Lookup table and calibration file for galileo detectors\n"
+                       "//===================================================================\n"
+                       "//\n"
+                       "// Note:\n"
+                       "//    1. Everything after two slashes (//) till the end of the line is\n"
+                       "//       treated as a COMMENT\n"
+                       "//    2. Empty lines, newlines, spaces, tabulators are ignored\n"
+                       "//    3. Keywords (names of the parameters) can be typed lowercase\n"
+                       "//       or uppercase, as you wish.\n"
+                       "//\n"
+                       "//       Advice: for your own sake, use rather uppercase 'L' instead\n"
+                       "//       of lowercase 'l'\n"
+                       "//       (because 'l' is too similar to '1')\n"
+                       "//    4. If a channel is disabled (0) then we don't read anything else\n"
+                       "//       after so the empty_?? are just here to make it easier to read\n"
+                       "//====================================================================\n"
+                       "// Channel channel_enable name_of_detector  ComptonThres  theta phi cal_order calibr_factors\n"};
 
             sav << top << header << endl;
 
@@ -3808,18 +3798,15 @@ void appl_form::common_galileo_signals_dialog(string input_file,
     {
 
         string mess = "Error while reading a file: \n" + input_file +
-                "\n\nThe error is in a line dedicated to the signal: "
-                + obj.channel + " ...,  \nerror while reading item: "
-                + obj.item  ;
+                      "\n\nThe error is in a line dedicated to the signal: "
+                      + obj.channel + " ...,  \nerror while reading item: "
+                      + obj.item  ;
 
-        QMessageBox::warning ( this,
-                               " Error while reading calibration file",
-                               mess.c_str(),
-                               "OK",
-                               "",
-                               "Cancel",
-                               2  // Default
-                               );
+       showWarningMessage(
+            " Error while reading calibration file",
+            mess.c_str(),
+            QMessageBox::Critical
+            );
         return;
     }
 }
@@ -3830,7 +3817,7 @@ void appl_form::on_actionNeutronwall_signals_enabling_triggered()
     string fname = gpath.calibration + "neutronwall_lookup_table_and_calibration.txt";
 
     string header =
-            "//  channel channel_enable(1)/disable(0)     name_of_the_detector threshold calibration_order calibr_factors";
+        "//  channel channel_enable(1)/disable(0)     name_of_the_detector threshold calibration_order calibr_factors";
 
     //---------
     common_galileo_signals_dialog(fname,
@@ -4112,10 +4099,10 @@ void appl_form::on_actionCheck_incrementers_triggered()
         if (flag_error_entry) {
 
             report << string(60, '=')
-                   << "\n" << nr << " ) Spectrum called " << sname
-                   << prepared.str()
-                   << string(50, '-')
-                   << "\n\nJust to help you to make decision. In a description of incrementers we see: \n" <<  inkrem_set << endl;
+            << "\n" << nr << " ) Spectrum called " << sname
+            << prepared.str()
+            << string(50, '-')
+            << "\n\nJust to help you to make decision. In a description of incrementers we see: \n" <<  inkrem_set << endl;
         }
     } // end scaning of this spectrum
     delete dlg;
@@ -4127,14 +4114,14 @@ void appl_form::on_actionCheck_incrementers_triggered()
 
         //        cout //<< "End of f. " << __PRETTY_FUNCTION__
         info =     "There were some errors. Check the file\n "
-                + gpath.spy_dir + "list_of_spectra_with_wrong_incrementers.txt" ;
+               + gpath.spy_dir + "list_of_spectra_with_wrong_incrementers.txt" ;
     }else {
         info= "Everything is  OK, no errors found";
     }
 
-    QMessageBox::information ( this, "Result of checking",
-                              QString(info.c_str()),
-                               QMessageBox::Ok, QMessageBox::NoButton , QMessageBox::NoButton );
+    showWarningMessage( "Result of checking",
+                       QString(info.c_str()),
+                       QMessageBox::Information );
 
 }
 //*******************************************************************************************************************
@@ -4204,3 +4191,9 @@ void appl_form::on_actionAuto_scale_to_highest_peaks_toggled(bool stan)
     }
 
 }
+
+
+
+
+
+

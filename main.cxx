@@ -1,4 +1,6 @@
 //#include <QtGui/QApplication>
+
+int qMain(int, char**);
 #include <QApplication>
 //#include <QTranslator>
 #include "appl_form.h"

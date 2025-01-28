@@ -432,7 +432,11 @@ int box_of_channels::ilo_cyfrowe_liczby(typ_x roznica_kon_pocz)
 //***********************************************************************
 void box_of_channels::mouseMoveEvent ( QMouseEvent * event )
 {
-	int now_x = event->x();
+    int now_x = event->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                position().
+#endif
+                x();
 
 
 	appl_form_ptr->send_to_statusbar(
@@ -484,7 +488,11 @@ void box_of_channels:: mousePressEvent ( QMouseEvent * event )
 {
 	// remembering the pressing point
 
-	last_dragged_x= event->x() ;
+    last_dragged_x= event->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                     position().
+#endif
+                     x() ;
 	//    cout << "Pressing at point " <<  last_moved_x
 	//         << " in word coordinates it is channel = "
 	//         << pix2worX(last_moved_x)

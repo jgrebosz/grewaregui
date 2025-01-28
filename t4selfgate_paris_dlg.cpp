@@ -6,7 +6,6 @@ using namespace std;
 #include "Tself_gate_paris_descr_simple.h"
 #include <QMessageBox>
 #include <QFileDialog>
-#include "Tfile_helper.h"
 #include "paths.h"
 
 #include "tplate_spectrum.h"
@@ -193,11 +192,9 @@ void T4selfgate_paris_dlg::accept()
     if(ui->lineEdit_name->text() == "" )
     {
 
-        QMessageBox::critical( this, "The name is missing",
+        showWarningMessage( "The name is missing",
                                "Please specify the (unique) name of this 'self-gate' ",
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton);  // error
+                               QMessageBox::Critical);  // error
         return ;
     }
     QDialog::accept();
@@ -285,19 +282,17 @@ void T4selfgate_paris_dlg::on_push_banana_clicked()
     else{
 
 
-        switch ( QMessageBox::information ( this,
+        switch ( askQuestionWithButtons(            // +
                                             "You pressed: Cancel",
                                             "Do you want to set 'no_polygon' situation?",
-
-                                            //"( Yes => all, No => only the one selected)",
-                                            " no_polygon ",  // QMessageBox::Yes | QMessageBox::Default,
-                                            "Leave it as it was previously",   // QMessageBox::No,
-                                            "Cancel", 1 ) )
+              " no_polygon ",  // 1
+              "Leave it as it was previously",   // 2
+              "Cancel", 2 ) )
           {
-          case 0 : // Yes
+          case 1 :
             ui->push_banana->setText("no_polygon");
             break ;
-          case 1:   // No
+          case 2:
             break ;
           default:
             return ;

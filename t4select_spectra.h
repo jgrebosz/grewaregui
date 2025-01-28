@@ -150,6 +150,8 @@ private slots:
 
 
 
+
+
 private:
     Ui::T4select_spectra *ui;
 

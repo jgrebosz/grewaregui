@@ -104,7 +104,7 @@ public:
 		else return false ;
 	}
 	//*************************************************
-	bool is_vertex_selected(int nr)
+    bool is_vertex_selected(long long nr)
 	{
 		int n = 0 ;
 		for(auto it = polygon.begin() ; it != polygon.end() ;  ++n, it++ )

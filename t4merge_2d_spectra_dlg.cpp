@@ -1,6 +1,8 @@
 #include "t4merge_2d_spectra_dlg.h"
+
+// #define QRegExp QRegularExpression
 #include "ui_t4merge_2d_spectra_dlg.h"
-#include <vector>
+// #include <vector>
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -49,17 +51,14 @@ void T4merge_2d_spectra_dlg::on_pushButton_remove_row_released()
 
     // are you sure?
 
-    if ( QMessageBox::warning ( this,
+    if (askYesNoCancel(
                                 "Removing the spectrum from the table",
                                 QString (
                                     "You are going to remove the row nr %1\n which is: %2  factor %3\n"
                                     "Are you sure?" ).arg ( nr+1 ).
                                 arg ( ui->table1->item ( nr, 0 )->text() ).
                                 arg ( ui->table1->item ( nr, 1 )->text() )
-                                ,
-                                QMessageBox::Yes,
-                                QMessageBox::No,
-                                QMessageBox::Cancel )
+                               )
          == QMessageBox::Yes )
     {
         // remove it
@@ -350,12 +349,10 @@ void T4merge_2d_spectra_dlg::on_buttonOk_clicked()   // this is a button EXECUTE
                 {
                     throw string("Error while saving ");
                 }
-                QMessageBox::information ( this,
+                showWarningMessage(
                                            "Merging the 2D spectra",
-                                           QString("Success. Now you may watch this matrix \n%1\nas all other Greware matrices").arg(fileName),
-                                           QMessageBox::Ok | QMessageBox::Default,
-                                           QMessageBox::NoButton,
-                                           QMessageBox::NoButton ); // no error
+                                           QString("Success. Now you may watch this matrix \n%1\nas all other Greware matrices").arg(fileName)
+                                            ); // no error
 
                 QDialog::accept();
 
@@ -365,17 +362,14 @@ void T4merge_2d_spectra_dlg::on_buttonOk_clicked()   // this is a button EXECUTE
     catch ( string &s )
     {
 
-        QMessageBox::critical ( this,
+        showWarningMessage(
                                 "Merging the 2D spectra",
                                 s.c_str(),
-
-                                QMessageBox::Ok | QMessageBox::Default,
-                                QMessageBox::NoButton,
-                                QMessageBox::NoButton ); // error
+                                QMessageBox::Critical); // error
 
     }
 
-#endif // OLD
+#endif // not OLD
 }
 //**********************************************************************
 void T4merge_2d_spectra_dlg::on_button_add_clicked()   // add_another line with a spectrum_name
@@ -469,7 +463,7 @@ bool T4merge_2d_spectra_dlg::read_in_file ( string fname, vector< int >& spectru
 
         if ( plik )
         {
-            int ile = 0 ;
+            [[__maybe_unused__]]  int ile = 0 ;
 
             // at first read binningsa
             double tab[6] = {0};   // note, all values, also bin, bin_y are double (not  int)
@@ -856,7 +850,7 @@ bool T4merge_2d_spectra_dlg::restore_periodic_list_from_disk( )
     }
 
     // read the contents of the file
-    for(int i = 0 ;  ;++i)
+    for( ;  ; )
     {
         string name;
         file >> name;
@@ -883,7 +877,7 @@ bool T4merge_2d_spectra_dlg::execute_periodic_summings()
 
     // 1. read int the periodic list of summings into one vector
     // read the contents of the file
-    for(int i = 0 ;  ;++i)
+    for( ;  ;)
     {
         string name;
         file >> name;
@@ -947,12 +941,9 @@ bool T4merge_2d_spectra_dlg::execute_periodic_summings()
 
     string txt = "Successfully created the following 2D sum spectra:\n" + result_spectra +
             "\nNow you may watch them as all usual greware matrices ";
-    QMessageBox::information ( this,
+    showWarningMessage(
                                "Merging the 2D spectra",
-                               QString(txt.c_str()),
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton ); // no error
+                               QString(txt.c_str()), QMessageBox::Information ); // no error
 
     QDialog::accept();
 
@@ -1052,13 +1043,10 @@ bool T4merge_2d_spectra_dlg::calculations(int nr_of_spectrum, string spec_name, 
     catch ( string &s )
     {
 
-        QMessageBox::critical ( this,
+        showWarningMessage(
                                 "Merging the 2D spectra",
                                 s.c_str(),
-
-                                QMessageBox::Ok | QMessageBox::Default,
-                                QMessageBox::NoButton,
-                                QMessageBox::NoButton ); // error
+                                QMessageBox::Critical); // error
 
         return false;
     }

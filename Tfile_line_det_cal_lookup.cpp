@@ -2,6 +2,7 @@
 using namespace std;
 extern istream & zjedz(istream & plik) ;
 #include "appl_form.h"
+#include "paths.h"
 #include <cctype>
 //*********************************************************************************
 bool Tfile_line_det_cal_lookup::read_in(ifstream &infile)
@@ -44,7 +45,6 @@ bool Tfile_line_det_cal_lookup::read_in(ifstream &infile)
             }
 
     }
-
 
     if(enable == true || flag_try_anyway)
     {
@@ -101,7 +101,9 @@ bool Tfile_line_det_cal_lookup::read_in(ifstream &infile)
     return 1;
 }
 //**************************************************************************************
-void Tfile_line_det_cal_lookup::save_line(ofstream &sav, appl_form *ptr, bool & flag_really_replace)
+void Tfile_line_det_cal_lookup::save_line(ofstream &sav,
+                                          [[__maybe_unused__]] appl_form *ptr,
+                                          bool & flag_really_replace)
 {
     sav << channel << "\t"
         << enable << "\t"
@@ -179,13 +181,9 @@ void Tfile_line_det_cal_lookup::save_line(ofstream &sav, appl_form *ptr, bool & 
 
         if(what.size())
         {
-            int odp = QMessageBox::warning ( ptr,
+            auto odp = askYesNoCancel(
                                              " Risk of loosing the information",
-                                             (mess + what + "\n\nAre you sure?").c_str(),
-                                             "Yes",
-                                             "No",
-                                             "Cancel",
-                                             2  // Default
+                                             (mess + what + "\n\nAre you sure?").c_str()
                                              );
             switch ( odp )
             {
@@ -193,7 +191,7 @@ void Tfile_line_det_cal_lookup::save_line(ofstream &sav, appl_form *ptr, bool & 
                     flag_really_replace = false;
                 break;
 
-                case 0:    // Yes
+                case QMessageBox::Yes:    // Yes
                 break;
             }
         } // end if th&phi

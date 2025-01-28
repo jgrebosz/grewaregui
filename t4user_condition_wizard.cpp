@@ -10,7 +10,6 @@
 #include "t4incrementer_selector.h"
 #include "Tcondition_description_cracow.h"
 #include "t4addline_1d_wizard.h"
-#include "t4general_selector.h"
 
 //********************************************************************************************
 T4user_condition_wizard::T4user_condition_wizard(QWidget *parent) :
@@ -197,8 +196,8 @@ void T4user_condition_wizard::redisplay_table_1D_AND()
     for (int j = 0; j < nr_rows; ++j )
     {
         ui->table_1D_AND_gates->setItem(j, 0, new QTableWidgetItem ( cond->item_1D_AND[j].obligatory_in_event?
-                                                                         consider_false:
-                                                                         consider_true) );
+                                                                       consider_false:
+                                                                       consider_true) );
 
         ui->table_1D_AND_gates->item(j, 0)->setCheckState(cond->item_1D_AND[j].obligatory_in_event?
                                                               Qt::Checked : Qt::Unchecked);
@@ -229,8 +228,8 @@ void T4user_condition_wizard::redisplay_table_2D_AND()
     for (int j = 0; j < nr_rows; ++j )
     {
         ui->table_2D_AND_gates->setItem(j, 0, new QTableWidgetItem ( cond->item_2D_AND[j].obligatory_in_event?
-                                                                         consider_false:
-                                                                         consider_true) );
+                                                                       consider_false:
+                                                                       consider_true) );
 
         ui->table_2D_AND_gates->item(j, 0)->setCheckState(cond->item_2D_AND[j].obligatory_in_event?
                                                               Qt::Checked : Qt::Unchecked);
@@ -330,26 +329,26 @@ void T4user_condition_wizard::help()
     //    cout << "T4user_condition_wizard::help()" << endl;
 
     QString not_valid =
-            "What to do if the incrementer is not valid?\n"
-            "\"it is obligatory\" - means that chosen variable is ALWAYS TESTED and must have this value in every event \n"
-            "\"it is optional\" - means that if this variable is TESTED ONLY IF IT HAS A LEGAL VALUE in this event\n\n "
-            "For example:\n"
-            " - the germanium detector energy data it is legal only when its detector has fired,\n"
-            " - multiwire chamber (ppac) 'position x' is legal only when this detector has fired and if it was possible to calculate position\n"
-            " from the data in current event (that means: both 'left' and 'right' signals comming from multiwire chamber \n"
-            "were present in this event).\n"
-            "\nIf you know when your favourite variable should be 'legal' - "
-            "tell this to Jurek, he will set its defaults  in the program\n";
+        "What to do if the incrementer is not valid?\n"
+        "\"it is obligatory\" - means that chosen variable is ALWAYS TESTED and must have this value in every event \n"
+        "\"it is optional\" - means that if this variable is TESTED ONLY IF IT HAS A LEGAL VALUE in this event\n\n "
+        "For example:\n"
+        " - the germanium detector energy data it is legal only when its detector has fired,\n"
+        " - multiwire chamber (ppac) 'position x' is legal only when this detector has fired and if it was possible to calculate position\n"
+        " from the data in current event (that means: both 'left' and 'right' signals comming from multiwire chamber \n"
+        "were present in this event).\n"
+        "\nIf you know when your favourite variable should be 'legal' - "
+        "tell this to Jurek, he will set its defaults  in the program\n";
 
     QString just_incrementer =                 "Here you may define the one dimmensional conditons.\n"
-                                               "1. Add a row to this table\n"
-                                               "2. Choose the variable which wil be tested \n"
-                                               "3. Set the minimum value of the gate\n"
-                                               "4. Set the maximum value of the gate\n\n"
-                                               "Note:\n"
-                                               "You may double click on the item to edit it.\n"
-                                               "You may also click and drag on the table to select (and edit) many values\n"
-                                               "You may click on the header of the column to select all variables in the column\n\n";
+                               "1. Add a row to this table\n"
+                               "2. Choose the variable which wil be tested \n"
+                               "3. Set the minimum value of the gate\n"
+                               "4. Set the maximum value of the gate\n\n"
+                               "Note:\n"
+                               "You may double click on the item to edit it.\n"
+                               "You may also click and drag on the table to select (and edit) many values\n"
+                               "You may click on the header of the column to select all variables in the column\n\n";
 
     QString help_message ;
 
@@ -357,10 +356,10 @@ void T4user_condition_wizard::help()
     {
     case  page__name:
         help_message =
-                "Note, that If you change this name of the condition later - perhaps there are already "
-                "MANY spectra which use this condtion. \n"
-                "This is why Jurek decided, that the condition with the old name should "
-                "still remain on the disk";
+            "Note, that If you change this name of the condition later - perhaps there are already "
+            "MANY spectra which use this condtion. \n"
+            "This is why Jurek decided, that the condition with the old name should "
+            "still remain on the disk";
         break;
 
     case page__1D_OR :
@@ -380,16 +379,16 @@ void T4user_condition_wizard::help()
 
     case   page__5possibilities:
         help_message =
-                "Your condition can be a combination of 5 different parts.\n"
-                "If you do not need some of them, you can say it here, so the wizard will not bother you "
-                "by showing corresponding pages";
+            "Your condition can be a combination of 5 different parts.\n"
+            "If you do not need some of them, you can say it here, so the wizard will not bother you "
+            "by showing corresponding pages";
         break;
 
     case   page__external_nodes :
         help_message =
-                "Here in your condition you can use some other, already exiting conditions\n"
-                "This is really a good idea: make simple conditions and then combine them into one  more complicated.\n"
-                "By this you can easily debug any logical errors";
+            "Here in your condition you can use some other, already exiting conditions\n"
+            "This is really a good idea: make simple conditions and then combine them into one  more complicated.\n"
+            "By this you can easily debug any logical errors";
         break;
 
     case   page__finish:
@@ -406,7 +405,7 @@ void T4user_condition_wizard::help()
     if(help_message != "")
     {
         QMessageBox::information ( this, "Help about setting the conditions", help_message,
-                                   QMessageBox::Ok);
+                                 QMessageBox::Ok);
     }
 }
 //***************************************************************************************************************
@@ -434,8 +433,8 @@ void T4user_condition_wizard::table_2D_AND_value_changed()
     {
         // change the text in
         ui->table_2D_AND_gates->item(row, column)->setText(
-                    (ui->table_2D_AND_gates->item(row, column)->checkState() == Qt::Checked) ?
-                        consider_false :consider_true); // ???????
+            (ui->table_2D_AND_gates->item(row, column)->checkState() == Qt::Checked) ?
+                consider_false :consider_true); // ???????
         ui->table_2D_AND_gates->item(row, column)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 
         ui->table_2D_AND_gates->resizeColumnsToContents();
@@ -493,11 +492,11 @@ void T4user_condition_wizard::redisplay_table_1D_OR()
     {
 
 #ifdef FINAL
-        // self-gate - listed next to  the incrementer
+            // self-gate - listed next to  the incrementer
         ui->table_1D_OR_gates->setItem(j, 0, new QComboTableItem( ui->table_1D_OR_gates, list ));
         //QComboTableItem *ptr =
         dynamic_cast<QComboTableItem*> (ui->table_1D_OR_gates->item(j, 0))->
-                setCurrentItem ( cond->item_1D_OR[j].obligatory_in_event) ;
+            setCurrentItem ( cond->item_1D_OR[j].obligatory_in_event) ;
 #endif
         ui->table_1D_OR_gates->item(j, 1)-> setText(cond->item_1D_OR[j].var_name.c_str() );
         ui->table_1D_OR_gates->item(j, 2)->setText( QString("!%1").setNum(cond->item_1D_OR[j].min_value)) ;
@@ -539,7 +538,7 @@ void T4user_condition_wizard::redisplay_table_2D_OR()
         ui->table_2D_OR_gates->setItem(j, 0, new QComboTableItem( ui->table_1D_OR_gates, list ));
         //QComboTableItem *ptr =
         dynamic_cast<QComboTableItem*> (ui->table_2D_OR_gates->item(j, 0))->
-                setCurrentItem ( cond->item_2D_OR[j].obligatory_in_event) ;
+            setCurrentItem ( cond->item_2D_OR[j].obligatory_in_event) ;
 
 #endif
 
@@ -642,8 +641,8 @@ void T4user_condition_wizard::table_1D_OR_value_changed()
     if(col == 0 )
     {
         cond->item_1D_OR[row].obligatory_in_event =
-                (ui->table_1D_OR_gates->item(row, col)->checkState() == Qt::Checked)?
-                    true: false ;
+            (ui->table_1D_OR_gates->item(row, col)->checkState() == Qt::Checked)?
+                true: false ;
         //      cout << "value in row" << row << "changed" << endl;
     }
 }
@@ -660,8 +659,8 @@ void T4user_condition_wizard::table_2D_OR_value_changed()
         //          dynamic_cast<QComboTableItem*> (ui->table_2D_OR_gates->item(row, col))->currentItem () ;
 
         cond->item_2D_OR[row].obligatory_in_event =
-                (ui->table_2D_OR_gates->item(row, col)->checkState() == Qt::Checked)?
-                    true: false ;
+            (ui->table_2D_OR_gates->item(row, col)->checkState() == Qt::Checked)?
+                true: false ;
     }
 }
 //***************************************************************************************************************
@@ -718,7 +717,7 @@ void T4user_condition_wizard::redisplay_tables_nodes()
 }
 //***************************************************************************************************************
 void T4user_condition_wizard::remove_other_cond_name_from_table( QTableWidget *tab, string tab_name,
-                                                                 vector<string> &cond_names)
+                                                                vector<string> &cond_names)
 {
     QList<QTableWidgetSelectionRange> range = tab->selectedRanges() ;
 
@@ -735,14 +734,13 @@ void T4user_condition_wizard::remove_other_cond_name_from_table( QTableWidget *t
             QString mess = QString("You are going to remove the condition nr %1\n%2\n"
                                    "from the table :  %3\n"
                                    "\nAre you sure ?")
-                    .arg(row+1).arg(cond_names[row].c_str()).arg(tab_name.c_str());
+                               .arg(row+1).arg(cond_names[row].c_str()).arg(tab_name.c_str());
 
 
-            switch(QMessageBox::warning( this, "Removing the other condition nam, ARE YOU SURE ? ",
-                                         mess,
-                                         "Yes", "No", "Cancel", 1))
+            switch(askYesNoCancel( "Removing the other condition nam, ARE YOU SURE ? ",
+                                   mess))
             {
-            case 0: // Yes :
+            case QMessageBox::Yes:  // Yes :
                 // user selected an item and pressed OK
                 cond_names.erase(cond_names.begin() + row);
                 redisplay_tables_nodes();
@@ -761,9 +759,9 @@ void T4user_condition_wizard::on_pushButton_remove_1D_OR_clicked()
 }
 //****************************************************************************************
 void T4user_condition_wizard::remove_selected_rows_from_some_1Dtable(
-        QTableWidget *tab,
-        vector<Tcondition_description_cracow::Titem_1D> &wekt,
-        string /* wyjasn*/ )
+    QTableWidget *tab,
+    vector<Tcondition_description_cracow::Titem_1D> &wekt,
+    string /* wyjasn*/ )
 {
 
     QList<QTableWidgetSelectionRange> range = tab->selectedRanges() ;
@@ -784,17 +782,15 @@ void T4user_condition_wizard::remove_selected_rows_from_some_1Dtable(
                                    "min value: %4\n"
                                    "max value: %5\n"
                                    "\nAre you sure ?")
-                    .arg(row+1)
-                    .arg(wekt[row].obligatory_in_event? consider_false : consider_true)
-                    .arg(wekt[row].var_name.c_str())
-                    .arg(wekt[row].min_value)
-                    .arg(wekt[row].max_value) ;
+                               .arg(row+1)
+                               .arg(wekt[row].obligatory_in_event? consider_false : consider_true)
+                               .arg(wekt[row].var_name.c_str())
+                               .arg(wekt[row].min_value)
+                               .arg(wekt[row].max_value) ;
 
-            switch(QMessageBox::warning( this, "ARE YOU SURE ? ",
-                                         mess,
-                                         "Yes", "No", "Cancel", 1))
+            switch( askYesNoCancel( "ARE YOU SURE ? ", mess))
             {
-            case 0: // Yes :
+            case QMessageBox::Yes:      // Yes :
                 // user selected an item and pressed OK
                 wekt.erase(wekt.begin() + row);
                 // redisplay_tables_nodes();
@@ -806,9 +802,9 @@ void T4user_condition_wizard::remove_selected_rows_from_some_1Dtable(
 }
 //***************************************************************************************************************
 void T4user_condition_wizard::remove_selected_rows_from_some_2Dtable(
-        QTableWidget *tab,
-        vector<Tcondition_description_cracow::Titem_2D> &wekt,
-        string /*wyjasn*/)
+    QTableWidget *tab,
+    vector<Tcondition_description_cracow::Titem_2D> &wekt,
+    string /*wyjasn*/)
 {
 
     QList<QTableWidgetSelectionRange> range = tab->selectedRanges() ;
@@ -829,18 +825,17 @@ void T4user_condition_wizard::remove_selected_rows_from_some_2Dtable(
                                    "variable Y: %4\n"
                                    "polygon   : %5\n\n"
                                    "Are you sure ?")
-                    .arg(row+1)
-                    .arg(wekt[row].obligatory_in_event? consider_false : consider_true)
-                    .arg(wekt[row].var_x_name.c_str())
-                    .arg(wekt[row].var_y_name.c_str())
-                    .arg(wekt[row].polygon_name.c_str()) ;
+                               .arg(row+1)
+                               .arg(wekt[row].obligatory_in_event? consider_false : consider_true)
+                               .arg(wekt[row].var_x_name.c_str())
+                               .arg(wekt[row].var_y_name.c_str())
+                               .arg(wekt[row].polygon_name.c_str()) ;
 
 
-            switch(QMessageBox::warning( this, "ARE YOU SURE ? ",
-                                         mess,
-                                         "Yes", "No", "Cancel", 1))
+            switch(askYesNoCancel( "ARE YOU SURE ? ",
+                                         mess))
             {
-            case 0: // Yes :
+            case QMessageBox::Yes: // Yes :
                 // user selected an item and pressed OK
                 wekt.erase(wekt.begin() + row);
                 // redisplay_tables_nodes();
@@ -940,11 +935,11 @@ void T4user_condition_wizard::on_pushButton_1D_AND_set_many_cells_clicked()
     //double value = ui->table_1D_AND_gates->text(r, c).toDouble(&ok);
 
     double res = QInputDialog::getDouble( this,
-                                          "Minimum value of the gate", "Enter a decimal number:", 0,
-                                          -2147483647,
-                                          2147483647,
-                                          6,
-                                          &ok);
+                                         "Minimum value of the gate", "Enter a decimal number:", 0,
+                                         -2147483647,
+                                         2147483647,
+                                         6,
+                                         &ok);
 
     if ( ok )
     {
@@ -972,8 +967,8 @@ void T4user_condition_wizard::on_table_1D_AND_gates_cellClicked(int row, int col
     {
         // change the text in
         ui->table_1D_AND_gates->item(row, column)->setText(
-                    (ui->table_1D_AND_gates->item(row, column)->checkState() == Qt::Checked) ?
-                        consider_false :consider_true); // ???????
+            (ui->table_1D_AND_gates->item(row, column)->checkState() == Qt::Checked) ?
+                consider_false :consider_true); // ???????
 
         ui->table_1D_AND_gates->resizeColumnsToContents();
     }
@@ -1091,8 +1086,8 @@ void T4user_condition_wizard::on_table_2D_AND_gates_cellClicked(int row, int col
     {
         // change the text in
         ui->table_2D_AND_gates->item(row, column)->setText(
-                    (ui->table_2D_AND_gates->item(row, column)->checkState() == Qt::Checked) ?
-                        consider_false :consider_true); // ???????
+            (ui->table_2D_AND_gates->item(row, column)->checkState() == Qt::Checked) ?
+                consider_false :consider_true); // ???????
 
         ui->table_2D_AND_gates->resizeColumnsToContents();
     }
@@ -1138,15 +1133,15 @@ void T4user_condition_wizard::add_external_condition_to_the_nodes_table(vector <
     {
         for(QString selected_name : fileNames)
         {
-//            cout << "name = " <<
-//                    selected_name.toStdString()
-//                 << endl;
+            //            cout << "name = " <<
+            //                    selected_name.toStdString()
+            //                 << endl;
             int where = selected_name.lastIndexOf('/', -1, Qt::CaseSensitive);
             selected_name.remove(0, where+1);
-//            cout << "where = " << where
-//                 << " name = "
-//                 << selected_name.toStdString()
-//                 << endl;
+            //            cout << "where = " << where
+            //                 << " name = "
+            //                 << selected_name.toStdString()
+            //                 << endl;
 
             wekt.push_back(selected_name.toStdString() ) ;
             redisplay_tables_nodes();
@@ -1184,25 +1179,25 @@ void T4user_condition_wizard::on_toolButton_nodes_NOR_add_clicked()
 void T4user_condition_wizard::on_toolButton_nodes_AND_remove_clicked()
 {
     remove_other_cond_name_from_table( ui->table_other_conditions_AND, "AND",
-                                       cond->other_condition_AND);
+                                      cond->other_condition_AND);
 }
 //***************************************************************************************************************
 void T4user_condition_wizard::on_toolButton_nodes_OR_remove_clicked()
 {
     remove_other_cond_name_from_table( ui->table_other_conditions_OR, "OR",
-                                       cond->other_condition_OR);
+                                      cond->other_condition_OR);
 }
 //***************************************************************************************************************
 void T4user_condition_wizard::on_toolButton_nodes_NAND_remove_clicked()
 {
     remove_other_cond_name_from_table( ui->table_other_conditions_NAND, "NAND",
-                                       cond->other_condition_NAND);
+                                      cond->other_condition_NAND);
 }
 //***************************************************************************************************************
 void T4user_condition_wizard::on_toolButton_nodes_NOR_remove_clicked()
 {
     remove_other_cond_name_from_table( ui->table_other_conditions_NOR, "NOR",
-                                       cond->other_condition_NOR);
+                                      cond->other_condition_NOR);
 }
 //***************************************************************************************************************
 bool T4user_condition_wizard::validateCurrentPage()
@@ -1221,12 +1216,10 @@ bool T4user_condition_wizard::validateCurrentPage()
             //cout << "Now enabled is disabled " << endl ;
             //setNextEnabled ( currentPage (), false ) ;
 
-            QMessageBox::information( this,
-                                      "Error in the name of condition",
-                                      "To go to the next page, you need to specify the name of the condition\n",
-                                      QMessageBox::Ok,
-                                      QMessageBox::NoButton,
-                                      QMessageBox::NoButton);
+            showWarningMessage(
+                                     "Error in the name of condition",
+                                     "To go to the next page, you need to specify the name of the condition\n",
+                                     QMessageBox::Critical );
             return false;
         }
 
@@ -1243,13 +1236,11 @@ bool T4user_condition_wizard::validateCurrentPage()
         if(flag_space_was_changed)
         {
             ui->lineEdit_condition_name->setText(name.c_str()) ;
-            QMessageBox::information( this,
-                                      "Error in the name of condition",
-                                      "In the name of the conditon you included one or more space character. \n"
-                                      "This is not allowed, so they were changed into underscores\n",
-                                      QMessageBox::Ok,
-                                      QMessageBox::NoButton,
-                                      QMessageBox::NoButton);
+            showWarningMessage(
+                                     "Error in the name of condition",
+                                     "In the name of the conditon you included one or more space character. \n"
+                                     "This is not allowed, so they were changed into underscores\n",
+                                     QMessageBox::Critical);
         }
         return true;
     } // endof case
@@ -1286,7 +1277,7 @@ void T4user_condition_wizard::on_table_1D_OR_gates_cellDoubleClicked(int row, in
     {
 
     }
-        break;
+    break;
     case 1:
     {
         T4incrementer_selector *dlg  = new T4incrementer_selector ;
@@ -1303,24 +1294,24 @@ void T4user_condition_wizard::on_table_1D_OR_gates_cellDoubleClicked(int row, in
             }
         }
     }
-        break;
+    break;
     case 2:
     {
         bool ok;
         double value = ui->table_1D_OR_gates->item(row, column)->text().toDouble(&ok);
 
         double res = QInputDialog::getDouble( this ,
-                                              "Minimum value of the gate", "Enter a decimal number:", value,
-                                              -2147483647,
-                                              2147483647,
-                                              6,
-                                              &ok);
+                                             "Minimum value of the gate", "Enter a decimal number:", value,
+                                             -2147483647,
+                                             2147483647,
+                                             6,
+                                             &ok);
         if ( ok ) {
             // user entered something and pressed OK
             cond->item_1D_OR[row].min_value = res ;
         }
     }
-        break;
+    break;
 
     case 3:
     {
@@ -1328,17 +1319,17 @@ void T4user_condition_wizard::on_table_1D_OR_gates_cellDoubleClicked(int row, in
         double value = ui->table_1D_OR_gates->item(row,column)->text().toDouble(&ok);
 
         double res = QInputDialog::getDouble( this ,
-                                              "Maximum value of the gate", "Enter a decimal number:", value,
-                                              -2147483647,
-                                              2147483647,
-                                              6,
-                                              &ok);
+                                             "Maximum value of the gate", "Enter a decimal number:", value,
+                                             -2147483647,
+                                             2147483647,
+                                             6,
+                                             &ok);
         if ( ok ) {
             // user entered something and pressed OK
             cond->item_1D_OR[row].max_value = res ;
         }
     }
-        break;
+    break;
     }// end switch
 
     redisplay_table_1D_OR();
@@ -1361,7 +1352,7 @@ void T4user_condition_wizard::on_table_1D_AND_gates_cellDoubleClicked(int row, i
         // cond->item_1D_AND[r].obligatory_in_event =
         // dynamic_cast<QComboTableItem*> (ui->table_1D_AND_gates->item(r, c))->currentItem();
     }
-        break;
+    break;
 
     case 1:
     {
@@ -1402,7 +1393,7 @@ void T4user_condition_wizard::on_table_1D_AND_gates_cellDoubleClicked(int row, i
             }
         }
     }
-        break;
+    break;
     case 2:
     {
         bool ok;
@@ -1419,7 +1410,7 @@ void T4user_condition_wizard::on_table_1D_AND_gates_cellDoubleClicked(int row, i
             cond->item_1D_AND[row].min_value = res ;
         }
     }
-        break;
+    break;
 
     case 3:
     {
@@ -1437,7 +1428,7 @@ void T4user_condition_wizard::on_table_1D_AND_gates_cellDoubleClicked(int row, i
             cond->item_1D_AND[row].max_value = res ;
         }
     }
-        break;
+    break;
     }// end switch
 
     if(column != 0) redisplay_table_1D_AND();
@@ -1452,12 +1443,10 @@ void T4user_condition_wizard::on_checkBox_OR_gates_clicked(bool checked)
         {
             // You can not disable this page, because now its table has some contents
             ui->checkBox_OR_gates->setChecked(true);
-            QMessageBox::warning ( this,
-                                   "No spectrum selected",
-                                   QString ( "You can not disable this page, because now its table has already some contents" ),
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton );
+            showWarningMessage(
+                                 "No spectrum selected",
+                                 QString ( "You can not disable this page, because now its table has already some contents" )
+                                 );
         }
     }
 }
@@ -1470,12 +1459,9 @@ void T4user_condition_wizard::on_checkBox_AND_gates_clicked(bool checked)
         {
             // You can not disable this page, because now its table has some contents
             ui->checkBox_AND_gates->setChecked(true);
-            QMessageBox::warning ( this,
-                                   "No spectrum selected",
-                                   QString ( "You can not disable this page, because now its table has already some contents" ),
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton );
+            showWarningMessage(
+                                 "No spectrum selected",
+                                 QString ( "You can not disable this page, because now its table has already some contents" ));
         }
     }
 }
@@ -1488,12 +1474,10 @@ void T4user_condition_wizard::on_checkBox_OR_bananas_clicked(bool checked)
         {
             // You can not disable this page, because now its table has some contents
             ui->checkBox_OR_bananas->setChecked(true);
-            QMessageBox::warning ( this,
-                                   "No spectrum selected",
-                                   QString ( "You can not disable this page, because now its table has already some contents" ),
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton );
+           showWarningMessage(
+                                 "No spectrum selected",
+                                 QString ( "You can not disable this page, because now its table has already some contents" )
+                                 );
         }
     }
 }
@@ -1506,12 +1490,9 @@ void T4user_condition_wizard::on_checkBox_AND_bananas_clicked(bool checked)
         {
             // You can not disable this page, because now its table has some contents
             ui->checkBox_AND_bananas->setChecked(true);
-            QMessageBox::warning ( this,
-                                   "No spectrum selected",
-                                   QString ( "You can not disable this page, because now its table has already some contents" ),
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton );
+            showWarningMessage(
+                                 "No spectrum selected",
+                                 QString ( "You can not disable this page, because now its table has already some contents" ));
         }
     }
 }
@@ -1521,19 +1502,16 @@ void T4user_condition_wizard::on_checkBox_external_conditions_clicked(bool check
     if(!checked)
     {
         if(ui->table_other_conditions_AND->rowCount() ||
-                ui->table_other_conditions_OR->rowCount() ||
-                ui->table_other_conditions_NAND->rowCount() ||
-                ui->table_other_conditions_NOR->rowCount()
-                )
+            ui->table_other_conditions_OR->rowCount() ||
+            ui->table_other_conditions_NAND->rowCount() ||
+            ui->table_other_conditions_NOR->rowCount()
+            )
         {
             // You can not disable this page, because now its table has some contents
             ui->checkBox_external_conditions->setChecked(true);
-            QMessageBox::warning ( this,
-                                   "No spectrum selected",
-                                   QString ( "You can not disable this page, because now some of its tables have already some contents" ),
-                                   QMessageBox::Ok,
-                                   QMessageBox::NoButton,
-                                   QMessageBox::NoButton );
+            showWarningMessage(
+                                 "No spectrum selected",
+                                 QString ( "You can not disable this page, because now some of its tables have already some contents" ) );
             return;
         }
     }

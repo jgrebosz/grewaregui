@@ -641,7 +641,8 @@ void box_of_matrix::draw_bananas ( QPainter & piorko )
             //      cout << "we are going to draw banana called " <<  banana[i].name  << endl; // this is a name
 
             polygon_type::iterator it ;
-            int nr = 0 ;
+            [[__maybe_unused__]]  int nr = 0 ;
+
             for ( it = banana[i].polygon.begin() ; it != banana[i].polygon.end() ;  nr++ )
             {
                 // here we are jumping through coordinates
@@ -756,9 +757,24 @@ void   box_of_matrix::mousePressEvent ( QMouseEvent * e )
     flag_mouse_just_pressed = true ;
 
 
-    x_mouse_click = typ_x ( pix2worX ( e->x() ) );
+    x_mouse_click = typ_x ( pix2worX (
+        #if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+        e->position().x()
+#else
+        e->x()
+#endif
+        ) );
+
+
     //y_mouse_click = int (pix2worY(e->y() ) ) ;
-    y_mouse_click = typ_x ( pix2worY ( e->y() ) ) ;
+
+
+    y_mouse_click = typ_x ( pix2worY ( e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                   position().
+#endif
+                                   y() ) ) ;
+
     pressed_button_state = e->button() ;
 
     //     cout << "In mousePressEvent,   Pixl=" << e->x()
@@ -1463,7 +1479,7 @@ void  box_of_matrix::select_nearest_vertex ( QMouseEvent *e )
 
 
             polygon_type::iterator it ;
-            int nr = 0 ;
+            [[__maybe_unused__]]  int nr = 0 ;
             for ( it = banana[i].polygon.begin() ; it != banana[i].polygon.end() ;  nr++, it++ )
             {
                 // here we are jumping through coordinates
@@ -1480,9 +1496,17 @@ void  box_of_matrix::select_nearest_vertex ( QMouseEvent *e )
 
                 // cout << " in at pixels xx=" << xx << ", yy= " << yy << endl ;
                 //looking in pixels if this the place of clicking
-                if ( abs ( e->x() - xx ) < pixel_tolerance
+                if ( abs ( e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                        position().
+#endif
+                        x() - xx ) < pixel_tolerance
                      &&
-                     abs ( e->y() - yy )   <  pixel_tolerance
+                     abs ( e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                           position().
+#endif
+                           y() - yy )   <  pixel_tolerance
                      )
                 {
                     //           cout << "nearest Vertex found !!! banana " << banana[i].screen_name
@@ -1536,7 +1560,7 @@ box_of_matrix::give_nearest_vertex ( QMouseEvent *e )
 
 
             polygon_type::iterator it ;
-            int nr = 0 ;
+            [[__maybe_unused__]] int nr = 0 ;
             for ( it = banana[i].polygon.begin() ; it != banana[i].polygon.end() ;  nr++, it++ )
             {
                 // here we are jumping through coordinates
@@ -1553,13 +1577,29 @@ box_of_matrix::give_nearest_vertex ( QMouseEvent *e )
 
                 //        cout << " in at pixels xx=" << xx << ", yy= " << yy << endl ;
                 // looking in pixels if this the place of clicking
-                if ( abs ( e->x() - xx ) < pixel_tolerance
+                if ( abs ( e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                   position().
+#endif
+                        x() - xx ) < pixel_tolerance
                      &&
-                     abs ( e->y() - yy )   < pixel_tolerance
+                     abs ( e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                           position().
+#endif
+                           y() - yy )   < pixel_tolerance
                      )
                 {
-                    x_distance_to_vertex = e->x() - xx;
-                    y_distance_to_vertex = e->y() - yy;
+                    x_distance_to_vertex = e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                           position().
+#endif
+                                           x() - xx;
+                    y_distance_to_vertex = e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                           position().
+#endif
+                                           y() - yy;
 
                     //           cout << "GIVE Vertex found !!! banana "
                     //           << banana[i].screen_name
@@ -1623,7 +1663,7 @@ void box_of_matrix::store_points_of_polygon ( int i )
     nr_of_moved_polygon = i ;
     vector<polygon_gate>&  banana = parent->give_vector_of_polygons();
     stored_polygon.clear() ;
-    int nr = 0 ;
+    [[__maybe_unused__]] int nr = 0 ;
     polygon_type::iterator it ;
     for ( it = banana[i].polygon.begin() ; it != banana[i].polygon.end() ;  nr++, it++ )
     {

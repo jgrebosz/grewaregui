@@ -266,5 +266,5 @@ void T4welcome::on_push_begin_clicked()
 							"\nNote: Currently in 'preferences' the path to the directory with your spectra is defined as:\n"
 							"%1").arg(gpath.Qspectra() ) ;
 
-    QMessageBox::information ( this, "How to begin", tekst, "OK", nullptr, nullptr);
+    showWarningMessage( "How to begin", tekst, QMessageBox::Information);
 }

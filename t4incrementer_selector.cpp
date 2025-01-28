@@ -33,11 +33,9 @@ T4incrementer_selector::T4incrementer_selector(QWidget *parent) :
                 + "to read the list of possible incrementors. "
                 "Are you sure that the path to the spy spectra is correct ?";
 
-        QMessageBox::critical( this, " List of possible variables not found",
+        showWarningMessage( " List of possible variables not found",
                                mess,
-                               QMessageBox::Ok | QMessageBox::Default,
-                               QMessageBox::NoButton,
-                               QMessageBox::NoButton);  // error
+                               QMessageBox::Critical);  // error
         return ;
     }
 
@@ -69,10 +67,15 @@ void T4incrementer_selector::filter_changed()
     last_filter = filter;
     // separate the * parts
 
-    QStringList found = list_of_all_increm.filter(
-//                QRegExp(filter, Qt::CaseInsensitive)
-                QRegExp ( filter, Qt::CaseInsensitive,QRegExp::Wildcard )
-                );
+#if  (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+   QStringList found = list_of_all_increm.filter(
+        zbuduj_regexpattern(filter, false)
+        );
+#else
+    QStringList found = list_of_all_increm.filter(    
+        QRegExp ( filter, Qt::CaseInsensitive,QRegExp::Wildcard )
+        );
+#endif
 
     ui->listBox_filtered->clear();
     ui->listBox_filtered->addItems(found) ;
@@ -175,7 +178,15 @@ void T4incrementer_selector::add_all_user_incrementers_to_the_list()
 void T4incrementer_selector::on_lineEdit_filter_textChanged(const QString &filter)
 {
     last_filter = filter;
-    QStringList found = list_of_all_increm.filter(QRegExp(filter, Qt::CaseInsensitive, QRegExp::Wildcard)  );
+    QStringList found = list_of_all_increm.filter(
+#if  (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+               zbuduj_regexpattern(filter, false)
+#else
+        QRegExp(filter, Qt::CaseInsensitive, QRegExp::Wildcard)
+#endif
+
+
+        );
 
     ui->listBox_filtered->clear();
     ui->listBox_filtered->addItems(found) ;
