@@ -657,158 +657,15 @@ void spectrum_2D::mousePressEvent ( QMouseEvent *e )
         else if ( e->button() & Qt::RightButton )
         {
 
-                // enum options {
-
-            //Q3PopupMenu *contekst_Menu = new Q3PopupMenu;
-            QMenu *context_Menu = new QMenu;
-
-            // how many vertices are seleced now ---------------
-            total_vertices_selected = 0 ;
-            more_than_one_polygon_selected = false ;
-            for ( unsigned int i = 0 ; i < banana.size() ; i++ )
-            {
-                int how_many = banana[i].how_namy_vertices_selected() ;
-
-                if ( how_many != 0 && total_vertices_selected != 0 )
-                {
-                    more_than_one_polygon_selected = true ;
-                }
-                total_vertices_selected += how_many ;
-            }
-            //-------------------------------------------
-            ostringstream strum ;
-
-            typ_x xxx = ( b_matrix->give_x_mouse_click() );
-            typ_x yyy = ( b_matrix->give_y_mouse_click() ) ;
-            //cout << "yyy = " << yyy << endl;
-            int value =  give_value_of_pixel ( xxx, yyy ) ;
-
-            strum << "Matrix point x="
-                  <<   xxx
-                  << " y="
-                  <<    yyy
-                  << ",  contains value: "
-                  << value
-                //<< ( ( value >= 32000 ) ? " (SATURATED)" : "")
-
-                ;
-
-
-            b_matrix-> make_rubberband_off();
-
-            context_Menu->addAction ( strum.str().c_str(), this,  SLOT ( slot_no_operation() ) );
-            context_Menu->addSeparator();
-
-            context_Menu->addAction("Help about mouse clicking", this, SLOT(slot_help_about_mouse_clicking() ) );
-            context_Menu->addAction("Help about MOVING vertices of polygon", this, SLOT(slot_help_about_moving_vertices() ) );
-            context_Menu->addAction("Help about SELECTING vertices of polygon", this, SLOT(slot_help_about_selecting_vertices() ) );
-            context_Menu->addSeparator();
-
-            context_Menu->addAction (
-                QString ( "'Crosshair cursor' mode. Click here to %1" ).arg ( b_matrix->is_crosshair_mode() ? "Stop" : "Begin" ),
-                this,
-                SLOT ( slot_crosshair_mode() ) ) ;
-
-            //             contekst_Menu->addAction (
-            //                 "Crosshair cursor RESET",
-            //                 26 );
-            context_Menu->addSeparator();
-            context_Menu->addAction ( "Add a NEW polygon gate", this, SLOT ( slot_add_new_polygon() ) );
-
-            if ( more_than_one_polygon_selected )
-            {
-                context_Menu->addAction ( "NOTE: options below are disabled when you select vertices "
-                                        " in more than one polygon", this, SLOT ( slot_no_operation () ) );
-            }
-
-            QAction* ptr_delete_polygon =
-                context_Menu->addAction ( "Delete a selected polygon gate", this, SLOT ( slot_delete_polygon () ) );
-
-
-            // contekst_Menu->addAction("Add a GRID of polygon gates", this, SLOT(slot_18() ) );   // <-- nobody is  using  this
-
-
-            QAction* ptr_copy_selected_polygon =
-                context_Menu->addAction ( "Copy a selected polygon gate", this, SLOT ( slot_copy_polygon () ) );
-
-            QAction* ptr_paste_polygon =
-                context_Menu->addAction ( "Paste a polygon gate (possible even to other matrix) ", this, SLOT ( slot_paste_polygon () ) );
-            QAction* ptr_integrate_selected_polygons =
-                context_Menu->addAction ( "Integrate the selected polygons", this, SLOT ( slot_integrate_polygon () ) );
-
-            context_Menu->addSeparator();
-            context_Menu->addAction ( "Z axis threshold", this, SLOT ( slot_ask_for_z_threshold () ) );
-            context_Menu->addSeparator();
-
-            context_Menu->addAction ( "Add one new vertex (after every selected vertex) ", this, SLOT ( slot_add_vertices ( ) ) );
-            QAction* ptr_delete_select_vertices =
-                context_Menu->addAction ( "Delete selected vertices", this, SLOT ( slot_remove_vertex ()) );
-            QAction* ptr_deselect_all_vertices =
-                context_Menu->addAction ( "Deselect all vertices", this, SLOT ( slot_deselect_all_vertices () ) );
-
-            ostringstream strum2 ;
-
-            strum2 << "UNDO moving of polygons/vertices ( possible "
-                   << ( b_matrix->how_many_undo_banana_possible() )
-                   << " steps ) ";
-
-            string mess = strum2.str() ;
-
-            QAction* ptr_banana_undo =
-                context_Menu->addAction ( mess.c_str() , this, SLOT ( slot_undo_banana_change () ) );
-            ptr_banana_undo->setEnabled(
-                ( b_matrix->how_many_undo_banana_possible() != 0 )
-                );
-
-            context_Menu->addSeparator();
-            context_Menu->addAction ( "Put a tag with my comment just at this point", this, SLOT ( slot_add_tag () ) );
-            context_Menu->addAction ( "Erase a nearest tag comment [point its beginning!]", this, SLOT ( slot_erase_nearest_tag () ) );
-            context_Menu->addAction ( "Remove all tags from this matrix", this, SLOT ( slot_remove_all_tags () ) );
-            context_Menu->addSeparator();
-
-            // here we can disable some options-------------------
-            if ( total_vertices_selected == 0 )
-            {
-                ptr_deselect_all_vertices->setEnabled(false);
-                ptr_delete_select_vertices->setEnabled(false);
-                ptr_integrate_selected_polygons->setEnabled(false);
-            }
-            if ( more_than_one_polygon_selected ||  total_vertices_selected == 0 )
-            {
-                ptr_delete_polygon->setEnabled(false);
-                ptr_copy_selected_polygon-> setEnabled(false);
-            }
-
-            if ( !flag_polygon_in_clipboard )
-            {
-                ptr_paste_polygon->setEnabled(false);
-            }
-
-            context_Menu->addAction ( "Show the list of X and Y incrementers of this spectrum", this, SLOT ( slot_show_incrementers () ) );
-            context_Menu->addAction ( "Show time of last zeroing of this spectrum", this, SLOT ( slot_show_time_of_last_zeroing () ) );
-
-
-            //             QList<QAction *>   lista =  contekst_Menu->actions();
-            //             for ( int i = 0 ; i < lista.count() ; i++ )
-            //             {
-            //                 cout << "Action nr " << i << " is enabled ? = " << lista[i].isEnabled() << endl;
-            //             }
-            //-------------------------------------------
-
-            context_Menu->exec ( mapToGlobal ( QPoint ( e->
 #if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-                                                  position().
+                       auto pos = e->position(). toPoint();
+#else
+                        auto pos = e->pos();
 #endif
-                                                  x() , e->
-#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-                                                  position().
-#endif
-                                                  y() ) ) );
 
-            delete context_Menu;
-            b_matrix-> inform_that_banana_just_deletd();
-            //            e->accept();
-
+            // cout << "Myszkowa Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
+            show_context_2d_menu(pos, true);
+            update();
         }  // end if right button
 
         b_matrix->clear_flag_was_mouse_click() ;
@@ -3901,3 +3758,174 @@ QMessageBox::StandardButton askYesNoCancel(const QString& title,
     return QMessageBox::NoButton;
 }
 //*****************************************************************************************************
+void spectrum_2D::show_context_2d_menu(QPoint pos, bool flaga_myszki)
+{    // enum options {
+    // QPoint pos = QCursor::pos();
+
+    // cout << "Wspolna Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
+
+
+    //Q3PopupMenu *contekst_Menu = new Q3PopupMenu;
+    QMenu *context_Menu = new QMenu;
+
+    // how many vertices are seleced now ---------------
+    total_vertices_selected = 0 ;
+    more_than_one_polygon_selected = false ;
+    for ( unsigned int i = 0 ; i < banana.size() ; i++ )
+    {
+        int how_many = banana[i].how_namy_vertices_selected() ;
+
+        if ( how_many != 0 && total_vertices_selected != 0 )
+        {
+            more_than_one_polygon_selected = true ;
+        }
+        total_vertices_selected += how_many ;
+    }
+    //-------------------------------------------
+    ostringstream strum ;
+
+    typ_x xxx = ( b_matrix->give_x_mouse_click() );
+    typ_x yyy = ( b_matrix->give_y_mouse_click() ) ;
+    //cout << "yyy = " << yyy << endl;
+    int value =  give_value_of_pixel ( xxx, yyy ) ;
+
+    strum << "Matrix point x="
+          <<   xxx
+          << " y="
+          <<    yyy
+          << ",  contains value: "
+          << value
+        //<< ( ( value >= 32000 ) ? " (SATURATED)" : "")
+
+        ;
+
+
+    b_matrix-> make_rubberband_off();
+
+    context_Menu->addAction ( strum.str().c_str(), this,  SLOT ( slot_no_operation() ) );
+    context_Menu->addSeparator();
+
+    context_Menu->addAction("Help about mouse clicking", this, SLOT(slot_help_about_mouse_clicking() ) );
+    context_Menu->addAction("Help about MOVING vertices of polygon", this, SLOT(slot_help_about_moving_vertices() ) );
+    context_Menu->addAction("Help about SELECTING vertices of polygon", this, SLOT(slot_help_about_selecting_vertices() ) );
+    context_Menu->addSeparator();
+
+    context_Menu->addAction (
+        QString ( "'Crosshair cursor' mode. Click here to %1" ).arg ( b_matrix->is_crosshair_mode() ? "Stop" : "Begin" ),
+        this,
+        SLOT ( slot_crosshair_mode() ) ) ;
+
+    //             contekst_Menu->addAction (
+    //                 "Crosshair cursor RESET",
+    //                 26 );
+    context_Menu->addSeparator();
+    context_Menu->addAction ( "Add a NEW polygon gate", this, SLOT ( slot_add_new_polygon() ) );
+
+    if ( more_than_one_polygon_selected )
+    {
+        context_Menu->addAction ( "NOTE: options below are disabled when you select vertices "
+                                " in more than one polygon", this, SLOT ( slot_no_operation () ) );
+    }
+
+    QAction* ptr_delete_polygon =
+        context_Menu->addAction ( "Delete a selected polygon gate", this, SLOT ( slot_delete_polygon () ) );
+
+
+    // contekst_Menu->addAction("Add a GRID of polygon gates", this, SLOT(slot_18() ) );   // <-- nobody is  using  this
+
+
+    QAction* ptr_copy_selected_polygon =
+        context_Menu->addAction ( "Copy a selected polygon gate", this, SLOT ( slot_copy_polygon () ) );
+
+    QAction* ptr_paste_polygon =
+        context_Menu->addAction ( "Paste a polygon gate (possible even to other matrix) ", this, SLOT ( slot_paste_polygon () ) );
+    QAction* ptr_integrate_selected_polygons =
+        context_Menu->addAction ( "Integrate the selected polygons", this, SLOT ( slot_integrate_polygon () ) );
+
+    context_Menu->addSeparator();
+    context_Menu->addAction ( "Z axis threshold", this, SLOT ( slot_ask_for_z_threshold () ) );
+    context_Menu->addSeparator();
+
+    context_Menu->addAction ( "Add one new vertex (after every selected vertex) ", this, SLOT ( slot_add_vertices ( ) ) );
+    QAction* ptr_delete_select_vertices =
+        context_Menu->addAction ( "Delete selected vertices", this, SLOT ( slot_remove_vertex ()) );
+    QAction* ptr_deselect_all_vertices =
+        context_Menu->addAction ( "Deselect all vertices", this, SLOT ( slot_deselect_all_vertices () ) );
+
+    ostringstream strum2 ;
+
+    strum2 << "UNDO moving of polygons/vertices ( possible "
+           << ( b_matrix->how_many_undo_banana_possible() )
+           << " steps ) ";
+
+    string mess = strum2.str() ;
+
+    QAction* ptr_banana_undo =
+        context_Menu->addAction ( mess.c_str() , this, SLOT ( slot_undo_banana_change () ) );
+    ptr_banana_undo->setEnabled(
+        ( b_matrix->how_many_undo_banana_possible() != 0 )
+        );
+
+    context_Menu->addSeparator();
+    context_Menu->addAction ( "Put a tag with my comment just at this point", this, SLOT ( slot_add_tag () ) );
+    context_Menu->addAction ( "Erase a nearest tag comment [point its beginning!]", this, SLOT ( slot_erase_nearest_tag () ) );
+    context_Menu->addAction ( "Remove all tags from this matrix", this, SLOT ( slot_remove_all_tags () ) );
+    context_Menu->addSeparator();
+
+    // here we can disable some options-------------------
+    if ( total_vertices_selected == 0 )
+    {
+        ptr_deselect_all_vertices->setEnabled(false);
+        ptr_delete_select_vertices->setEnabled(false);
+        ptr_integrate_selected_polygons->setEnabled(false);
+    }
+    if ( more_than_one_polygon_selected ||  total_vertices_selected == 0 )
+    {
+        ptr_delete_polygon->setEnabled(false);
+        ptr_copy_selected_polygon-> setEnabled(false);
+    }
+
+    if ( !flag_polygon_in_clipboard )
+    {
+        ptr_paste_polygon->setEnabled(false);
+    }
+
+    context_Menu->addAction ( "Show the list of X and Y incrementers of this spectrum", this, SLOT ( slot_show_incrementers () ) );
+    context_Menu->addAction ( "Show time of last zeroing of this spectrum", this, SLOT ( slot_show_time_of_last_zeroing () ) );
+
+
+//             QList<QAction *>   lista =  contekst_Menu->actions();
+//             for ( int i = 0 ; i < lista.count() ; i++ )
+//             {
+//                 cout << "Action nr " << i << " is enabled ? = " << lista[i].isEnabled() << endl;
+//             }
+//-------------------------------------------
+
+#if 0
+context_Menu->exec ( mapToGlobal ( QPoint ( e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                      position().
+#endif
+                                      x() , e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                      position().
+#endif
+                                      y() ) ) );
+#endif
+
+  //  cout << "Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
+
+    if(flaga_myszki){
+        context_Menu->exec ( mapToGlobal ( pos ) );
+    }
+    else{
+        context_Menu->exec ( pos  );
+    }
+
+
+    delete context_Menu;
+    b_matrix-> inform_that_banana_just_deletd();
+    //            e->accept();
+
+}
+//************************************************************************************************************************************************

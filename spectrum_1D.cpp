@@ -404,6 +404,9 @@ void spectrum_1D::mousePressEvent(QMouseEvent *e)
 
             if(e->button() & Qt::LeftButton)
             {
+
+
+
                 // it will be about the marker
                 // remember the new
                 remember_as_marker(b_spectrum->give_x_mouse_click()) ;
@@ -413,61 +416,15 @@ void spectrum_1D::mousePressEvent(QMouseEvent *e)
             }
             else if(e->button() & Qt::RightButton)
             {
-                //                cout << "F. spectrum_1D::mousePressEven - RIGHT button" << endl ;
-                QMenu *context_Menu = new QMenu;
-
-                context_Menu->addAction("Help about mouse clicking", this, SLOT(slot_help_about_1D_mouse_clicking() ) );
-                context_Menu->addSeparator();
-                context_Menu->addAction("SET background marker at this point", this, SLOT(slot_set_bg_marker() ));
-                context_Menu->addAction("erase RECENT  background marker", this, SLOT(slot_erase_recent_bg_marker() ));
-                context_Menu->addAction("erase the NEAREST background marker", this, SLOT(slot_erase_nearest_bg_marker() ));
-                context_Menu->addAction("erase ALL background markers", this, SLOT(slot_erase_all_bg_markers() ));
-
-                context_Menu->addSeparator();
-
-                context_Menu->addAction("[Obsolate] Create the default GATE from current background markers", this, SLOT(slot_save_bg_markers_as_default_gate() ));
-                context_Menu->addAction("Remove one of the GATEs", this, SLOT(slot_remove_default_gate() ));
-
-                context_Menu->addSeparator();
-                // context_Menu->addAction("Remember the Set of Integration and Bgr markers", this, SLOT(slot_remember_all_markers() ));
-                context_Menu->addAction("Manager of sets of Integ and Bgr markers...", this, SLOT(slot_paste_all_markers() ));
-
-                context_Menu->addSeparator();
-
-                context_Menu->addAction("place a yellow integration marker in channel nr...", this, SLOT(slot_place_integ_marker_by_value() ));
-                context_Menu->addAction("Rebin on screen...", this, SLOT(slot_rebin_on_screen() ));
-
-                context_Menu->addSeparator();
-                context_Menu->addAction("Put a tag with my comment just in this point...", this, SLOT(slot_add_a_tag() ));
-                context_Menu->addAction("Erase a nearest comment [point a beginning!]", this, SLOT(slot_add_nalepka() ));
-                context_Menu->addAction("Remove all TAGS [peak centr. and width]", this, SLOT(slot_remove_all_tags() ));
-                context_Menu->addSeparator();
-
-                if(kind_of_spectrum == overplot)
-                {
-                    context_Menu->addAction("Name of the overlay spectrum nr...", this, SLOT(slot_name_overlay_spec_nr() ));
-                }
-
-                if(kind_of_spectrum != overplot)
-                {
-                    //  contekst_Menu->insertItem("Make frozen photo of the spectrum", this, SLOT(slot_14() ));
-                }
-                context_Menu->addAction("Show the list of incrementers of this spectrum", this, SLOT(slot_show_list_of_incrementers() ));
-                context_Menu->addAction("Show time of last zeroing of this spectrum", this, SLOT(slot_times_of_last_zeroing() ));
-
-
-                context_Menu->exec(mapToGlobal(QPoint(e->
 #if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-                                                      position().
-
+                auto pos = e->position(). toPoint();
+#else
+                auto pos = e->pos();
 #endif
-                                                      x() ,e->
-#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-                                                      position().
-#endif
-                                                      y()   )));
+                // cout << "Myszkowa Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
+                show_context_1d_menu(pos, true);
 
-                delete context_Menu;
+
             }
             b_spectrum->clear_flag_was_mouse_click() ;
             b_spectrum->update();
@@ -2524,8 +2481,8 @@ void spectrum_1D::remove_the_gate_1D()
 
         default:
         case 3: // Cancel :
-           it = lista.end() ; // stop the loop
-           it-- ;  // because the loop will now skip to the next
+            it = lista.end() ; // stop the loop
+            it-- ;  // because the loop will now skip to the next
             break ;
 
         }
@@ -3607,8 +3564,12 @@ void spectrum_1D::slot_set_bg_marker()
 {
     // ----------------------set marker
     remember_for_undo ( "Set background marker" );
+    // cout << "give_x_mouse_click = " << b_spectrum->give_x_mouse_click()
+    //      << endl;
+
     set_backgr_marker ( b_spectrum->give_x_mouse_click() );
 }
+
 //***************************************************************************
 void spectrum_1D::slot_erase_all_bg_markers()
 {
@@ -3762,3 +3723,103 @@ void spectrum_1D::slot_help_about_1D_mouse_clicking()
                            ), QMessageBox::Information);
 }
 //***************************************************************************************************
+void spectrum_1D::show_context_1d_menu(QPoint pos, bool flaga_myszki)
+{
+
+    // cout << " spectrum_1D  current spectrum name is " << name_of_spectrum
+    //      << endl;
+  //  appl_form_ptr->activateWindow();
+
+    //                cout << "F. spectrum_1D::mousePressEven - RIGHT button" << endl ;
+    QMenu *context_Menu = new QMenu;
+
+    context_Menu->addAction("Help about mouse clicking", this, SLOT(slot_help_about_1D_mouse_clicking() ) );
+    context_Menu->addSeparator();
+    context_Menu->addAction("SET background marker at this point", this, SLOT(slot_set_bg_marker() ));
+    context_Menu->addAction("erase RECENT  background marker", this, SLOT(slot_erase_recent_bg_marker() ));
+    context_Menu->addAction("erase the NEAREST background marker", this, SLOT(slot_erase_nearest_bg_marker() ));
+    context_Menu->addAction("erase ALL background markers", this, SLOT(slot_erase_all_bg_markers() ));
+
+    context_Menu->addSeparator();
+
+    context_Menu->addAction("[Obsolate] Create the default GATE from current background markers", this, SLOT(slot_save_bg_markers_as_default_gate() ));
+    context_Menu->addAction("Remove one of the GATEs", this, SLOT(slot_remove_default_gate() ));
+
+    context_Menu->addSeparator();
+    // context_Menu->addAction("Remember the Set of Integration and Bgr markers", this, SLOT(slot_remember_all_markers() ));
+    context_Menu->addAction("Manager of sets of Integ and Bgr markers...", this, SLOT(slot_paste_all_markers() ));
+
+    context_Menu->addSeparator();
+
+    context_Menu->addAction("place a yellow integration marker in channel nr...", this, SLOT(slot_place_integ_marker_by_value() ));
+    context_Menu->addAction("Rebin on screen...", this, SLOT(slot_rebin_on_screen() ));
+
+    context_Menu->addSeparator();
+    context_Menu->addAction("Put a tag with my comment just in this point...", this, SLOT(slot_add_a_tag() ));
+    context_Menu->addAction("Erase a nearest comment [point a beginning!]", this, SLOT(slot_add_nalepka() ));
+    context_Menu->addAction("Remove all TAGS [peak centr. and width]", this, SLOT(slot_remove_all_tags() ));
+    context_Menu->addSeparator();
+
+    if(kind_of_spectrum == overplot)
+    {
+        context_Menu->addAction("Name of the overlay spectrum nr...", this, SLOT(slot_name_overlay_spec_nr() ));
+    }
+
+    if(kind_of_spectrum != overplot)
+    {
+        //  contekst_Menu->insertItem("Make frozen photo of the spectrum", this, SLOT(slot_14() ));
+    }
+    context_Menu->addAction("Show the list of incrementers of this spectrum", this, SLOT(slot_show_list_of_incrementers() ));
+    context_Menu->addAction("Show time of last zeroing of this spectrum", this, SLOT(slot_times_of_last_zeroing() ));
+
+#if 0
+context_Menu->exec(mapToGlobal(QPoint(e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                      position().
+
+#endif
+                                      x() ,e->
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+                                      position().
+#endif
+                                      y()   )));
+
+#endif
+
+
+
+    // auto mpos = mapToGlobal ( pos );
+    // cout <<  " proste pos x = " << pos.x() <<   ", y = " << pos.y()
+    //         << " mapowane x = " << mpos.x() << ", y = " << mpos.y() << endl;
+
+    // cout << "Tuz przed narysowanie popup menu..." << endl;
+    if(flaga_myszki){
+
+        // cout << "Sytuacja myszki =  "
+        //      << " pozycja menu  (po mapToGlobal   [ " << mpos.x() << ", " << mpos.y() << "]" << endl;
+        context_Menu->exec ( mapToGlobal ( pos ) );
+    }
+    else{
+        // cout << "Sytuacja shortcut =pos [ "
+             // << pos.x() << ", " << pos.y() << "]" << endl;
+
+        context_Menu->exec ( pos  );
+
+    }
+    delete context_Menu;
+    // appl_form_ptr->give_workspace() ->setFocus();
+
+}
+//************************************************************************************************
+// void spectrum_1D::showContextMenu(QPoint pos)
+// {
+
+//     // appl_form_ptr->give_workspace() ->setFocus();
+
+//     // auto tmp = appl_form_ptr->give_workspace() ->hasFocus();
+//     // cout << "Focus = " << tmp << endl;
+
+//     cout << "SPECTRUM_1D --> Ctrl+B KLAWISZOWO  Po mapowaniu pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
+//     b_spectrum->showContextMenu( pos);
+//      moj_showContextMenu(pos);
+// }

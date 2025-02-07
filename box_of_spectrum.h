@@ -1,10 +1,19 @@
 #ifndef box_of_spectrum_h
 #define box_of_spectrum_h
 
+//#include <qworkspace.h>
+#include <qevent.h>
+#include <qcursor.h>
+#include <qapplication.h>
 
 #include <qwidget.h>
 #include <qpainter.h>
 #include <QMenu>
+
+
+#include <QGridLayout>
+#include <QShortcut>
+#include <QKeySequence>
 
 #include <vector>
 
@@ -29,8 +38,8 @@ class box_of_spectrum :  public QWidget, public swiatek
     //    double f_right;	//factor_right,
     //    double f_bottom;	// factor_bottom,
 
-    // QWidget *parent ;
-    spectrum_1D   *parent ;  // <-- here we now that is is only 1D spectrum
+        // QWidget *parent ;
+        spectrum_1D   *parent ;  // <-- here we now that is is only 1D spectrum
     // spectrum_widget* parent ;
 
     vector<int> *spectrum_ptr ;
@@ -39,8 +48,8 @@ class box_of_spectrum :  public QWidget, public swiatek
     // current parameters for drawing
     typ_x minX;
     typ_x maxX;
-	int maxY;
-	int minY ;
+    int maxY;
+    int minY ;
 
     // pointer to the data in the spectrum widget
     spectrum_descr * specif ;            // nr of bins, np. 1024
@@ -60,22 +69,25 @@ class box_of_spectrum :  public QWidget, public swiatek
     QPixmap pix;   // pixmap for making picture of matrix
     bool make_new_pixmap ;  // to force making general change (for expample after expanding)
 
+    double real_x;
+    double real_y;
+    string real_spectrum_name ;
 
 public:
 
     box_of_spectrum (
-            // fators telling the relative positions of this widget inside the parent widget
-            // for example 0,    0, 1,    1   -- would mean full surface of the parent
-            //                     0.5, 0, 1, 0.5 -- would mean upper right square
-            //                                                                                   |_X|
-            //                                                                                   |__|
-            //        double factor_left,
-            //        double factor_top,
-            //        double factor_right,
-            //        double factor_bottom,
-            QWidget *a_parent,
-            //..= 0,
-            string name = "" );
+        // factors telling the relative positions of this widget inside the parent widget
+        // for example 0,    0, 1,    1   -- would mean full surface of the parent
+        //                     0.5, 0, 1, 0.5 -- would mean upper right square
+        //                                                                                   |_X|
+        //                                                                                   |__|
+        //        double factor_left,
+        //        double factor_top,
+        //        double factor_right,
+        //        double factor_bottom,
+        QWidget *a_parent,
+        //..= 0,
+        string name = "" );
     // parent is the widget wher this box is drawn,
     // (boss is the object which sends the order what to draw
 public:
@@ -100,7 +112,7 @@ public:
 
     void set_spectrum_pointer ( vector<int> * ptr, spectrum_descr * desc );
 
-	void 	change_region_of_spectrum ( typ_x a, typ_x b, typ_x c, typ_x d )
+    void 	change_region_of_spectrum ( typ_x a, typ_x b, typ_x c, typ_x d )
     {
         minX = a;
         maxY = b;
@@ -112,6 +124,7 @@ public:
     //----------------------------------
     void mousePressEvent ( QMouseEvent * e );
     void mouseMoveEvent ( QMouseEvent* e );
+    void  take_position_from_mouse() ;
 
     bool was_mouse_click()
     {
@@ -121,14 +134,25 @@ public:
     {
         flag_was_mouse_click = false;
     }
-
+    //--------------
     typ_x give_x_mouse_click()
     {
         return  x_mouse_click;
     }
+
+    void set_x_mouse_click(typ_x x)
+    {
+          x_mouse_click = x;
+    }
+    //-------------------
     typ_x give_y_mouse_click()
     {
         return  y_mouse_click;
+    }
+
+   void set_y_mouse_click(typ_x y)
+    {
+        y_mouse_click = y;
     }
 
     //-- markers
@@ -173,6 +197,12 @@ protected: // Protected attributes
     bool  overlay_mode;
     bool black_white ;
     int krot; // rebinning factor
+
+
+public slots:
+    void showContextMenu(QPoint pos);
+
+protected:
 };
 
 

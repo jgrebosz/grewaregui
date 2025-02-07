@@ -16,7 +16,7 @@ class T4results_of_integration;
 
 bool Tplate_spectrum::flag_repainting_allowed = true;
 //***********************************************************************
-Tplate_spectrum::Tplate_spectrum(QMdiArea *parent) :
+Tplate_spectrum::Tplate_spectrum(QWidget *parent) :
     QWidget( (QWidget*)  parent  ),
 //    QMdiSubWindow(  parent  ),
 
@@ -25,6 +25,9 @@ Tplate_spectrum::Tplate_spectrum(QMdiArea *parent) :
     ui->setupUi(this);
     dimension = 0 ;
     setGeometry(10,10, 180, 100);
+
+
+
 }
 //***********************************************************************
 Tplate_spectrum::~Tplate_spectrum()

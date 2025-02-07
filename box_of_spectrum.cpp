@@ -20,11 +20,11 @@ class spectrum_1D ;
 //*******************************************************************
 
 box_of_spectrum::box_of_spectrum (
-        //        double factor_left,
-        //                                   double factor_top,
-        //                                   double factor_right,
-        //                                   double factor_bottom,
-        QWidget *a_parent, string name ) :
+    //        double factor_left,
+    //                                   double factor_top,
+    //                                   double factor_right,
+    //                                   double factor_bottom,
+    QWidget *a_parent, string name ) :
     QWidget ( a_parent) , swiatek()
 {
     setWindowTitle(name.c_str() );
@@ -50,13 +50,13 @@ box_of_spectrum::box_of_spectrum (
     //                                 QColor ( 0, 85,0 ) ); // dark green
 
     QColor color =  (parent->give_flag_black_white() ?
-                         Qt::white
-                       :
-                         //QColor (0, 85,0)  // just green
-                         //                         QColor (0, 45,0)   // very dark green
-                         background_colour_of_1D_spectrum   // very dark blue
+                        Qt::white
+                                                    :
+                        //QColor (0, 85,0)  // just green
+                        //                         QColor (0, 45,0)   // very dark green
+                        background_colour_of_1D_spectrum   // very dark blue
 
-                         );  // dark green
+                    );  // dark green
 
     QPalette palette;
     palette.setColor(backgroundRole(), color);
@@ -76,10 +76,36 @@ box_of_spectrum::box_of_spectrum (
     setMouseTracking ( true );
     //    setMouseTracking (false  );
 
-
     //    setContextMenuPolicy(Qt::CustomContextMenu);
     //    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ctxMenu(const QPoint &)));
 
+
+}
+//*********************************************************************
+void box_of_spectrum::showContextMenu(QPoint pos)
+{
+    // appl_form_ptr->give_workspace() ->setFocus();
+
+    // auto tmp = appl_form_ptr->give_workspace() ->hasFocus();
+    // cout << "Focus = " << tmp << endl;
+
+
+    // cout << "showContextMenu BOX --> KLAWISZOWO  CTL-N Surowa Pozycja x = ["
+    //      << pos.x() << ", " << pos.y() << "]"
+    //      << "  w  widmie " << parent->name_of_spectrum
+    //      // << " appl_form_ptr->give_workspace() ->hasFocus() = "
+    //      // <<  appl_form_ptr->give_workspace() ->hasFocus()
+    //      << endl;
+
+    // Wspolrzedne w tym widgecie bierzemy z ostaniej pozcyji przesuwanej myszki
+    take_position_from_mouse();
+
+    // cout << "wywolanie moj_showContextMenu z parenta" << endl;
+    // cout << "Nazwa dla jego parenta = " << parent->name_of_spectrum << endl;
+    // cout << "a current spectum is " << real_spectrum_name << endl;
+    parent->moj_showContextMenu(pos);
+    // appl_form_ptr->give_workspace() ->setFocus();
+    // cout << " end of "<< __PRETTY_FUNCTION__ << endl;
 }
 //*********************************************************************
 void box_of_spectrum::ctxMenu(const QPoint &)
@@ -219,7 +245,7 @@ void box_of_spectrum::draw_all ( QPainter * pior )
         piorko.setPen ( black_white ? Qt::black : Qt::white ); // prepering the pen
 
         ustaw_swiat ( r.left(), r.top(), r.right(), r.bottom(), // preparing the coordinates
-                      minX, maxY, maxX, minY );
+                    minX, maxY, maxX, minY );
 
 
         //  cout << "rect left = " << r.left()
@@ -362,14 +388,14 @@ void box_of_spectrum::draw_all ( QPainter * pior )
 
                     if ( nr==0 )
                         piorko.drawText ( wx ( minX ),
-                                          wy ( maxY- ( 0.01 * ( maxY-minY ) ) ) +13   ,
-                                          "frozen clone done at" );
+                                        wy ( maxY- ( 0.01 * ( maxY-minY ) ) ) +13   ,
+                                        "frozen clone done at" );
                     COTO;
                     piorko.setPen ( black_white ?
-                                        parent->frozen_photo_vector[nr].color //+ 0x808080
-                                      :
-                                        parent->frozen_photo_vector[nr].color //+ 0x808080
-                                        );   // prepaing the pen
+                                      parent->frozen_photo_vector[nr].color //+ 0x808080
+                                              :
+                                      parent->frozen_photo_vector[nr].color //+ 0x808080
+                                  );   // prepaing the pen
                     COTO;
                     // opis
                     //        sansFont.setPixelSize(12);
@@ -386,8 +412,8 @@ void box_of_spectrum::draw_all ( QPainter * pior )
                     COTO;
 
                     piorko.drawText ( wx ( minX + ( 0.05 * ( nr / 20 ) * ( maxX-minX ) ) ),
-                                      wy ( maxY- ( 0.01 * ( maxY-minY ) ) ) + ( 13* ( ( ( nr ) %20 ) +1 ) ) +13 ,
-                                      napis );
+                                    wy ( maxY- ( 0.01 * ( maxY-minY ) ) ) + ( 13* ( ( ( nr ) %20 ) +1 ) ) +13 ,
+                                    napis );
 
                     // piorko.moveTo ( wx ( minX ),   wy ( 0 ) );
                     QPainterPath skok;
@@ -401,11 +427,11 @@ void box_of_spectrum::draw_all ( QPainter * pior )
             {
 
                 first_drawn_channel = ( int ) ( ( minX - parent->overplot_vector[nr].sd.beg )
-                                                / parent->overplot_vector[nr].sd.waga )  ;
+                                             / parent->overplot_vector[nr].sd.waga )  ;
                 first_drawn_channel = max ( 0, first_drawn_channel );
 
                 last_drawn_channel  = ( int ) ( ( maxX - parent->overplot_vector[nr].sd.beg )
-                                                / parent->overplot_vector[nr].sd.waga ) ;
+                                            / parent->overplot_vector[nr].sd.waga ) ;
                 //                last_drawn_channel  = min ( parent->overplot_vector[nr].sd.bin-1, (double) last_drawn_channel );
                 last_drawn_channel  = min ( parent->overplot_vector[nr].sd.bin-1, last_drawn_channel );
 
@@ -429,13 +455,13 @@ void box_of_spectrum::draw_all ( QPainter * pior )
                 }
 
                 piorko.drawText ( wx ( minX ),
-                                      wy ( maxY- ( 0.01 * ( maxY-minY ) ) ) +13   ,
-                                      opis.c_str() );
+                                wy ( maxY- ( 0.01 * ( maxY-minY ) ) ) +13   ,
+                                opis.c_str() );
                 piorko.setPen ( black_white ?
-                                    parent->overplot_vector[nr].color + 0x808080
-                                  :
-                                    parent->overplot_vector[nr].color + 0x808080
-                                    );   // prepaing the pen
+                                  parent->overplot_vector[nr].color + 0x808080
+                                          :
+                                  parent->overplot_vector[nr].color + 0x808080
+                              );   // prepaing the pen
                 // opis
                 //        sansFont.setPixelSize(12);
                 //        piorko.setFont(sansFont);
@@ -454,8 +480,8 @@ void box_of_spectrum::draw_all ( QPainter * pior )
 
 
                 piorko.drawText ( wx ( minX + ( 0.05 * ( nr / 20 ) * ( maxX-minX ) ) ),
-                                  wy ( maxY- ( 0.01 * ( maxY-minY ) ) ) + ( 13* ( ( ( nr ) %20 ) +1 ) ) +13 ,
-                                  napis );
+                                wy ( maxY- ( 0.01 * ( maxY-minY ) ) ) + ( 13* ( ( ( nr ) %20 ) +1 ) ) +13 ,
+                                napis );
 
                 //piorko.moveTo ( wx ( parent->overplot_vector[nr].sd.beg ),   wy ( 0 ) );
                 QPainterPath skok;
@@ -486,9 +512,9 @@ void box_of_spectrum::draw_all ( QPainter * pior )
                     if ( krot == 1 ) // no rebin on screen
                     {
                         county =wy ( ( widmo[i] > maxY ) ?
-                                         maxY + ( ( minY + maxY ) >> 3 )
-                                       :
-                                         widmo[i] );
+                                        maxY + ( ( minY + maxY ) >> 3 )
+                                                      :
+                                        widmo[i] );
                     }
                     else // for rebining on the screen
                     {
@@ -505,9 +531,9 @@ void box_of_spectrum::draw_all ( QPainter * pior )
                         }
                         // now we use this mean
                         county =wy ( ( mean > maxY ) ?
-                                         maxY + ( ( minY + maxY ) >> 3 )
-                                       :
-                                         mean );
+                                        maxY + ( ( minY + maxY ) >> 3 )
+                                                  :
+                                        mean );
                         cout << "county = " << county << endl;
                     }
 
@@ -527,8 +553,8 @@ void box_of_spectrum::draw_all ( QPainter * pior )
                 QPainterPath skok;
 
                 ustaw_swiat ( r.left(), r.top(), r.right(), r.bottom(), // preparing the coordinates
-                              minX, maxY ,
-                              maxX, minY );
+                            minX, maxY ,
+                            maxX, minY );
 
                 // loops goes on real channels !----------------------------------------
                 //piorko.moveTo(wx(minX),   wy(log10(widmo[first_drawn_channel ]) )) ;
@@ -761,7 +787,7 @@ void box_of_spectrum::draw_background_markers ( QPainter& piorko )
                 for ( int i = static_cast<int> ( bg_markers[0] ) ; i <= bg_markers[last_bgr_point] ; i++ )
                 {
                     double p1 = ( i * slope )
-                            + offset ;
+                    + offset ;
                     double p2 = ( ( i+1 ) * slope ) + offset ;
                     if ( p1 > 0 && p2 > 0 )
                     {
@@ -843,7 +869,7 @@ void box_of_spectrum::draw_1Dgates ( QPainter & piorko )
             // opis
 
             piorko.drawText ( wx ( my_gate[i].boundaries[k] ),   wy ( gate_height )-5,
-                              my_gate[i].screen_name.c_str() );
+                            my_gate[i].screen_name.c_str() );
         }
     }
 
@@ -871,7 +897,7 @@ void box_of_spectrum::draw_pinup_notices(QPainter & piorko, int fontsize)
 
 
     sansFont.setPixelSize ( (parent->nalepka_notice.give_info().size()) > 90 ? // for very long notice
-                                                                               0.6 * fontsize : fontsize );
+                              0.6 * fontsize : fontsize );
 
     piorko.setFont ( sansFont );
     parent->nalepka_notice.draw ( this, &piorko, parent->give_flag_log_scale() );
@@ -916,6 +942,21 @@ void box_of_spectrum::set_spectrum_pointer ( vector<int> * ptr, spectrum_descr *
     specif = d ;
 }
 //***********************************************************************
+void   box_of_spectrum::take_position_from_mouse()
+{
+    // we make it easer: just take the last mouse position
+
+    x_mouse_click =real_x;
+    y_mouse_click = real_y;
+
+    // cout << "last mouse positon is = " << x_mouse_click
+    //      << ", y = " << y_mouse_click
+    //      << " at spectrum name " << real_spectrum_name
+    //      << endl;
+
+}
+
+//***********************************************************************
 void   box_of_spectrum::mousePressEvent ( QMouseEvent * e )
 {
     // we set the values
@@ -939,10 +980,10 @@ void   box_of_spectrum::mousePressEvent ( QMouseEvent * e )
     //       if(pressed_button_state == Qt::RightButton)
     //       {
 
-    //           cout << " right mouse button " << endl;
-    //           QMenu *menu = new QMenu;
-    //              menu->addAction(tr("Test Item"), this, SLOT(test_slot()));
-    //              menu->exec(mapToGlobal(QPoint(e->x() ,e->y()   )));
+        //           cout << " right mouse button " << endl;
+        //           QMenu *menu = new QMenu;
+        //              menu->addAction(tr("Test Item"), this, SLOT(test_slot()));
+        //              menu->exec(mapToGlobal(QPoint(e->x() ,e->y()   )));
 
     //              delete menu;
 
@@ -993,9 +1034,9 @@ void box_of_spectrum::force_new_pixmap ( bool b )
     //                                 :
     //                                 QColor ( 0, 85,0 ) ); // dark green}
     QColor color =  (parent->give_flag_black_white() ?
-                         Qt::white
-                       :
-                         background_colour_of_1D_spectrum);  // dark green
+                        Qt::white
+                                                    :
+                        background_colour_of_1D_spectrum);  // dark green
     QPalette palette;
     palette.setColor(backgroundRole(), color);
     setPalette(palette);
@@ -1017,8 +1058,11 @@ void box_of_spectrum::mouseMoveEvent ( QMouseEvent* e )
 {
     {
         // showing the position in the "Tip" area
-        double real_x = pix2worX ( e->pos().x() );
-        double real_y = pix2worY ( e->pos().y() );
+        // double
+        real_x = pix2worX ( e->pos().x() );
+        // double
+        real_y = pix2worY ( e->pos().y() );
+        real_spectrum_name = parent->give_spectrum_name().c_str() ;
         //int contents =    parent->give_value_of_pixel ( real_x,real_y );
 
         if(parent->give_flag_log_scale() )
@@ -1030,10 +1074,10 @@ void box_of_spectrum::mouseMoveEvent ( QMouseEvent* e )
             //             QString wydruk ;
             //             wydruk=
             appl_form_ptr->send_to_statusbar(
-                        QString ( "Spectrum  X: %1  Y: %2     %3" ).arg ( real_x, 10 )
-                        .arg ( real_y, 10 )
-                        .arg( parent->give_spectrum_name().c_str()).toStdString(),
-                        10*1000 ); //  seconds on the screen
+                QString ( "Spectrum  X: %1  Y: %2     %3" ).arg ( real_x, 10 )
+                    .arg ( real_y, 10 )
+                    .arg( parent->give_spectrum_name().c_str()).toStdString(),
+                10*1000 ); //  seconds on the screen
         }
 
     }

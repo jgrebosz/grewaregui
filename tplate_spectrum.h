@@ -17,14 +17,17 @@ class Tplate_spectrum;
 class QMdiArea;
 ///////////////////////////////////////////////////////////////////////////////////////
 class Tplate_spectrum :
-//        public  QMdiSubWindow //
-public  QWidget
+        // public  QMdiSubWindow //
+        public  QWidget
 {
     Q_OBJECT
 
 public:
-	explicit Tplate_spectrum ( QMdiArea *parent = nullptr );
+    // explicit Tplate_spectrum ( QMdiArea *parent = nullptr );
     //explicit Tplate_spectrum(QMdiArea *ws, QString nazwa);
+    explicit Tplate_spectrum ( QWidget *parent = nullptr );
+
+
     ~Tplate_spectrum();
     Tplate_spectrum(const Tplate_spectrum&) = delete;
     Tplate_spectrum& operator=(const Tplate_spectrum&) = delete;
@@ -57,9 +60,9 @@ public:
         return dimension;
     }
 
+    void init();
 public slots:
     virtual void paintEvent ( QPaintEvent * ) = 0;
-    virtual void init();
     //virtual void resizeEvent ( QResizeEvent * ) = 0;
     virtual void full() = 0;
     virtual void shift_right ( int ) = 0;
@@ -135,6 +138,16 @@ protected:
 
     virtual void read_list_of_incrementers ( ifstream & plik );
 
+    // for MAC
+public:
+    virtual void showContextMenu() = 0;
+    static Tplate_spectrum* getHoveredDocument() {
+        return hoveredDocument;
+    }
+
+protected:
+    // ColorWidget *colorWidget;
+    static inline Tplate_spectrum *hoveredDocument = nullptr;
 
 private:
     Ui::Tplate_spectrum *ui;

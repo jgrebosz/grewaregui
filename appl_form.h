@@ -299,6 +299,8 @@ protected:
     bool flag_display_previously_displayed_spectra = false;
     vector<string> last_spectra_selection ;
 
+
+
 };
 /////////////////////////////////////////////////////////////
 extern appl_form  *appl_form_ptr;

@@ -58,9 +58,9 @@ protected:
     void select_all();
     void create_the_sum_spectrum();
     bool check_common_binnings ( string spec_name,
-                                 double *bin,
-                                 double *beg,
-                                 double *end );
+                               double *bin,
+                               double *beg,
+                               double *end );
     // extended mode is when we want to use CTRL/SHIFT keys - just like in Windows
     void extended_selection_mode ( bool extended );
     void add_to_history ( QString s );
@@ -130,23 +130,23 @@ private slots:
     void on_lineEdit_anti_filter_textChanged(const QString &arg1);
 
     void on_checkBox_anti_toggled(bool checked);
-	void on_ComboBox_filter_editTextChanged(const QString);
+    void on_ComboBox_filter_editTextChanged(const QString);
     void on_ComboBox_filter_currentTextChanged(QString arg1);
 
     // no signals of this (anymore?)
     // void on_ComboBox_filter_textChanged(const QString &arg1);
 
-	//void on_ListBox_available_activated(const QModelIndex &index);
+    //void on_ListBox_available_activated(const QModelIndex &index);
 
-	void on_ComboBox_filter_activated(const QString &arg1);
+    // void on_ComboBox_filter_activated(const QString &arg1);
 
     void on_checkBox_case_sens_clicked(bool checked);
 
     void on_Button_show_exit_clicked();
 
-	//void on_checkBox_toggled(bool checked);
+    //void on_checkBox_toggled(bool checked);
 
-	void on_checkBox_enable_drag_toggled(bool checked);
+    void on_checkBox_enable_drag_toggled(bool checked);
 
 
 

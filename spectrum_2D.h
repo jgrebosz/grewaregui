@@ -5,6 +5,9 @@
 #include <qevent.h>
 #include <QGridLayout>
 
+#include <QShortcut>
+#include <QKeySequence>
+
 #include "qmessagebox.h"
 #include "tplate_spectrum.h"
 
@@ -68,9 +71,19 @@ public:
         //cout << " this is the constructor of the 2D specrum" << endl ;
 
         name_of_spectrum = nazwa.toStdString() ;
+
+        // Skrót klawiszowy Ctrl + M
+
+        // QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+M"), this);
+        // connect(shortcut, &QShortcut::activated, this, [this]() { showContextMenu(QCursor::pos()); });
+
         // the init below must be called manually from here !
         init() ;
 
+        connect(this, &spectrum_2D::hovered, this, [this]() {
+            // cout<< "hovered over 2D spectrum " << name_of_spectrum << endl;
+            hoveredDocument = this;
+        });
     }
     ~spectrum_2D()
     {
@@ -78,7 +91,55 @@ public:
         //			cout << "Memory freed " << endl;
         destroy();
     }
+protected:
+    void enterEvent(QEnterEvent *event) //override
+    {
+        emit hovered();
+        QWidget::enterEvent(event);
+    }
 
+signals:
+    void hovered();
+public:
+    void showContextMenu() override {
+        // QMenu menu;
+        // menu.addAction("Opcja B1");
+        // menu.addAction("Opcja B2");
+        // menu.exec(QCursor::pos());
+         b_matrix -> showContextMenu(QCursor::pos() );
+    }
+
+protected:
+    // Obsługa zdarzenia menu kontekstowego (kliknięcie prawym przyciskiem myszy)
+    void contextMenuEvent(QContextMenuEvent *event) override
+    {
+        auto pos = event->globalPos();
+        // cout << "Myszka Prawy klawisz - Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
+        moj_showContextMenu(pos);
+    }
+
+private slots:
+    // void showContextMenu(QPoint pos)
+    // {
+
+    //         // cout << "KLAWISZOWO  Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
+    //     moj_showContextMenu(pos);
+    // }
+
+public:
+
+    void moj_showContextMenu(QPoint pos)
+    {
+        // cout << "Myszka Prawy klawisz - Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
+
+        show_context_2d_menu(pos, false);
+        update();
+
+    }
+
+
+
+public:
     vector <Tpinup> nalepka ;  // user texts
     Tpinup nalepka_notice ;     // info about the spectrum
     Tpinup z_threshold_notice ;
@@ -111,14 +172,14 @@ public:
     int min_counts_on_map ;
 
 
-//    double Bx;
-//    double Cx;
-//    double Dx;
-//    double Ax;
-//    double Ay;
-//    double By;
-//    double Cy;
-//    double Dy;
+    //    double Bx;
+    //    double Cx;
+    //    double Dx;
+    //    double Ax;
+    //    double Ay;
+    //    double By;
+    //    double Cy;
+    //    double Dy;
     double bgr_slope ;
 
 
@@ -159,6 +220,8 @@ public:
     void ask_z_threshold();
     bool is_possible_to_erase_this_polygon ( string );
     int give_minZthreshold() { return min_z_threshold; }
+
+    void show_context_2d_menu(QPoint pos, bool flaga_myszki);
     //---------------
 
 public slots:
@@ -169,7 +232,7 @@ public slots:
     void keyPressEvent ( QKeyEvent *e );
 
     void wheelEvent ( QWheelEvent * e );
-	void mouseMoveEvent ( QMouseEvent * e );
+    void mouseMoveEvent ( QMouseEvent * e );
 
     // ---------
     void paintEvent ( QPaintEvent * );
@@ -200,8 +263,8 @@ public slots:
     void scaleY_by_05();
     void integrate ( T4results_of_integration *ptr );
     void give_parameters ( typ_x * min_ch, typ_x * max_co,
-                           typ_x * max_ch, typ_x * min_co,
-                           spectrum_descr *sd );
+                         typ_x * max_ch, typ_x * min_co,
+                         spectrum_descr *sd );
     //typ_x * sp_beg, typ_x * sp_end );
     void scrollbar_horizontal_moved ( int int_left_edge );
     void scaleY_by_factor ( double value );
@@ -210,7 +273,7 @@ public slots:
     int giveCurrentMaxCounts();
     // void spectrum__destroyed( QObject * );
     void set_parameters ( typ_x min_ch, typ_x max_yy,
-                          typ_x max_ch, typ_x min_yy );
+                        typ_x max_ch, typ_x min_yy );
     void save();
     void save_as ( string prefix );
     void set_the_name ( QString & name );
@@ -229,7 +292,7 @@ public slots:
     }
 
     void read_in_file ( const char * name, bool this_is_first_time );
-//    bool find_x_description ( const char * name );
+    //    bool find_x_description ( const char * name );
     void log_linear ( bool stan );
     void auto_scale( bool state)
     { // cout << "Wirtualna " << __PRETTY_FUNCTION__ << endl;
@@ -301,9 +364,9 @@ public slots:
         // ( "Add horizontal line", 25 );
         // add_horizontal_polygon();
         b_matrix->crosshair_mode ( ! b_matrix->is_crosshair_mode() );
-		b_matrix->update();
+        b_matrix->update();
     }
-	//-----------------------------------------
+    //-----------------------------------------
     void slot_add_horizontal_obsolate()
     {
         //
@@ -334,8 +397,8 @@ public slots:
 
                 // dialog to choose the name and the format
                 QFileDialog* fd = new QFileDialog ( this,
-                                                    "Select the name for cloned polygon gate",
-                                                    true );
+                                                  "Select the name for cloned polygon gate",
+                                                  true );
                 fd->setMode ( QFileDialog::AnyFile );
                 fd->setFilter ( "polygon gates ( *.poly ) " );
                 QString fileName;
@@ -409,9 +472,9 @@ public slots:
             paste_polygon();
         }
     }
-	void slot_help_about_moving_vertices();
-	void slot_help_about_selecting_vertices();
-	void slot_help_about_mouse_clicking();
+    void slot_help_about_moving_vertices();
+    void slot_help_about_selecting_vertices();
+    void slot_help_about_mouse_clicking();
 
     void slot_undo_banana_change()
     {
@@ -420,7 +483,7 @@ public slots:
         find_polygons_with_names_as_this_marix();
     }
 
-	void slot_create_grid_of_polygons()   // never used?
+    void slot_create_grid_of_polygons()   // never used?
     {
         // create the grid of polygon gates
         grid_of_polygons() ;
@@ -440,16 +503,16 @@ public slots:
     void slot_add_tag()
     {
         add_tag_with_comment (
-                    b_matrix->give_x_mouse_click(),
-                    b_matrix->give_y_mouse_click() );
+            b_matrix->give_x_mouse_click(),
+            b_matrix->give_y_mouse_click() );
         // update() ;
     }
 
     void slot_erase_nearest_tag()
     {
         erase_nearest_tag_with_comment (
-                    b_matrix->give_x_mouse_click(),
-                    b_matrix->give_y_mouse_click() );
+            b_matrix->give_x_mouse_click(),
+            b_matrix->give_y_mouse_click() );
         //        update() ;
     }
 

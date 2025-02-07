@@ -60,12 +60,12 @@ private:
     //bool flag_banana_just_deleted;
 
 
-	bool flag_banana_creating_mode;  // while user clicks vertices of the new banana
+    bool flag_banana_creating_mode;  // while user clicks vertices of the new banana
     vector<QPoint> new_banana_points;
 
 
-	bool flag_marking_selected_vertices_region_mode = false;  // while user makes rubberband to select vertices
-	bool flag_deselect_all_vertices_outside = false;
+    bool flag_marking_selected_vertices_region_mode = false;  // while user makes rubberband to select vertices
+    bool flag_deselect_all_vertices_outside = false;
 
 
     // we remember how far was the place of clicking from the center of the vertex
@@ -79,6 +79,10 @@ private:
     typ_x y_mouse_click;
 
     Qt::MouseButtons pressed_button_state ;
+
+    double real_x;
+    double real_y;
+    string real_spectrum_name ;
 
     typ_x marker[2] ;   // integration and expansion markers
 
@@ -120,20 +124,20 @@ public:
         //                     0.5, 0, 1, 0.5 -- would mean upper right square
         //                                                                                   |_X|
         //                                                                                   |__|
-//        double factor_left,
-//        double factor_top,
-//        double factor_right,
-//        double factor_bottom,
-		QWidget *a_parent= nullptr,
+        //        double factor_left,
+        //        double factor_top,
+        //        double factor_right,
+        //        double factor_bottom,
+        QWidget *a_parent= nullptr,
         string name = "" );
     // parent is the widget wher this box is drawn,
     // (boss is the object which sends the order what to draw
 
-	 ~box_of_matrix ()
-	{
-		delete rubberBand_lupa;
-	}
-	list<polygon_gate> undo_banana_list ;
+    ~box_of_matrix ()
+    {
+        delete rubberBand_lupa;
+    }
+    list<polygon_gate> undo_banana_list ;
 
 
 
@@ -151,18 +155,18 @@ public:
     void moving_polygon_vertex_handler ( QMouseEvent *e );
 
     void make_undo_banana() ;
-	auto how_many_undo_banana_possible()
+    auto how_many_undo_banana_possible()
     {
         return undo_banana_list.size() ;
     }
-//    void set_printing_mode ( QPainter * druk )
-//    {	printer = druk ;
-//    }
+    //    void set_printing_mode ( QPainter * druk )
+    //    {	printer = druk ;
+    //    }
     void inform_that_banana_just_deletd()
     {
         flag_move_one_vertex_of_polygon = false;
         flag_move_whole_polygon = false;
-		flag_move_selected_vertices_of_polygon = false;
+        flag_move_selected_vertices_of_polygon = false;
         rubberband_on = false ; // probably not needed, but usually stays ON
     }
     void make_rubberband_off() { rubberband_on = false ; }
@@ -172,7 +176,7 @@ public:
 
     void drawing_new_banana_mode ( string screen_name, string disk_name )
     {
-		flag_banana_creating_mode = true;  // while user clicks vertices of the new banana
+        flag_banana_creating_mode = true;  // while user clicks vertices of the new banana
         new_banana_points.clear();
         disk_name_for_new_banana = disk_name;
         screen_name_for_new_banana = screen_name;
@@ -215,8 +219,23 @@ public:
     void keyPressEvent ( QKeyEvent * e ) ;
     void keyReleaseEvent ( QKeyEvent * e );
 
-		void wheelEvent ( QWheelEvent * /*e*/ ) {}
+    void wheelEvent ( QWheelEvent * /*e*/ ) {}
 
+    //***********************************************************************
+    void  take_position_from_last_mouse()
+    {
+        // we make it easer: just take the last mouse position
+        // cout << "przeliczenie pozycji na numer kanalu : ? " ;
+
+        x_mouse_click =real_x;
+        y_mouse_click = real_y;
+
+        // cout << "last mouse positon is = " << x_mouse_click
+        //      << ", y = " << y_mouse_click
+        //      << " at spectrum name " << real_spectrum_name
+        //      << endl;
+
+    }
     // below there are not slots
 
     bool was_mouse_click()
@@ -252,18 +271,18 @@ public:
 
     // new factors, when the widget was resized, and the aspect is such, that we would like
     // it to be a bit different, so the world have to be recalculated.
-//    void new_factors ( double factor_left,
-//                       double factor_top,
-//                       double factor_right,
-//                       double factor_bottom
-//                     )
-//    {
-//        // remembering the factors
-//        f_left	= factor_left;
-//        f_top = factor_top;
-//        f_right = factor_right;
-//        f_bottom = factor_bottom;
-//    }
+    //    void new_factors ( double factor_left,
+    //                       double factor_top,
+    //                       double factor_right,
+    //                       double factor_bottom
+    //                     )
+    //    {
+    //        // remembering the factors
+    //        f_left	= factor_left;
+    //        f_top = factor_top;
+    //        f_right = factor_right;
+    //        f_bottom = factor_bottom;
+    //    }
     void force_new_pixmap ( bool b );
 
     void	enter_lupa_mode()
@@ -314,7 +333,7 @@ private:
     QPoint p_previous, p_next ;
     bool flag_move_whole_polygon ;
     bool flag_move_one_vertex_of_polygon ;
-	bool flag_move_selected_vertices_of_polygon ;
+    bool flag_move_selected_vertices_of_polygon ;
 
     void store_points_of_polygon ( int i );
     vector<QPoint> stored_polygon ;
@@ -330,17 +349,20 @@ private:
     QPainterPath shape_moving_vertex;
     QPainterPath path_crosshair;
 
-	void show_moving_flags(std::string txt )
-	{
-		cout << txt
-				<< " whole polygon = " << flag_move_whole_polygon
-			 << ", one vertex = " << flag_move_one_vertex_of_polygon
-			 <<  ", only selected vertices " << flag_move_selected_vertices_of_polygon
-			  << endl;
+    void show_moving_flags(std::string txt )
+    {
+        cout << txt
+             << " whole polygon = " << flag_move_whole_polygon
+             << ", one vertex = " << flag_move_one_vertex_of_polygon
+             <<  ", only selected vertices " << flag_move_selected_vertices_of_polygon
+             << endl;
 
-	}
+    }
 
-	void select_all_vertices_in_rubberband_region();
+    void select_all_vertices_in_rubberband_region();
+
+public slots:
+    void showContextMenu(QPoint pos);
 };
 
 #endif // box_of_matrix_h

@@ -65,6 +65,7 @@ box_of_matrix::box_of_matrix (
     pressed_button_state = Qt::NoButton ;
 
     //--------------------------
+
     //setBackgroundColor( transparentColor );
     rubberband_on = false;
     flag_lupa_mode = false ;
@@ -994,8 +995,12 @@ void  box_of_matrix::mouseMoveEvent ( QMouseEvent * e )
 
     {
         // showing the position in the "Tip" area
-        double real_x = pix2worX ( e->pos().x() );
-        double real_y = pix2worY ( e->pos().y() );
+        // double
+        real_x = pix2worX ( e->pos().x() );
+        // double
+        real_y = pix2worY ( e->pos().y() );
+        real_spectrum_name = parent->give_spectrum_name();
+
         int contents =    parent->give_value_of_pixel ( real_x,real_y );
 
         if ( contents >=0 )
@@ -2058,5 +2063,35 @@ void box_of_matrix::moving_polygon_vertex_handler ( QMouseEvent* e )
         //p.setCompositionMode(QPainter::CompositionMode_SourceOver);
 
     }
+
+}
+//************************************************************************************************
+void box_of_matrix::showContextMenu(QPoint pos)
+{
+    // cout << "wywolane showContextMenu " <<  endl;
+    // appl_form_ptr->give_workspace() ->setFocus();
+
+    // auto tmp = appl_form_ptr->give_workspace() ->hasFocus();
+    // cout << "Focus = " << tmp << endl;
+
+
+    // cout << "showContextMenu BOX --> KLAWISZOWO  CTL-N Surowa Pozycja x = ["
+    //      << pos.x() << ", " << pos.y() << "]"
+    //      // << "  w  widmie " << parent->name_of_spectrum
+    //      // << " appl_form_ptr->give_workspace() ->hasFocus() = "
+    //      // <<  appl_form_ptr->give_workspace() ->hasFocus()
+    //      << endl;
+
+    // Wspolrzedne w tym widgecie bierzemy z ostaniej pozcyji przesuwanej myszki
+    take_position_from_last_mouse();
+
+    // cout << "wywolanie moj_showContextMenu z parenta" << endl;
+    // cout << "Nazwa dla jego parenta = " << parent->name_of_spectrum << endl;
+    // cout << "a current spectum is " << real_spectrum_name << endl;
+
+
+    parent->moj_showContextMenu(pos);
+    // appl_form_ptr->give_workspace() ->setFocus();
+    // cout << " end of "<< __PRETTY_FUNCTION__ << endl;
 
 }

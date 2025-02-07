@@ -125,6 +125,47 @@ appl_form::appl_form ( QWidget *parent_w )
             this, SLOT ( updateActions() ) );
 
 
+    // for Mac computers, where right mouse button does not work, so we make a shortcut CTRL+M
+    // QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+B"), this);
+    // connect(shortcut, &QShortcut::activated, this, [this]() {
+    //     cout << "Wcisniety Ctrl+B" << endl;
+    //     Tplate_spectrum *doc =  Tplate_spectrum::getHoveredDocument();
+    //     if (doc) {
+    //         cout << "znaleziony doc " << endl;
+    //         auto subwind = (QMdiSubWindow *) doc;
+    //        area->setActiveSubWindow(subwind);
+    //          cout << "po set Active  " << endl;
+    //         doc->showContextMenu();
+    //         cout << "po showContext  " << endl;
+    //     }
+    // });
+
+    QShortcut *shortcut = new QShortcut(QKeySequence("Ctrl+M"), this);
+    connect(shortcut, &QShortcut::activated, this, [this]() {
+        // std::cout << "Wciśnięty Ctrl+M" << std::endl;
+
+        // auto lista = area->subWindowList();
+        // for(QMdiSubWindow element : lista)
+        //     {
+        //     Tplate_spectrum *doc = qobject_cast<Tplate_spectrum *>(element);
+        //     doc ->give_spectrum_name();
+        //     element ->give_spectrum_name();
+        // }
+
+        Tplate_spectrum *doc = Tplate_spectrum::getHoveredDocument();
+        if (doc) {
+            auto subwind = qobject_cast<QMdiSubWindow *>(doc);
+            if (subwind && area->subWindowList().contains(subwind)) {  // Sprawdzenie czy subwindow jest w QMdiArea
+                area->setActiveSubWindow(subwind);
+            } else {
+                // std::cout << "Blad: subwindow nie nalezy do QMdiArea!" << std::endl;
+            }
+            doc->showContextMenu();
+        }
+    });
+
+
+
     // chnage font for everybody
     QFont sansFont_ogolny ( "Sans",general_font_size);   // was : 9
     //QFont sansFont_ogolny ( "Sans", 12 );
@@ -347,6 +388,7 @@ void appl_form::on_actionSelecting_the_spectra_triggered()
 
                 //             int dim = ( dynamic_cast<spectrum_1D*> ( dokument ) == 0 ) ? 2 : 1 ;
                 //             dokument->give_dimension();
+
 
                 //     cout   << ", dimmension of spectrum " << dim << endl;
                 enable_some_actions ( dokument->give_dimension() );
@@ -678,7 +720,9 @@ bool appl_form::it_is_user_def_spectrum()
 //******************************************************************************
 void appl_form::addSubWindow ( Tplate_spectrum * s, Qt::WindowFlags windowFlags )
 {
-    ui->mdiArea->addSubWindow ( s, windowFlags );
+    QMdiSubWindow * subwind = (QMdiSubWindow *)(s);
+
+    ui->mdiArea->addSubWindow ( subwind, windowFlags );
     //     cout << "Dodane okno, teraz jest ich "
     //          << ui->mdiArea->subWindowList().count() << endl;
 }
@@ -4192,8 +4236,5 @@ void appl_form::on_actionAuto_scale_to_highest_peaks_toggled(bool stan)
 
 }
 
-
-
-
-
+//******************************************************************************************************
 

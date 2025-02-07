@@ -1937,12 +1937,12 @@ void T4select_spectra::on_ComboBox_filter_currentTextChanged([[maybe_unused]]  Q
     selected_filter();
 }
 //*********************************************************************************************************************
-void T4select_spectra::on_ComboBox_filter_activated(const QString & /*arg1*/)
-{
-    // This function is essential when we type filter "F" and "f" - they are distinguished properly.
+// void T4select_spectra::on_ComboBox_filter_activated(const QString & /*arg1*/)
+// {
+//     // This function is essential when we type filter "F" and "f" - they are distinguished properly.
 
-    //cout << "Combo activqted with " << arg1.toStdString() << endl;
-}
+//     //cout << "Combo activqted with " << arg1.toStdString() << endl;
+// }
 //*********************************************************************************************************************
 void T4select_spectra::on_checkBox_case_sens_clicked(bool checked)
 {
