@@ -125,9 +125,6 @@ void spectrum_1D::init()
     // max_channel = spectrum_length-1 ;
     max_counts = 250 ;
 
-#ifdef NIGDY
-#endif // NIGDY
-
     marker_older = marker_younger = 0;   // integration and expansion markers
 
     bgr_slope = 0;
@@ -230,88 +227,8 @@ void spectrum_1D::recalculate_my_geometry()
     flag_repaint_spectrum_box = 1;
     return;
 
-// ================================================
-
-#if 0
-
-    // calculating the standard boarder
-    // double pixels5 =  flag_draw_scales? 2 :   0;      //1.0 ; //5.0 ;
-
-
-    double boarderX = pixels5  / s.width()  ;
-
-
-    // calculating the geometry of all the boxes
-    Ax = boarderX;    // left edge of the scale of counts
-    Bx = Ax + 5 * boarderX  ; //  5 digits of text  ; // right edge of the scale of counts
-
-    // CHANGE
-    Bx = Ax + 11 * boarderX  ; //  5 digits of text  ; // right edge of the scale of counts
-
-
-    //Cx = Bx + boarderX ; // left edge of the spectrum filed
-    Cx = Bx ;
-
-    Dx = 1 - boarderX; // right edge of the spectrum field
-
-    // vertical geometry
-    double boarderY = pixels5 / s.height()  ;
-
-    //double aspect = ((double)s.height()) / s.width()   ;
-
-    Ay = boarderY ; // bottom edge of channels
-    By = Ay + 11 * (boarderY) ; // 2* wys_fontu (10 pix) ;
-
-
-    // to not to make channel scale (and font ) too high ,
-    // when it is narrow widget
-
-    /*---------
-    cout      << " original       Ay=" << Ay << "  By=" << By
-    << "  By-Ay" << By-Ay
-    //<< "  Dx=" << Dx
-    //<< "  Cx=" << Cx
-    //<< "  Dx-Cx" << Dx-Cx
-    << " aspect = " << aspect
-    <<   endl ;
-    ----*/
-
-    if(s.width()   < 250)
-    {
-        By = By / 1.5  ;
-        // cout << " recalculated Ay=" << Ay << " By=" << By
-        //<< " this aspect = " << aspect
-        // << endl ;
-    }
-
-    // Cy = By + boarderY; // bottom edge of spectrum box  OLD
-    Cy = By; // bottom edge of spectrum box NEW
-
-    Dy = 1 - boarderY ;
-
-
-    /*--
-    cout << "After recalculation "
-    << "  Ax=" << Ax
-    << "  Bx=" << Bx
-    << "  Cx=" << Cx
-    << "  Dx=" << Dx
-    << " s.width()=" <<  s.width()
-    << endl ;
-    ---*/
-
-    //  b_spectrum->new_factors(Cx, 1-Dy, Dx, 1-Cy);
-#endif  // 0
-
 }
 //**************************************************************************
-//int spectrum_1D::give_max_channel_skas()
-//{
-
-//	// return (max_channel) ;
-//	return spectrum_table.size() ;
-
-//}
 //***************************************************************************
 // function called from the toolbar (QMdiArea)
 void spectrum_1D::expand()
@@ -380,7 +297,7 @@ void spectrum_1D::expand_double_click(typ_x pos_x, typ_x  /*pos_y*/, bool shift)
 //****************************************************************************
 void spectrum_1D::mousePressEvent(QMouseEvent *e)
 {
-    //cout << "F. spectrum_1D::mousePressEven " << endl ;
+    // cout << "F. spectrum_1D::mousePressEven " << endl ;
     //cout << " w polu dialogowym Pixl=" << e->x()
     //      << "means channel =" << b_spectrum->pix2worX(e->x() )
     //      << endl ;
@@ -392,7 +309,7 @@ void spectrum_1D::mousePressEvent(QMouseEvent *e)
         {
             // Warning, at first widget gets a mouspress event, and then Doubleclik.
             // so it will be here around two times...
-            COTO;
+            // COTO;
             //cout << "to byl doubleclick  1D" << endl ;
             //expand() ;
         }
@@ -414,20 +331,24 @@ void spectrum_1D::mousePressEvent(QMouseEvent *e)
                 //   appl_form_ptr->statusBar()->message(
                 //   "Tip: Shift Click -allows you to correct a wrong  setting of the last yellow marker");
             }
-            else if(e->button() & Qt::RightButton)
-            {
-#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-                auto pos = e->position(). toPoint();
-#else
-                auto pos = e->pos();
-#endif
-                // cout << "Myszkowa Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
-                show_context_1d_menu(pos, true);
+//             else if(e->button() & Qt::RightButton)
+//             {
+// #if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+//                 auto pos = e->position(). toPoint();
+//                 auto p = e->scenePosition();
+//                 // cout << "Myszkowa Pozycja  scene x = "  <<  p.x()
+//                 //      << endl;
+// #else
+//                 auto pos = e->pos();
+// #endif
+//                 cout << "Myszkowa Pozycja x = " << pos.x() << ", y = " << pos.y()
+//                 << endl;
+//                 show_context_1d_menu(pos, true);
 
 
-            }
-            b_spectrum->clear_flag_was_mouse_click() ;
-            b_spectrum->update();
+//             }
+//             b_spectrum->clear_flag_was_mouse_click() ;
+//             b_spectrum->update();
         }
     }
     else
@@ -435,6 +356,8 @@ void spectrum_1D::mousePressEvent(QMouseEvent *e)
         COTO;
         //cout << " Click in neutral place " << e->x()  << endl ;
     }
+    b_spectrum->update();
+    // cout << " End of " << __PRETTY_FUNCTION__  << endl ;
 
 }
 //**************************************************************************
@@ -546,17 +469,6 @@ void spectrum_1D::scale_to_maxY()
 
     int first_drawn_channel = (int)((min_x - specif.beg) / specif.waga)  ;
     int last_drawn_channel  = (int)((max_x - specif.beg) / specif.waga) ;
-
-
-#ifdef NIGDY
-
-    // loops goes on real channels !
-    for(int i = first_drawn_channel ; i < last_drawn_channel ; i ++)
-    {
-        if(spectrum_table[i] > max_counts)
-            max_counts = spectrum_table[i] ;
-    }
-#endif
 
 
     if(kind_of_spectrum == overplot)
@@ -1038,29 +950,7 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
 
 
 
-#if 0
 
-    ostringstream ss2  ;
-
-    ss2 << " "
-        << setprecision(4) << centroid_channel
-        << " [" << peak_width << "]";
-    //<< ends ;
-
-    statement = ss2.str() ;
-
-    int vector_channel = (int)((centroid_channel - specif.beg) / specif.waga)  ;
-
-    if(
-            (vector_channel >= 0)
-            &&
-            (vector_channel < (int) spectrum_table.size()))
-
-    {
-        double pos_y = spectrum_table[vector_channel] ;
-        nalepka.push_back(Tpinup(centroid_channel, pos_y, statement.c_str())) ;
-    }
-#endif
 
 }
 //****************************************************************************
@@ -1082,76 +972,14 @@ void spectrum_1D::give_parameters(typ_x * min_ch, typ_x * max_co,
 
 }
 //************************************************************************
-void spectrum_1D::scrollbar_horizontal_moved(int int_left_edge)
-{
-    // to not to store intermediate positions while we drag the scrollbar
-    static time_t last = time(nullptr) ;
-    if(time(nullptr) - last > 2)
-    {
-        remember_for_undo("Scrollbar horizontal moved");
-    }
-    last = time(nullptr) ;
 
-
-    // this trick is because sliders do not accept any double numbers
-
-    //  cout << "scrolbar mover , value = " << int_left_edge << endl ;
-    typ_x my_left_edge = (typ_x)int_left_edge /   scrollbar_poziomy_mnoznik  ;
-    // cout << "Po korekcji = " << my_left_edge << endl ;
-
-    typ_x range  = (max_x - min_x) ;
-    if(range <= 0)
-        return ; // range = 0.01 ;
-
-    //cout << "Range is = " << range << endl ;
-
-    max_x = my_left_edge + range ;
-    min_x = my_left_edge ;
-
-    if(max_x > specif.end)
-        max_x = specif.end  ;
-    if(max_x - min_x < range)
-        min_x = max_x - range ;
-
-    b_spectrum ->force_new_pixmap(true);
-    //    draw_all_on_screen();
-
-}
 //*****************************************************************************
 void spectrum_1D::scaleY_by_factor(double  scaling_factor)
 {
 
     remember_for_undo("Scale by fatctor [n]") ;
     //  for(int i = min_channel ; i <= max_channel ; i++)
-#if 0
-    int first_drawn_channel = (int)((min_x - specif.beg) / specif.waga)  ;
-    int last_drawn_channel  = (int)((max_x - specif.beg) / specif.waga) ;
 
-    // claculate the scale in this region
-    max_counts = 0 ;
-
-    // loops goes on real channels !
-    for(int i = first_drawn_channel ; i <= last_drawn_channel ; i ++)
-    {
-        if(spectrum_table[i] > max_counts)
-            max_counts = spectrum_table[i] ;
-    }
-
-    if(value < 2)
-        value = 2 ;
-
-    max_counts = (int)(min_counts + value) ;
-    /*--
-        cout << "scale by factor *** Max counts = " << max_counts
-                << " value = " << value
-                        << ", summ = "
-                                << (min_counts + value)
-                                << endl;
-                                ---*/
-    // draw_all();
-    b_spectrum ->force_new_pixmap(true);
-    //    draw_all_on_screen();
-#else
     // warning: to scaling_factor   0.5, means that the spectrum is geting  2 times smaller
 
     //	flag_repaint_counts_box = true;
@@ -1191,66 +1019,10 @@ void spectrum_1D::scaleY_by_factor(double  scaling_factor)
     b_spectrum ->force_new_pixmap(true);
     //    draw_all_on_screen();
 
-#endif
+
 }
 //************************************************************************
-void spectrum_1D::slider_horizontal(int value)
-{
-    remember_for_undo("Slider horizontal moved");
 
-    // cout << "slider horizontal mover , value = " << value << endl ;
-    typ_x my_value = (typ_x)value /   scrollbar_poziomy_mnoznik  ;
-    // cout << "Po korekcji = " << my_value << endl ;
-
-
-
-    if(my_value < 5)
-        my_value = 5 ;
-
-    if(min_x + my_value  >  specif.end)
-    {
-        max_x = specif.end ;
-        min_x = max_x - my_value ;
-    }
-    else
-    {
-        max_x = min_x + my_value ;
-    }
-
-    if(min_x < specif.beg)
-        min_x = specif.beg ;
-
-    b_spectrum ->force_new_pixmap(true);
-    //    draw_all_on_screen();
-
-
-}
-//***********************************************************************
-void spectrum_1D::scroller_vertical_moved(int value_bottom)
-{
-    remember_for_undo("scroller veritcal moved");
-    value_bottom  /=   scrollbar_poziomy_mnoznik;
-
-    // cout << "F. scroller_vertical_moved(int value_bottom), argu = " << value_bottom << endl ;
-    //cout << "divider  is = " << divider << endl ;
-    int current_range  = (max_counts - min_counts) ;
-    if(current_range < 10)
-        current_range = 10 ;
-    /*----
-        cout
-        << "VSCR Range is = " << current_range
-                << ",  bottom = " << value_bottom << endl ;
-                        ------*/
-    //cout << "before change: max_coutns = " << max_counts << ", min_counts = "<< min_counts << endl ;
-    max_counts = -value_bottom ;
-    min_counts = max_counts - current_range ;
-    //cout << "after   change: max_coutns = " << max_counts << ", min_counts = "<< min_counts << endl ;
-
-    b_spectrum ->force_new_pixmap(true);
-    //    draw_all_on_screen();
-
-
-}
 //*************************************************************************
 int spectrum_1D::giveCurrentMaxCounts()
 {
@@ -1324,18 +1096,7 @@ void spectrum_1D::set_parameters(typ_x min_ch, typ_x max_co, typ_x  max_ch, typ_
         max_x = min(specif.end, max_ch) ;
     }
 
-#ifdef NIGDY
 
-    if(max_ch <= specif.end)
-    {
-        min_x = min_ch ;
-        max_x = max_ch ;
-    }
-    else
-    {
-        //cout << "Uwaga max_ch = " << max_ch << "gdy spextrum length " << spectrum_length << endl ;
-    }
-#endif
     min_counts = static_cast<int>(min_co) ;
     max_counts = static_cast<int>(max_co) ;
 
@@ -1358,15 +1119,6 @@ void spectrum_1D::save_as(string prefix)
     {
         // dialog to choose the name and the format
 
-
-#if 0
-        QString QFileDialog::getSaveFileName
-                ( QWidget * parent = 0, const QString & caption = QString(),
-                  const QString & dir = QString(), const QString & filter = QString(),
-                  QString * selectedFilter = 0, Options options = 0 );
-
-#endif
-
         QString fileName;
         QString selected_filter;  // QString("1).  Just two columned ascii(*.asc);;2).  Radware header, two columned ascii(*.asc);;3).  Binary original cracow format(*.spc)");
         QString filters = "3).  Binary original greware format(*.spc)";  // QString("1).  Just two columned ascii(*.asc);;2).  Radware header, two columned ascii(*.asc);;3).  Binary original cracow format(*.spc)");
@@ -1386,7 +1138,6 @@ void spectrum_1D::save_as(string prefix)
                 //name.replace(gdzie, 0, "");
             }
         }
-
 
         fileName = QFileDialog::getSaveFileName(this,
                                                 tr("Save current spectrum as a file"),
@@ -1516,98 +1267,7 @@ void spectrum_1D::set_the_name(QString & name)
 void spectrum_1D::print_it()
 {
     // cout << "spec widget, Decyzja drukowania " << endl ;
-#if 0
-    flaga_this_is_printing = true ;
 
-    printer = new QPrinter ;
-
-
-    printer->setOutputToFile(true);  // <-- for testing purposes we prefeare the file
-    printer->setOutputFileName("testing_hardcopy.ps");
-    printer->setOrientation(QPrinter::Landscape);
-
-    if(printer->setup(this))
-    {
-        // wyglada na to ze ze powyzsza instrukcja sprawila, ze nastapilo
-        // takie odswiezenie ekranu, ze flag printowania sie wyzerowal
-        // dlatego ponawiam go
-        flaga_this_is_printing = true ;
-
-        printer->setPrintProgram("lpr") ;    // <--- to okazalo sie wymagane !!!!!!!!
-
-        //      cout << "Program drukujacy to: >" << (printer->printProgram()) << "<"
-        //      << ", a nazwa printera to >" << (printer->printerName()) << "<"
-        //      << ", printerSelectionOption ()= >"  << (printer->printerSelectionOption ()) << "<"
-        //      << endl ;
-
-        //   cout << "Po setupie "
-        //     << printer->docName()
-        //     << endl ;
-        QPainter piorko(printer) ;
-        //cout << "Po piorku " << endl ;
-
-        //  QBrush b1( Qt::blue );
-        QBrush b2(Qt::green, Qt::Dense6Pattern);      // green 12% fill
-        //    QBrush b3( Qt::NoBrush );       // void brush
-        //    QBrush b4( Qt::CrossPattern );      // black cross pattern
-
-        piorko.setBrush(b2);
-        piorko.drawRoundRect(10, 10, 800, 800, 20, 20);
-        //    piorko.setBrush( b3 );
-        //    piorko.drawEllipse( 250, 10, 200, 100 );
-        //    piorko.setBrush( b4 );
-        //    piorko.drawPie( 250, 150, 200, 100, 45*16, 90*16 );
-
-
-        //++++++++++++++++++++++++
-
-        QPaintDeviceMetrics metrics(printer);   // need width/height
-        // of printer surface
-
-
-        paper_height  = metrics.height();
-        paper_width =  metrics.width();
-
-
-        /*----
-            const int MARGIN = metrics.logicalDpiX() / 2; // half-inch margin
-            int yPos        = MARGIN;               // y position for each line
-
-            QFontMetrics fm = piorko.fontMetrics();
-
-            for( int i = 0 ; i < 10  ; i++ ) {
-            //            if ( printer.aborted() )
-            //                break;
-            if ( yPos + fm.lineSpacing() > metrics.height() - MARGIN ) {
-            // no more room on this page
-            //                if ( !printer.newPage() )          // start new page
-            //                    break;                           // some error
-            yPos = MARGIN;                   // back to top of page
-            }
-            piorko.drawText( MARGIN, yPos, metrics.width() - 2*MARGIN,
-            fm.lineSpacing(), ExpandTabs, "linijka tekstu "   );
-            yPos += fm.lineSpacing();
-            }
-            -----*/
-
-        // moje proby --------- zakonczone -------------------
-
-        //      ustaw_swiat(0, 0, metrics.width(), metrics.height() ,   // preparing the coordinates
-        //        minX, maxY, maxX, minY);
-
-        /*
-            b_counts->set_printing_mode(&piorko);
-            b_channels->set_printing_mode(&piorko);
-            b_spectrum->set_printing_mode(&piorko);
-            */
-        draw_all(&piorko) ;
-
-        //   cout << "Po draw " << endl ;
-
-    }
-    delete printer ;
-    printer = 0 ;
-#endif
 
     //    flaga_this_is_printing = false ;
 }
@@ -1846,98 +1506,7 @@ void spectrum_1D::read_in_file(const char *name, bool this_is_first_time)
 
 }
 //****************************************************************
-#if 0
 
-bool spectrum_1D::find_x_description(const char * name)
-{
-    cout << __func__ << ", Is this function ever used? " << endl;
-
-    // now the system has changed and bins are written as first
-    // 2 double words in the contents of spectrum
-    // so we do not have to read them here
-    //
-    // now this function is only checking if this is active
-    // spectrum , or it is not anymore aculutated (but what for...?)
-
-    string desc_name = gpath.spectra + "description_of_ranges.txt";
-    ifstream plik(desc_name.c_str()) ;
-
-    if(!plik)
-        return false ;
-
-    //cout << "Searching in the " << desc_name << endl ;
-
-    char wyraz[500] ;
-    while(1)
-    {
-        //
-        if(!plik)
-        {
-            cout << "reading of  " << desc_name << " failed " << endl ;
-            break ;
-        }
-        if(plik.eof())
-        {
-            cout  << desc_name  << " riched the eof " << endl ;
-            break ;
-        }
-
-        plik.getline(wyraz, sizeof(wyraz)) ;   // because filename can have some spacies inside
-        //cout << " read line: " << wyraz << endl ;
-        //
-
-        if(strcmp(name, wyraz) == 0)  // found  ----------
-        {
-            // not needed anymore
-            //      plik
-            //        >> specif.bin
-            //        >>  specif.beg
-            //        >> specif.end ;
-
-            //      cout << "spectrum description found " << wyraz
-            //        <<  "values are:  " << specif.bin
-            //        <<  "  " << specif.beg
-            //        <<  "  " << specif.end ;
-
-            return true ;
-        }
-        // try without extension ----------------------
-        //    cout << " is not what we lookfor:  " << name
-        //                << ", so lets try with the extension *.asc"
-        //                << endl ;
-        //
-
-        char *wsk = strrchr(wyraz, ' ') ;
-        if(wsk)
-            *wsk = 0 ;
-        strcat(wyraz, ".spc");
-        //cout << " after appending is  " << wyraz << endl ;
-
-        if(strcmp(name, wyraz) == 0)  // found
-        {
-            plik >> specif.bin  >> specif.beg >> specif.end ;
-            //      cout << "spectrum description found " << wyraz
-            //        <<  "  values are:  bin= " << specif.bin
-            //                      <<  ", beg=  " << specif.beg
-            //                      <<  ", end  " << specif.end ;
-            //
-            //      cout << "\nreturning by B" << endl;
-            return true ;
-        }
-
-
-
-        //  int fff ;
-        //  cin >> fff ;
-    }
-
-
-    //cout << "Finally description of the spectum " << name
-    // << " was not found " << endl ;
-    return false ;
-
-}
-#endif // 0
 
 //*************************************************************************
 void spectrum_1D::log_linear(bool stan)
@@ -3723,7 +3292,7 @@ void spectrum_1D::slot_help_about_1D_mouse_clicking()
                            ), QMessageBox::Information);
 }
 //***************************************************************************************************
-void spectrum_1D::show_context_1d_menu(QPoint pos, bool flaga_myszki)
+void spectrum_1D::show_context_1d_menu(QPoint pos)
 {
 
     // cout << " spectrum_1D  current spectrum name is " << name_of_spectrum
@@ -3772,19 +3341,7 @@ void spectrum_1D::show_context_1d_menu(QPoint pos, bool flaga_myszki)
     context_Menu->addAction("Show the list of incrementers of this spectrum", this, SLOT(slot_show_list_of_incrementers() ));
     context_Menu->addAction("Show time of last zeroing of this spectrum", this, SLOT(slot_times_of_last_zeroing() ));
 
-#if 0
-context_Menu->exec(mapToGlobal(QPoint(e->
-#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-                                      position().
 
-#endif
-                                      x() ,e->
-#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-                                      position().
-#endif
-                                      y()   )));
-
-#endif
 
 
 
@@ -3793,7 +3350,8 @@ context_Menu->exec(mapToGlobal(QPoint(e->
     //         << " mapowane x = " << mpos.x() << ", y = " << mpos.y() << endl;
 
     // cout << "Tuz przed narysowanie popup menu..." << endl;
-    if(flaga_myszki){
+    // if(flaga_myszki){
+     if(1){
 
         // cout << "Sytuacja myszki =  "
         //      << " pozycja menu  (po mapToGlobal   [ " << mpos.x() << ", " << mpos.y() << "]" << endl;

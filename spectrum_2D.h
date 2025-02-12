@@ -92,21 +92,32 @@ public:
         destroy();
     }
 protected:
-    void enterEvent(QEnterEvent *event) //override
-    {
-        emit hovered();
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    void enterEvent(QEnterEvent *event) override {
+        emit hovered(this);
+        QWidget::enterEvent(event);
+        // cout << "hovered " << name_of_spectrum << endl;
+    }
+#else
+    void enterEvent(QEvent *event) override {
+        // W Qt5 możesz sprawdzić, czy event jest typu QEvent::Enter
+        if (event->type() == QEvent::Enter) {
+            emit hovered(this);
+            // cout << "hovered " << name_of_spectrum << endl;
+        }
         QWidget::enterEvent(event);
     }
+#endif
 
 signals:
-    void hovered();
+    void hovered(QWidget*);
 public:
     void showContextMenu() override {
         // QMenu menu;
         // menu.addAction("Opcja B1");
         // menu.addAction("Opcja B2");
         // menu.exec(QCursor::pos());
-         b_matrix -> showContextMenu(QCursor::pos() );
+         b_matrix -> showMatrixContextMenu(QCursor::pos() );
     }
 
 protected:
@@ -114,17 +125,13 @@ protected:
     void contextMenuEvent(QContextMenuEvent *event) override
     {
         auto pos = event->globalPos();
-        // cout << "Myszka Prawy klawisz - Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
+
+        // cout << "Myszka Prawy klawisz - global Pozycja x = " << pos.x() << ", y = " << pos.y()
+             // << endl;
+
         moj_showContextMenu(pos);
     }
 
-private slots:
-    // void showContextMenu(QPoint pos)
-    // {
-
-    //         // cout << "KLAWISZOWO  Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
-    //     moj_showContextMenu(pos);
-    // }
 
 public:
 
@@ -132,7 +139,7 @@ public:
     {
         // cout << "Myszka Prawy klawisz - Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
 
-        show_context_2d_menu(pos, false);
+        show_context_2d_menu(pos);
         update();
 
     }
@@ -221,7 +228,7 @@ public:
     bool is_possible_to_erase_this_polygon ( string );
     int give_minZthreshold() { return min_z_threshold; }
 
-    void show_context_2d_menu(QPoint pos, bool flaga_myszki);
+    void show_context_2d_menu(QPoint pos);
     //---------------
 
 public slots:
@@ -266,10 +273,10 @@ public slots:
                          typ_x * max_ch, typ_x * min_co,
                          spectrum_descr *sd );
     //typ_x * sp_beg, typ_x * sp_end );
-    void scrollbar_horizontal_moved ( int int_left_edge );
+    // void scrollbar_horizontal_moved ( int int_left_edge );
     void scaleY_by_factor ( double value );
-    void slider_horizontal ( int value );
-    void scroller_vertical_moved ( int value_bottom );
+    // void slider_horizontal ( int value );
+    // void scroller_vertical_moved ( int value_bottom );
     int giveCurrentMaxCounts();
     // void spectrum__destroyed( QObject * );
     void set_parameters ( typ_x min_ch, typ_x max_yy,

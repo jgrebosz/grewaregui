@@ -56,8 +56,6 @@ void example()
 }
 #endif
 //======================================================================
-
-
 Tselfgate_type::Types Tselfgate_type::give_type_of_selfgate_called(string fname)
 {
     // take only extension
@@ -79,3 +77,4 @@ Tselfgate_type::Types Tselfgate_type::give_type_of_selfgate_called(string fname)
     }
     return Types::not_available;
 }
+//======================================================================

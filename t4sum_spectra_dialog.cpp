@@ -70,37 +70,7 @@ void T4sum_spectra_dialog::on_pushButton_remove_row_clicked()
 }
 //**********************************************************************************
 
-#if 0
-void T4sum_spectra_dialog::on_table1_doubleClicked(int row, int col, int button, const QPoint &   /*mousePos*/ )
-{
-    // which row is selected
-    int nr = row ; // ui->tableWidget1->currentRow();
-    col = col ; // fake
-    button = button ; // fake
 
-
-    // Take the text from the table
-
-
-    double old_value = ui->tableWidget1->item(nr, 1)->text().toDouble() ;
-
-    // display the dialog
-    bool ok;
-    double res = QInputDialog::getDouble(this , "Adding factor",
-                                         QString("Enter a new value of the factor for spectrum %1").arg(ui->tableWidget1->item(nr, 0)->text() ),
-                                         old_value, -10000.5,
-                                         10000.5, 3, &ok);
-    if ( ok ) {
-        // user entered something and pressed OK
-        // store this back into the table
-        QString new_text;
-        new_text.setNum(res);
-        ui->tableWidget1->item(nr, 1)->setText(new_text);
-    } else {
-        // user pressed Cancel
-    }
-}
-#endif // 0
 //*********************************************************************************
 void T4sum_spectra_dialog::on_tableWidget1_cellDoubleClicked(int row, int column)
 {

@@ -66,31 +66,6 @@ void T4merge_2d_spectra_dlg::on_pushButton_remove_row_released()
     }
 }
 
-#if 0
-//*****************************************************************************
-void T4merge_2d_spectra_dlg::set_parameters ( QStringList *ptr_names, QStringList *ptr_factors )
-{
-    names = ptr_names ;
-    factors = ptr_factors;
-    int nr = 0 ;
-    ui->table1->setNumRows ( 0 );
-    QStringList::Iterator itfac =  factors->begin();
-    for ( QStringList::Iterator it = names->begin() ; it != names->end() ;  ++it, nr++, ++itfac )
-    {
-        //cout << *it << "\n";
-        if ( nr+1 > ui->table1->numRows() )
-        {
-            ui->table1->insertRows ( nr, 1 );
-        }
-        ui->table1->setText ( nr, 0, *it );
-        ui->table1->setText ( nr, 1, *itfac );
-    }
-
-    ui->table1->adjustColumn ( 0 );
-    ui->table1->adjustColumn ( 1 );
-
-}
-#endif
 //**************************************************************************************************************
 void T4merge_2d_spectra_dlg::on_table1_cellDoubleClicked ( int row, int column )
 {

@@ -14,11 +14,11 @@ greaterThan(QT_MAJOR_VERSION,4): QT += widgets
 
 #=========================================================
 # when DEBUG ---- uncomment this 2 lines below
-# CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant (1)
-# QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug  (2)
+CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant (1)
+QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug  (2)
 
 #when RELEASE    ===========================================
- CONFIG  += warn_on  static release
+ # CONFIG  += warn_on  static release
 
 #    (static is probably for pictures (loaded into program))
 
@@ -286,7 +286,8 @@ FORMS    += appl_form.ui \
 OTHER_FILES +=
 
 RESOURCES += \
-    greware_icons.qrc
+   greware_icons.qrc
+
 
 DISTFILES += \
     info_to_remember.txt

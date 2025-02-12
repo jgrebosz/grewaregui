@@ -175,13 +175,6 @@ void box_of_matrix::draw_all ( QPainter * pior )
     spectrum_2D *p = ( spectrum_2D* ) parent ;
 
 
-#if 0
-    resize ( ( int ) ( ( f_right-f_left ) * size_of_window.width() ),
-             ( int ) ( ( f_bottom-f_top ) * size_of_window.height() ) ); // restore size
-    move ( ( int ) ( f_left * size_of_window.width() ),
-           ( int ) ( f_top * size_of_window.height() ) );     // restore position
-#endif
-
     QRect r = rect() ;
 
     //bool
@@ -1837,22 +1830,10 @@ void box_of_matrix::crosshair_handler ( QMouseEvent* e )
         }
         else
         {
-#if 0
-            // at first Erase last drawn rubberband:
-            p.setPen ( QPen ( Qt::white, 1 ) );
-            p.drawLine ( wx ( minX ),previous_crosshair_end_pt.y(),
-                         wx ( maxX ),previous_crosshair_end_pt.y() );
-            p.drawLine ( previous_crosshair_end_pt.x(), wy ( minY ),
-                         previous_crosshair_end_pt.x(), wy ( maxY ) );
-#endif
+
         }
         QPainterPath skok;
         // now Draw the new one:
-        //        p.setPen ( QPen ( Qt::white, 1 ) );
-        //        p.drawLine ( wx ( minX ),current_crosshair_end_pt.y(),
-        //                     wx ( maxX ),current_crosshair_end_pt.y() );
-        //        p.drawLine ( current_crosshair_end_pt.x(), wy ( minY ),
-        //                     current_crosshair_end_pt.x(), wy ( maxY ) );
 
         skok.moveTo(QPoint( wx ( minX ),current_crosshair_end_pt.y()));
         skok.lineTo(wx ( maxX ),current_crosshair_end_pt.y());
@@ -1901,41 +1882,7 @@ void box_of_matrix::moving_polygon_vertex_handler ( QMouseEvent* e )
             previous_end_pt = current_end_pt;
             // and no need to erasing previous
         }
-#if 0
-        else
-        {
 
-            // ErasING last drawn rubberband: @@@@@@@@@@@@@
-            p.setPen ( QPen ( Qt::white, 1 ) );
-            if ( flag_move_whole_polygon )
-            {
-
-
-                if ( stored_polygon.size() > 1 )
-                {
-                    QPainterPath skok;
-                    skok.moveTo ( stored_polygon[0]  + ( previous_end_pt - starting_pt /*- pd*/ ) );
-
-                    for ( unsigned int i = 0 ; i < stored_polygon.size() ; i++ )
-                    {
-                        skok.lineTo ( stored_polygon[i] + ( previous_end_pt - starting_pt /*+ pd*/ ) );
-                    }
-                    skok.lineTo ( stored_polygon[0]  + ( previous_end_pt - starting_pt /*+ pd*/ ) );
-                    p.drawPath(skok);
-                }
-
-
-            }
-            else if ( flag_move_one_vertex_of_polygon ) // so moving only one point
-            {
-                p.drawLine ( p_previous, previous_end_pt - pd );
-                p.drawLine ( previous_end_pt - pd, p_next );
-            }
-        }
-
-        // Draw the new position one: @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-        p.setPen ( QPen ( Qt::white, 1 ) );
-#endif
         if ( flag_move_whole_polygon )
         {
             if ( stored_polygon.size() > 1 )
@@ -2066,32 +2013,18 @@ void box_of_matrix::moving_polygon_vertex_handler ( QMouseEvent* e )
 
 }
 //************************************************************************************************
-void box_of_matrix::showContextMenu(QPoint pos)
+void box_of_matrix::showMatrixContextMenu(QPoint pos)
 {
     // cout << "wywolane showContextMenu " <<  endl;
-    // appl_form_ptr->give_workspace() ->setFocus();
 
-    // auto tmp = appl_form_ptr->give_workspace() ->hasFocus();
-    // cout << "Focus = " << tmp << endl;
+    QPoint globalPos = pos;
+    QPoint localPos = mapFromGlobal(globalPos);
 
+    // some options of popup menu would like to have it in "channels"
+    x_mouse_click = typ_x ( pix2worX (localPos.x()) );
+    y_mouse_click = typ_x ( pix2worY (localPos.y()) );
+    parent->moj_showContextMenu(localPos);
 
-    // cout << "showContextMenu BOX --> KLAWISZOWO  CTL-N Surowa Pozycja x = ["
-    //      << pos.x() << ", " << pos.y() << "]"
-    //      // << "  w  widmie " << parent->name_of_spectrum
-    //      // << " appl_form_ptr->give_workspace() ->hasFocus() = "
-    //      // <<  appl_form_ptr->give_workspace() ->hasFocus()
-    //      << endl;
-
-    // Wspolrzedne w tym widgecie bierzemy z ostaniej pozcyji przesuwanej myszki
-    take_position_from_last_mouse();
-
-    // cout << "wywolanie moj_showContextMenu z parenta" << endl;
-    // cout << "Nazwa dla jego parenta = " << parent->name_of_spectrum << endl;
-    // cout << "a current spectum is " << real_spectrum_name << endl;
-
-
-    parent->moj_showContextMenu(pos);
-    // appl_form_ptr->give_workspace() ->setFocus();
     // cout << " end of "<< __PRETTY_FUNCTION__ << endl;
 
 }

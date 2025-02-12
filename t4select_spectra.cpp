@@ -1526,60 +1526,7 @@ void T4select_spectra::create_the_overplot_spectrum()
     }
 }
 //******************************************************************************************************
-#if 0
-void T4select_spectra::right_mouse_on_chosen ( Q3ListBoxItem * itemek, const QPoint &  /* e */ )
-{
-    //  cout << "F.right_mouse_on_chosen() " << endl ;
-    if ( itemek == 0 )
-    {
-        //    cout << "BUT 0 " << endl ;
-        return ; // nothing or more than one selected
-    }
-#if 0
 
-    unsigned int nr   = ui->ListBox_chosen-> index ( itemek );
-    QString one_selected  = ui->ListBox_chosen->text ( nr ) ;
-
-    // context menu -------------
-
-
-
-    QPopupMenu *contekst_Menu = new QPopupMenu;
-
-    contekst_Menu->addItem ( "Move this item UP", 1 );
-    contekst_Menu->addItem ( "Move this item DOWN", 2 );
-
-    contekst_Menu->setItemEnabled ( 1, ( nr != 0 ) ) ; // delete
-    contekst_Menu->setItemEnabled ( 2, ( nr != ui->ListBox_chosen->count() -1 ) ) ; // delete
-
-    //int result = contekst_Menu->  exec(mapToGlobal(QPoint(e.x() ,e.y()   )) );
-    int result = contekst_Menu->  exec ( QPoint ( e.x() ,e.y() ) );
-    bool up = false ;
-    switch ( result )
-    {
-    case 1:    // ----------------------set marker
-        up = true ;
-        break ;
-
-    case 2:   // ---------------------- erase all markers
-        up = false ;
-        break ;
-
-    default:
-        return ;
-    }
-    // moving up
-    // what is selected
-    // only one may be selected
-    ui->ListBox_chosen->removeItem ( nr );
-    ui->ListBox_chosen->addItem ( one_selected, nr+ ( up?  -1: 1 ) );
-    //ui->ListBox_chosen->clearSelection ();
-
-#endif
-
-
-}
-#endif
 
 //*****************************************************************************************************
 void T4select_spectra::zero_all_available_spectra()

@@ -18,13 +18,13 @@ bool Tplate_spectrum::flag_repainting_allowed = true;
 //***********************************************************************
 Tplate_spectrum::Tplate_spectrum(QWidget *parent) :
     QWidget( (QWidget*)  parent  ),
-//    QMdiSubWindow(  parent  ),
+   // QMdiSubWindow(  parent  ),
 
     ui(new Ui::Tplate_spectrum)
 {
     ui->setupUi(this);
     dimension = 0 ;
-    setGeometry(10,10, 180, 100);
+    // setGeometry(10,10, 180, 100);
 
 
 
@@ -78,17 +78,17 @@ void Tplate_spectrum::integrate( T4results_of_integration * )
 void Tplate_spectrum::give_parameters( typ_x *, typ_x *, typ_x *, typ_x *, spectrum_descr * )
 {}
 //******************************************************************************
-void Tplate_spectrum::scrollbar_horizontal_moved( int )
-{}
+// void Tplate_spectrum::scrollbar_horizontal_moved( int )
+// {}
 //******************************************************************************
 void Tplate_spectrum::scaleY_by_factor( double )
 {}
 //******************************************************************************
-void Tplate_spectrum::slider_horizontal( int )
-{}
+// void Tplate_spectrum::slider_horizontal( int )
+// {}
 //******************************************************************************
-void Tplate_spectrum::scroller_vertical_moved( int )
-{}
+// void Tplate_spectrum::scroller_vertical_moved( int )
+// {}
 //******************************************************************************
 int Tplate_spectrum::giveCurrentMaxCounts()
 {
@@ -129,12 +129,7 @@ void Tplate_spectrum::draw_all_on_screen()
 void Tplate_spectrum::read_in_file( const char *, bool /*this_is_first_time*/ )
 {}
 //******************************************************************************
-#if 0
-bool Tplate_spectrum::find_x_description( const char * )
-{
-    return false ;
-}
-#endif
+
 //******************************************************************************
 void Tplate_spectrum::log_linear( bool )
 {  }

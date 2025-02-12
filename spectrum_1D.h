@@ -58,10 +58,13 @@ public:
         // the init below must be called manually from here !
         init() ;
 
-        connect(this, &spectrum_1D::hovered, this, [this]() {
-            // cout<< "hovered over 1D spectrum " << name_of_spectrum << endl;
-            hoveredDocument = this;
-        });
+        connect(this,
+                &spectrum_1D::hovered,
+                this,
+                [this]() {
+                     // cout<< "hovered over 1D spectrum " << name_of_spectrum << endl;
+                         hoveredDocument = this; }
+                );
     }
     //---------------------
     ~spectrum_1D()
@@ -71,41 +74,42 @@ public:
     }
     //---------------------
 protected:
-    void enterEvent(QEnterEvent *event) //override
-    {
-        emit hovered();
+
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+    void enterEvent(QEnterEvent *event) override {
+        emit hovered(this);
+        QWidget::enterEvent(event);
+        // cout << "hovered " << name_of_spectrum << endl;
+    }
+#else
+    void enterEvent(QEvent *event) override {
+        // W Qt5 możesz sprawdzić, czy event jest typu QEvent::Enter
+        if (event->type() == QEvent::Enter) {
+            emit hovered(this);
+            // cout << "hovered " << name_of_spectrum << endl;
+        }
         QWidget::enterEvent(event);
     }
+#endif
+
+    // void enterEvent(QEnterEvent *event)  override
+    // {
+    //     emit hovered(this);
+    //     QWidget::enterEvent(event);
+    //     cout << "hovered " << name_of_spectrum << endl;
+    // }
     //---------------------
 signals:
-    void hovered();
+    void hovered(QWidget*);
 public:
     void showContextMenu() override {
         // QMenu menu;
         // menu.addAction("Opcja A1");
         // menu.addAction("Opcja A2");
         // menu.exec(QCursor::pos());
-        b_spectrum-> showContextMenu(QCursor::pos() );
+
+        b_spectrum-> showSpectrumContextMenu(QCursor::pos() );
     }
-
-#if 0
-    // Obsługa zdarzenia menu kontekstowego (kliknięcie prawym przyciskiem myszy)
-    void contextMenuEvent(QContextMenuEvent *event) override
-    {
-       // auto pos = event->globalPos();
-         auto pos = event->pos();
-        cout << "Ctrl+M  -->Przed mapowaniem x = " << pos.x() << ", y = " << pos.y() << endl;
-
-        b_spectrum->remember_Shortcut_position(pos);
-        moj_showContextMenu(pos);
-    }
-#endif
-
-private slots:
-#if 0
-    void showContextMenu(QPoint pos);
-
-#endif
 
 protected:
 
@@ -114,8 +118,9 @@ protected:
         // cout << "moj_showContextMenu -> Przysłana pozycja  [" << pos.x() << ",  " << pos.y() << "]"
         //      << endl;
 
+        // pos is now local to box_of_spectrum
+       show_context_1d_menu(pos);
 
-        show_context_1d_menu(pos, false);
         update();
 
     }
@@ -132,26 +137,26 @@ public:
     void remove_the_gate_1D();
     /** No descriptions */
 
-    void black_white_spectrum ( bool on );
+    void black_white_spectrum ( bool on ) override;
     /** when somebody press X to close spectrum */
-    void closeEvent ( QCloseEvent * e ) ;
+    void closeEvent ( QCloseEvent * e ) override ;
     /** with dialog precisely setting the marker */
     void set_integr_marker();
 
     // copy integration markers and background markers from the other spectrum
-    void copy_markers ( Tplate_spectrum * doc );
-    void set_new_refreshing_times();  // virtual
-    void zero_spectrum();
+    void copy_markers ( Tplate_spectrum * doc ) override;
+    void set_new_refreshing_times()  override;
+    void zero_spectrum() override;
 
     void name_overlay_spec_nr();
     /** storing the parameters in case of later undo command */
     void remember_for_undo ( string s = "No name" );
     /** To display on the menu bar  */
-    string give_undo_text ( int nr );
+    string give_undo_text ( int nr ) override;
     /** No descriptions */
-    void print_postscript();
+    void print_postscript() override;
     /** See description in  the class spectrum widget */
-    void give_Cx_Cy ( double *x, double *y );
+    void give_Cx_Cy ( double *x, double *y ) override;
     /** No descriptions */
     int giveCurrentMinCounts();
 
@@ -161,14 +166,14 @@ public:
     {
         return rebin_factor ;
     }
-    void freezing_photo_of_spectrum();
-    void show_list_of_incrementers() ;
-    bool give_flag_draw_scales()    // virtual
+    void freezing_photo_of_spectrum()override;
+    void show_list_of_incrementers();
+    bool give_flag_draw_scales()  override
     {
         return (flag_draw_scales &&   ! flag_impossible_to_draw_scales);
     }
 
-    void show_context_1d_menu(QPoint pos, bool flaga_myszki);
+    void show_context_1d_menu(QPoint pos);
 
 
 protected:
@@ -313,10 +318,10 @@ public slots:
     void give_parameters ( typ_x * min_ch, typ_x * max_co,
                          typ_x * max_ch, typ_x * min_co,
                          spectrum_descr *sd );
-    void scrollbar_horizontal_moved ( int int_left_edge );
+    // void scrollbar_horizontal_moved ( int int_left_edge );
     void scaleY_by_factor ( double value );
-    void slider_horizontal ( int value );
-    void scroller_vertical_moved ( int value_bottom );
+    // void slider_horizontal ( int value );
+    // void scroller_vertical_moved ( int value_bottom );
     int giveCurrentMaxCounts();
     void set_parameters ( typ_x min_ch, typ_x max_co, typ_x max_ch, typ_x min_co );
     void save();

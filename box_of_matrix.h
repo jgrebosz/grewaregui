@@ -362,7 +362,7 @@ private:
     void select_all_vertices_in_rubberband_region();
 
 public slots:
-    void showContextMenu(QPoint pos);
+    void showMatrixContextMenu(QPoint pos);
 };
 
 #endif // box_of_matrix_h

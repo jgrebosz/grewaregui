@@ -72,14 +72,7 @@ extern refresh_big_matrices_policy  policy;
 //    return plik ;
 //}
 //*********************************************************************
-#if 0
-void QWidget::setMouseTracking ( bool enable )
-{
 
-    void QWidget::mouseMoveEvent ( QMouseEvent * e ) [virtual protected] ;
-    const QPoint & QMouseEvent::pos () const ;
-}
-#endif
 
 void spectrum_2D::mouseMoveEvent ( QMouseEvent * e )
 {
@@ -346,218 +339,20 @@ void spectrum_2D::recalculate_my_geometry()
 
 
 
-//    if ( s.height() < 80 || flag_draw_scales == false)
-//    {
-//        flag_impossible_to_draw_scales = true;
-//    }
+    //    if ( s.height() < 80 || flag_draw_scales == false)
+    //    {
+    //        flag_impossible_to_draw_scales = true;
+    //    }
 
-//    double pixels5 =   0;
-//    if ( flag_draw_scales  &&  !flag_impossible_to_draw_scales )
-//    {
-//        pixels5 = 5;
-//    }
-
-#if 0
-
-    //    //   const double pixels5 =  flag_draw_scales? 5.0 :   0;
-    //    double boarderX = pixels5  / s.width()  ;
-
-    //    // calculating the geometry of all the boxes
-    //    Ax = boarderX;    // left edge of the scale of counts
-    //    Bx = Ax + 5 * boarderX  ; // (30.0 / s.width());  //  5 digits of text  ;   // right edge of the scale of counts
-
-    //    // OLD Cx = Bx + boarderX ; // left edge of the spectrum filed
-    //    Cx = Bx ; // NEW   // left edge of the spectrum filed
-
-    //    Dx = 1 - boarderX; // right edge of the spectrum field
-
-    //    // vertical geometry
-    //    double boarderY = pixels5 / s.height()  ;
-
-    //    //double aspect = ((double)s.height()) / s.width()   ;
-
-    //    Ay = boarderY ; // bottom edge of channels
-    //    By = Ay + 5 * ( boarderY ) ; // 2* wys_fontu (10 pix) ;
+    //    double pixels5 =   0;
+    //    if ( flag_draw_scales  &&  !flag_impossible_to_draw_scales )
+    //    {
+    //        pixels5 = 5;
+    //    }
 
 
-
-
-
-    // to not to make channel scale (and font ) too high , when it is narrow widget
-
-
-    /*---------
-      cout      << " original       Ay=" << Ay << "  By=" << By
-      << "  By-Ay" << By-Ay
-      //<< "  Dx=" << Dx
-      //<< "  Cx=" << Cx
-      //<< "  Dx-Cx" << Dx-Cx
-      << " aspect = " << aspect
-      <<   endl ;
-      ----*/
-
-    //#define OLD_VERSION 1
-    //#ifdef OLD_VERSION
-
-    enum version  { free_aspect, square, fixed_aspect } ;
-    version version_now = free_aspect ;
-    //version version_now = fixed_aspect ;
-
-    switch ( version_now )
-    {
-    case square :
-        if ( s.width()   < 250 )
-        {
-            By = By / 1.5  ;
-            //    cout << " recalculated Ay=" << Ay << " By=" << By
-            //   << " this aspect = " << aspect
-            // << endl ;
-        }
-
-        // Cy = By + boarderY ; // OLD. bottom edge of spectrum box
-        Cy = By ; // NEW. bottom edge of spectrum box
-        Dy = 1 - boarderY ;
-
-
-        // to make it square
-        /*---
-          cout << " before squaring"
-          << "  Dx=" << Dx
-          << "  Dy=" << Dy
-          << " s.width()=" <<  s.width()
-          << endl ;
-          ------------*/
-
-        if ( s.height()  > s.width() )
-        {
-            // this is a portrait-------------
-            // calculate how many pixels in horizontal can be maximum
-            double pix_horizontal = s.width() * ( Dx - Cx ) ;
-            // now recalculate these pixels into position in vertical;
-            double part = pix_horizontal / s.height()  ;
-            Dy = Cy + part ;
-
-        }
-        else                                           // this is a landscape------------
-        {
-            // calculate how many pixels in vertical
-            double pix_vertical = s.height() * ( Dy - Cy ) ;
-            // now recalculate these pixels into position in horizontal;
-            double part = pix_vertical / s.width()  ;
-            Dx = Cx + part ;
-
-        }
-        break ;
-
-    case fixed_aspect :
-
-        //new version for non-square matrices
-
-    {
-
-        // Cy = By + boarderY ; // bottom edge of spectrum box
-        Cy = By ; // NEW. bottom edge of spectrum box
-        Dy = 1 - boarderY ;
-
-
-        double szer_pole = ( Dx - Cx ) * s.width() ;
-        double wys_pole = ( Dy - Cy ) * s.height() ;
-        double asp_pole = szer_pole / wys_pole ;
-        double aspect_bin_xy = 1.0 * specif.bin / specif.bin_y ;
-
-        //  cout << " before rectangulating --"
-        //  << "  szer_pole=" << szer_pole
-        //  << " wys_pole=" << wys_pole
-        //  << " co daje aspekt " << asp_pole
-        //  << ", natomiast aspekt danych x/y = " << aspect_bin_xy
-        //  << endl ;
-        //
-
-
-        if ( asp_pole > aspect_bin_xy )
-        {
-            //cout << " puste miejsce z prawej   -------------" << endl ;
-            // calculate how many pixels in horizontal can be maximum
-            double horizontal_pix = wys_pole * aspect_bin_xy ;
-            //cout << "maximum horiz pixels of mapa can be " << horizontal_pix << endl;
-            // now recalculate these pixels into position in vertical;
-            double part = horizontal_pix / s.width()  ;
-            Dx = Cx + part ;
-
-        }
-        else
-        {
-            //cout << "Puste miejsce bedzie z gory ------------" << endl ;
-            // calculate how many pixels in vertical can be maximum
-            double vertical_pix = szer_pole / aspect_bin_xy ;
-            //cout << "maximum vertical pixels of mapa can be " << vertical_pix << endl;
-            // now recalculate these pixels into position in verical;
-            double part = vertical_pix / s.height()  ;
-            Dy = Cy + part ;
-
-        }
-
-    }
-        break ;
-
-    case free_aspect :
-    {
-        // calculating the standard boarder
-        double boarderY = pixels5 / s.height()  ;
-
-        //double aspect = ((double)s.height()) / s.width()   ;
-
-        Ay = boarderY ; // bottom edge of channels
-        By = Ay + 5 * ( boarderY ) ; // 2* wys_fontu (10 pix) ;
-        if ( s.height()   < 250 )
-        {
-            By = By / 1.5  ;
-            // cout << " recalculated Ay=" << Ay << " By=" << By
-            //<< " this aspect = " << aspect
-            // << endl ;
-        }
-
-        // Cy = By + boarderY ; OLD
-        Cy = By ; // NEW. bottom edge of spectrum box
-
-        Dy = 1 - boarderY ;
-
-        break ;
-    }
-    } // endo of switch
-
-    /*----
-      cout << " after squaring"
-      << " Cx= " << Cx
-      << " Dx=" << Dx
-      << "      Cy= " << Cy
-      << " Dy=" << Dy
-      << " bo szer_pole=" <<  szer_pole
-      << " wys_pole=" << wys_pole
-      << endl ;
-      --*/
-
-    /*---
-      cout << "After recalculation "
-      << "  Ax=" << Ax
-      << "  Bx=" << Bx
-      << "  Cx=" << Cx
-      << "  Dx=" << Dx
-      << " s.width()=" <<  s.width()
-      << endl ;
-      ----*/
-#endif
 }
 //*****************************************************************************************
-/*---
-  int spectrum_2D::give_max_channel_skas()
-  {
-
-  // return (max_channel) ;
-  return spectrum_table.size() ;
-
-  }
-  ----*/
 //*****************************************************************************************
 // function called from the toolbar (QMdiArea)
 void spectrum_2D::expand()
@@ -658,13 +453,13 @@ void spectrum_2D::mousePressEvent ( QMouseEvent *e )
         {
 
 #if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-                       auto pos = e->position(). toPoint();
+            auto pos = e->position(). toPoint();
 #else
-                        auto pos = e->pos();
+            auto pos = e->pos();
 #endif
 
             // cout << "Myszkowa Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
-            show_context_2d_menu(pos, true);
+            show_context_2d_menu(pos);
             update();
         }  // end if right button
 
@@ -1063,85 +858,8 @@ void spectrum_2D::give_parameters ( typ_x * min_ch, typ_x * max_yy, typ_x * max_
 
 }
 //********************************************************************************
-void spectrum_2D::scrollbar_horizontal_moved ( int int_left_edge )
-{
-    // in fact it was really scrollbar
-    // this trick is because sliders do not accept any double numbers
-
-    //  cout << "scrolbar mover , value = " << int_left_edge << endl ;
-    typ_x my_left_edge = ( typ_x ) int_left_edge /   scrollbar_poziomy_mnoznik  ;
-    // cout << "Po korekcji = " << my_left_edge << endl ;
-
-    typ_x range  = ( max_x - min_x ) ;
-    if ( range <= 0 )
-        return ; // range = 0.01 ;
-
-    //cout << "Range is=" << range << endl ;
-
-    max_x = my_left_edge + range ;
-    min_x = my_left_edge ;
-
-    if ( max_x > specif.end )
-        max_x = specif.end  ;
-    if ( max_x - min_x < range )
-        min_x = max_x - range ;
-
-    //draw_all_on_screen();
-    b_matrix ->force_new_pixmap(true);
-
-}
-//*******************************************************************************
-void spectrum_2D::slider_horizontal ( int value )
-{
 
 
-    // cout << "slider horizontal mover , value = " << value << endl ;
-    typ_x my_value = ( typ_x ) value /   scrollbar_poziomy_mnoznik  ;
-    // cout << "Po korekcji = " << my_value << endl ;
-
-
-
-    if ( my_value < 5 )
-        my_value = 5 ;
-
-    if ( min_x + my_value  >  specif.end )
-    {
-        max_x = specif.end ;
-        min_x = max_x - my_value ;
-    }
-    else
-    {
-        max_x = min_x + my_value ;
-    }
-
-    if ( min_x < specif.beg )
-        min_x = specif.beg ;
-
-    //draw_all_on_screen();
-
-
-}
-//*******************************************************************************
-void spectrum_2D::scroller_vertical_moved ( int value_bottom )
-{
-    //     cout << "spectrum_2D::scroller_vertical_moved ( " << value_bottom << " ) " << endl ;
-
-    double vb =  1.0 * value_bottom  /   scrollbar_poziomy_mnoznik;
-    //     cout << "podzielony = " << vb << " ) " << endl ;
-    typ_x current_range  = ( max_y - min_y ) ;
-    if ( current_range < 0.001 )
-        current_range = 0.001 ;
-
-    //     cout << "before change:  max_y = " << max_y << ", min_y = "<< min_y << endl ;
-
-    max_y = -vb ;
-    min_y = max_y - current_range ;
-
-    //     cout << "after   change:  max_y = " << max_y << ", min_y = "<< min_y << endl ;
-
-    b_matrix ->force_new_pixmap ( true );
-    //draw_all_on_screen();
-}
 //*******************************************************************************
 int spectrum_2D::giveCurrentMaxCounts()
 {
@@ -1239,51 +957,9 @@ void spectrum_2D::save()   // virtual function to save spectrum
 void spectrum_2D::save_as ( string prefix )
 {
 
-#ifdef  NIGDY
-        // dialog to choose the name and the format
-    QFileDialog* fd = new QFileDialog ( this, "Save current matrix as a file ", true );
-    fd->setMode ( QFileDialog::AnyFile );
-    fd->setFilter ( "3 column ASCII matrices ( *.mat3asc ) " );
-    QString fileName;
-    if ( fd->exec() == QDialog::Accepted )
-    {
-        fileName = fd->selectedFile();
-    }
-    //cout << "Nazwa " << fileName << endl ;
-    if ( fileName )
-    {
-        // real saving
-        real_save_ascii ( fileName, false ); // so far NO radware header for matrices
-    }
-
-
-#else
-
-
     if ( prefix.empty() )
     {
-
-            // dialog to choose the name and the format
-#if 0
-        QFileDialog* fd = new
-                QFileDialog ( gpath.spectra, QString::null, this,
-                              // new QFileDialog( this,
-                              "Save current matrix as a file ", true );
-
-        fd->setMode ( QFileDialog::AnyFile );
-
-
-
-
-
-
-
-        //note: below the filters are separated with two semicolons.
-        fd->setFilters ( QString ( "a ) Three  column ASCII matrices ( *.mat3asc );; b ) Binary original cracow format ( *.mat ) " ) );
-
-        //  fd->setFilters(QString("1 ).  Just two columned ascii ( *.asc );; 2 ).  Radware header, two columned ascii ( *.asc );; 3 ).  Binary original cracow format ( *.spc ) ")  );
-#endif // 0
-
+        // dialog to choose the name and the format
         QString fileName;
         QString filter;
 
@@ -1347,7 +1023,7 @@ void spectrum_2D::save_as ( string prefix )
 
     }
 
-#endif
+
 
 
 }
@@ -1389,35 +1065,6 @@ void spectrum_2D::set_the_name ( QString & name )
 //****************************************************************************************
 void spectrum_2D::print_it()
 {
-#if 0
-    // cout << "spec widget, Decyzja drukowania " << endl ;
-    flaga_this_is_printing = true ;
-    printer = new QPrinter ;
-
-    if ( printer->setup ( this ) )
-    {
-        //   cout << "Po setupie "
-        //     << printer->docName()
-        //     << endl ;
-        QPainter piorko ; //(printer) ;
-        //cout << "Po piorku " << endl ;
-
-        // b_counts->set_printing_mode(&piorko);
-        // b_channels->set_printing_mode(&piorko);
-        //b_matrix->set_printing_mode(&piorko);
-        if ( piorko.begin ( printer ) )
-        {
-            cout << "blad , return " << endl ;
-            return ;
-        }
-
-        draw_all ( &piorko ) ;
-        //   cout << "Po draw " << endl ;
-    }
-    //    delete printer ;
-    //    printer = 0 ;
-#endif
-
     //    flaga_this_is_printing = false ;
 }
 //**************************************************************************
@@ -1729,111 +1376,6 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
     }
 }
 //******************************************************************************
-#if 0
-
-bool spectrum_2D::find_x_description ( const char * name )
-{
-
-    // now the system has changed and bins are written as first
-    // six double words in the contents of spectrum
-    // so we do not have to read them here
-    //
-    // now this function is only checking if this is active
-    // matrix, or it is not anymore aculutated (but what for...?)
-
-
-    //char *desc_name = "description_of_ranges.txt";
-    string path_filename = gpath.spectra + "description_of_ranges.txt";
-    ifstream plik ( path_filename.c_str() ) ;
-
-    if ( !plik )
-        return false ;
-
-
-    char wyraz[500] ;
-    while ( 1 )
-    {
-
-        if ( !plik )
-            break ; //return false ;
-        if ( plik.eof() )
-            break ; // return false;
-
-        plik.getline ( wyraz, sizeof ( wyraz ) ) ; // because filename can have some spacies inside
-        //cout << "przeczytane " << wyraz << endl ;
-
-        /*---
-        cout << "any key " ;
-        int nic ;
-        cin >> nic ;
-        --*/
-
-
-        if ( strcmp ( name, wyraz ) == 0 ) // found  ----------
-        {
-            // this bins now are inside the contents of the matrix
-            // so we do not have to read them separately
-            //    plik  >> specif.bin
-            //       >> specif.beg
-            //       >> specif.end
-            //       >> specif.bin_y
-            //       >> specif.beg_y
-            //       >> specif.end_y ;
-
-            //      cout << "spectrum description found "
-            //        << wyraz
-            //         << " bins_x = " <<  specif.bin
-            //        << " first ch = " <<  specif.beg
-            //        << " last ch = " <<  specif.end
-            //        << ", Y bins = " << specif.bin_y
-            //        << " first ch =" << specif.beg_y
-            //        << " last ch = " << specif.end_y
-            //        << endl ;
-
-            return true ;
-        }
-        // try without extension ----------------------
-        //cout << " is not " << name << endl ;
-
-
-        char *wsk = strrchr ( wyraz, ' ' ) ;
-        if ( wsk )
-            *wsk = 0 ;
-        strcat ( wyraz, ".mat" );
-        //cout << " after appending is  " << wyraz << endl ;
-
-        if ( strcmp ( name, wyraz ) == 0 ) // found
-        {
-            //    plik
-            //      >> specif.bin
-            //      >> specif.beg
-            //      >> specif.end
-            //      >> specif.bin_y
-            //      >> specif.beg_y
-            //      >> specif.end_y ;
-
-            //      cout << "spectrum description found "
-            //        << wyraz
-            //         << " bins_x = " <<  specif.bin
-            //        << " first ch = " <<  specif.beg
-            //        << " last ch = " <<  specif.end
-            //        << ", Y bins = " << specif.bin_y
-            //        << " first ch =" << specif.beg_y
-            //        << " last ch = " << specif.end_y
-            //        << endl ;
-
-            return true ;
-        }
-
-
-        //  int fff ;
-        //  cin >> fff ;
-    } // end of while
-
-    return false ;
-
-}
-#endif // 0
 
 //***************************************************************************************
 void spectrum_2D::log_linear ( bool stan )
@@ -2243,16 +1785,6 @@ void  spectrum_2D::add_new_polygon()
     // ----------------------add new polygon
     // polygon gates
 
-#if 0
-    bool ok;
-    QString screen_name_of_polygon
-            = QInputDialog::getText (
-                "Adding the new polygon gate",
-                "Enter the name of this polygon gate:",
-                QLineEdit::Normal,
-                QString::null, &ok, this );
-#endif
-
     bool ok;
     QString screen_name_of_polygon = QInputDialog::getText ( this, tr ( "Adding the new polygon gate" ),
                                                            tr ( "Enter the name of this polygon gate:" ),
@@ -2260,15 +1792,9 @@ void  spectrum_2D::add_new_polygon()
                                                            QDir::home().dirName(),
                                                            &ok );
 
-
-
-
     if ( ok && !screen_name_of_polygon.isEmpty() )
     {
         // user entered something and pressed OK
-
-
-
         string matr_name = windowTitle().toStdString() ;
         // removing last ".mat"
         matr_name.erase ( matr_name.rfind ( ".mat" ) );
@@ -2279,35 +1805,7 @@ void  spectrum_2D::add_new_polygon()
            << ".poly"   ;// << ends ;
         string disk_name_of_polygon  = ss.str() ;
 
-
-
         string screen = screen_name_of_polygon.toStdString() ;
-
-#ifdef OLD_BANAN
-
-        int m = banana.size() ;
-        //to fit to the size of current window
-        typ_x szer_win = max_x - min_x ;
-        typ_x wys_win = max_y - min_y ;
-
-        polygon_gate b ( screen,
-                       disk_name_of_polygon,
-                       min_x + 0.3 * szer_win, max_y - 0.3 * wys_win,
-                       max_x - 0.3 * szer_win, min_y + 0.3 * wys_win
-                       );
-
-
-        //cout << "Before pushing to vector " << screen << endl;
-        banana.push_back ( b );
-        //cout << "Created polygon named " << screen
-        //  << " now size of banana is " << banana.size()
-        //  << ", last pushed polygon has vertices "
-        //  << banana[m]
-        //  << endl ;
-        banana[m].save_to_disk();
-
-//cout << "succesfully created new polygon" << endl ;
-#else
 
         QMessageBox::information ( this, "Creating the  polygon" ,
                                  QString ( "Now start clicking in the  places where you would  like  to have vertices of your polygon\n"
@@ -2318,8 +1816,6 @@ void  spectrum_2D::add_new_polygon()
         b_matrix->drawing_new_banana_mode ( screen, disk_name_of_polygon );
         b_matrix->update();
         update();
-#endif
-
     }
     else
     {
@@ -3758,7 +3254,7 @@ QMessageBox::StandardButton askYesNoCancel(const QString& title,
     return QMessageBox::NoButton;
 }
 //*****************************************************************************************************
-void spectrum_2D::show_context_2d_menu(QPoint pos, bool flaga_myszki)
+void spectrum_2D::show_context_2d_menu(QPoint pos)
 {    // enum options {
     // QPoint pos = QCursor::pos();
 
@@ -3894,34 +3390,8 @@ void spectrum_2D::show_context_2d_menu(QPoint pos, bool flaga_myszki)
     context_Menu->addAction ( "Show time of last zeroing of this spectrum", this, SLOT ( slot_show_time_of_last_zeroing () ) );
 
 
-//             QList<QAction *>   lista =  contekst_Menu->actions();
-//             for ( int i = 0 ; i < lista.count() ; i++ )
-//             {
-//                 cout << "Action nr " << i << " is enabled ? = " << lista[i].isEnabled() << endl;
-//             }
-//-------------------------------------------
-
-#if 0
-context_Menu->exec ( mapToGlobal ( QPoint ( e->
-#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-                                      position().
-#endif
-                                      x() , e->
-#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-                                      position().
-#endif
-                                      y() ) ) );
-#endif
-
-  //  cout << "Pozycja x = " << pos.x() << ", y = " << pos.y() << endl;
-
-    if(flaga_myszki){
-        context_Menu->exec ( mapToGlobal ( pos ) );
-    }
-    else{
-        context_Menu->exec ( pos  );
-    }
-
+    //  context menu must have global position  ---------------------
+    context_Menu->exec ( mapToGlobal ( pos ) );
 
     delete context_Menu;
     b_matrix-> inform_that_banana_just_deletd();

@@ -363,10 +363,6 @@ void appl_form::on_actionSelecting_the_spectra_triggered()
             if(dokument == nullptr) continue; // to prevent segment violation
 
             // the real action of this loop
-            connect (
-                dokument, SIGNAL ( spec_update_scrolls_and_sliders() ),
-                this, SLOT ( appl_update_scrolls_and_sliders() )
-                );
 
             //             cout << "******** before connecting in selected combo groups"
             //                  << dokument->caption().toStdString() << endl ;
@@ -375,8 +371,7 @@ void appl_form::on_actionSelecting_the_spectra_triggered()
                 dokument, SIGNAL ( enable_selected_actions ( int ) ),
                 this, SLOT ( enable_some_actions ( int ) )
                 );
-            // dokument  = ( Tplate_spectrum * ) windows[nr_dok++];  // .next() ;
-            //  dokument->setFocus();
+
         }
 
         // we must know if the current document is 1D or 2D spectrum
@@ -680,8 +675,7 @@ bool appl_form::should_sliders_be_enabled()
     {
         some_spectra_displayed = true ;
     }
-    ui->ScrollBar_poziomy_widma->setEnabled ( some_spectra_displayed );
-    ui->ScrollBar_pionowy_widma->setEnabled ( some_spectra_displayed );
+
 
     //  set_current_undo_text_in_menu();   <-- why was this?
     return some_spectra_displayed;
@@ -1057,38 +1051,6 @@ void appl_form::on_toolButton_select_spectra_clicked()
 void appl_form::on_full_spectrum_action_triggered()
 {
 
-#if 0
-    cout << "appl_form::on_full_spectrum_action_triggered() - there are subwindows "
-         << ws->subWindowList().count()
-         << ", active has address " << ws->activeSubWindow()
-         << ", current has address " << ws->currentSubWindow()
-         << endl ;
-
-    if ( ws-> currentSubWindow() == NULL )
-    {
-        cerr << "Alarm "<< endl;
-        if ( ws->subWindowList().count() )
-        {
-            QList <QMdiSubWindow*> windows = ws->subWindowList()  ;
-            ws->setActiveSubWindow ( windows[0] ) ;  //   subWindowList().  count()
-
-            cout << "2222 appl_form::on_full_spectrum_action_triggered() - there are subwindows "
-                 << ws->subWindowList().count()
-                 << ", active has address " << ws->activeSubWindow()
-                 << ", current has address " << ws->currentSubWindow()
-                 << endl ;
-
-        }
-        //return;
-    }
-    //    if( ws-> currentSubWindow()->widget() == 0 )
-    //        return ;
-
-#endif
-
-
-
-
     Tplate_spectrum * doc = ( Tplate_spectrum * ) area-> currentSubWindow()->widget();
     if ( flag_act_on_all_spectra )
     {
@@ -1150,7 +1112,7 @@ void appl_form::apply_to_other_spectra()
 
     if ( doc )
     {
-        //doc->   scroller_vertical_moved( value_bottom );
+
         typ_x min_x = 0 ;
         typ_x max_x = 4096 ;
         typ_x min_yy = 0 ;
@@ -1306,7 +1268,7 @@ void appl_form::on_parameters_Action_triggered()
     //  flag_reaction_for_scroll_slider_event = true;
     if ( doc )
     {
-        //doc->   scroller_vertical_moved( value_bottom );
+
         typ_x min_x = 0 ;
         typ_x max_x = 4096 ;
         typ_x min_yy = 0 ;
@@ -1411,11 +1373,7 @@ void appl_form::on_actionSave_as_triggered()
 {
     // which is selected now?
     // this can be a document which is a 1D spectrum, 2D matrix !!!!
-#ifdef NIGDY
 
-
-
-#else
 
     if(!area-> currentSubWindow() ) return;
     Tplate_spectrum * doc = ( Tplate_spectrum * ) ( area-> currentSubWindow()->widget() );
@@ -1492,7 +1450,6 @@ void appl_form::on_actionSave_as_triggered()
         } // end if ok
     }
 
-#endif
 
 }
 //********************************************************************************************
@@ -1659,7 +1616,7 @@ void appl_form::on_actionChange_the_binning_and_range_triggered()
             return;
         }
 
-        //doc->   scroller_vertical_moved( value_bottom );
+
         typ_x min_x = 0 ;
         typ_x max_x = 4096 ;
         typ_x min_yy = 0 ;
@@ -1750,7 +1707,7 @@ void appl_form::on_actionHelp_about_mouse_clicking_triggered()
         //"Shift + Single click   -  correct the last \"single click marker\"\n"
         "Double  click   -  expand the region marked with two marking lines\n"
         "Shift  double click   -  Zoom OUT the region\n"
-        "Right click - popup menu for background markers, etc.\n\n"
+        "Right click - popup menu for background markers, etc. (On Mac computers - you may use a shortcut Ctrl+M )\n\n"
         "NEW: if you use a mouse ROLL on any scale (channels, or counts) you expand/compress the scale\n"
         "NEW: if you press a mouse and DRAG - on any scale (channels, or counts) you shift the scale\n"
         "\n"
@@ -1758,7 +1715,7 @@ void appl_form::on_actionHelp_about_mouse_clicking_triggered()
         "============ In 2D spectrum: ============\n\n"
         "Double  click   -  zoom IN the region around the clicked place\n"
         "Shift double  click   -  zoom OUT the region around the clicked place\n"
-        "Right click - popup menu for bananaa gates,  background markers, etc.\n\n"
+        "Right click - popup menu for bananaa gates,  background markers, etc.  (On Mac computers - you may use a shortcut Ctrl+M )\n\n"
         "NEW: if you use a mouse ROLL on any scale (horizontal or vertical) you expand/compress the scale\n"
         "NEW: if you press a mouse and DRAG - on any scale (horizontal or vertical) you shift the scale\n"
         "\n"
@@ -2478,10 +2435,7 @@ void appl_form::on_Combo_app_group_textActivated(const QString &groupName)
             //            QMdiSubWindow *subWindow =
             area->addSubWindow ( s, Qt::Window );
             // now conect all spectra
-            connect (
-                s, SIGNAL ( spec_update_scrolls_and_sliders() ),
-                this, SLOT ( appl_update_scrolls_and_sliders() )
-                );
+
 
             //cout << "before connecting in selected combo groups" << endl ;
             connect (
@@ -2691,362 +2645,9 @@ void appl_form::check_synchro_of_spy()     // kind of watchdog
     //remove file is in the dialog
 
 }
-//************************************************************************************************************
-/// This is a fuction which recalculates the image of scrollers. It does not change the picture
-/// what is made by other functions (scroll moved, scroll next line, etc.
-/// after these previous functions - this one is changing the position of the scroller itself.
-
-void appl_form::appl_update_scrolls_and_sliders()
-{
-    //    cout << "++++++++++++ F. appl_form::appl_update_scrolls_and_sliders() " << endl;
-    //    //------------------------------------------------
-    static time_t last = 0 ;
-    // to prevent updating more than every second while opening many files
-    time_t now =  time(nullptr) ;
-
-    if(now - last == 0) return ;  // the same second
-    last  = now ;
-    //--------------------------------------------------
-    [[__maybe_unused__]]   static int busy = 0 ;
-    //    if(busy){
-    //        for(int i = 0 ; i < 1000 ; i++) sin(sin(i)) ;
-    //        return;
-    //    }
-
-    busy++;
-
-    if ( !should_sliders_be_enabled() ) return ;  // no need for empty screen
-
-    //cout << "=== appl_update scrolls - begins " << endl ;
-
-    // at first ask the current spectrum for its display parameters
-    /*-------*/
-    //  COTO ;
-
-
-    if ( ! area->currentSubWindow() ) return ;   // this is needed
-
-    Tplate_spectrum * doc = ( Tplate_spectrum * ) ( area-> currentSubWindow()->widget() );
-    if ( doc
-        &&
-        flag_reaction_for_scroll_slider_event == false
-        )
-    {
-
-        //cout << "flag_reaction_for_scroll_slider_event..  Trying to react ..." << endl ;
-
-        //ScrollBar_poziomy_widma->setVisible(true);
-        // we ask for parameters of window
-        typ_x min_x = 0 ;
-        typ_x max_x = 4096 ;
-        typ_x min_yy = 0 ;
-        typ_x max_yy = 100 ;
-
-        //---------------------------------------------
-        spectrum_descr sd;
-        doc->give_parameters ( &min_x, &max_yy, &max_x, &min_yy,  &sd );
-        typ_x spectrum_beg_x  = sd.beg ;
-        typ_x spectrum_end_x  = sd.end ;
-        typ_x spectrum_beg_y  = sd.beg_y ;
-        typ_x spectrum_end_y  = sd.end_y ;
-
-
-        //             cout << "--------------(f. update),  after give parameters min_x=" << min_x
-        //                 << " max_x " << max_x
-        //                 <<  " spectrum_beg_x " << spectrum_beg_x
-        //                 << " spectrum_end_x " << spectrum_end_x << endl;
-
-
-        //---------------------------------
-        // to enable working with spectra 0.1 - 0.7 (root spectra)
-        // we make such a trick - multiplying by mnoznik.
-        // later results of scrollers will be divided
-
-
-        min_x *= scrollbar_poziomy_mnoznik ;   // const defined in swiat.h  = 1000
-        max_x *= scrollbar_poziomy_mnoznik ;
-        spectrum_beg_x *= scrollbar_poziomy_mnoznik ;
-        spectrum_end_x *= scrollbar_poziomy_mnoznik ;
-
-        //        cout << "(f. update),  after monoznik  " << scrollbar_poziomy_mnoznik << "    ,   min_x=" << min_x
-        //                    << " max_x " << max_x
-        //                    <<  " spectrum_beg " << spectrum_beg_x
-        //                    << " spectrum_end " << spectrum_end_x
-        //                    << endl;
-
-
-        //==================================================================
-        // then update horizontal scrollbar---------------H SCR-------------
-        ui->ScrollBar_poziomy_widma->setEnabled ( true );
-        //        COTO;
-        //Sets the current scroll bar value. See the "value" property for details.
-        //cout << "Update sliders, scroll poz" << endl ;
-
-        ui->ScrollBar_poziomy_widma->setPageStep ( ( int ) ( max_x - min_x ) ) ;
-        //cout << "Update sliders, scroll poz" << endl ;
-        ui->ScrollBar_poziomy_widma->setSingleStep ( ( int ) ( max_x - min_x ) / 10 ) ;
-        //        COTO;
-
-        //              cout << "Update sliders, setRange("  << spectrum_beg
-        //            <<  ", "  << (spectrum_end - (max_x - min_x))
-        //            << " becse end = " << spectrum_end
-        //            << " (max_x - min_x) = "  << (max_x - min_x)
-        //            << endl ;
-        //
-        //        COTO;
-        typ_x till = spectrum_end_x - ( max_x - min_x ) ;
-        if ( till == spectrum_beg_x )
-            till = till + 1;
-        ui->ScrollBar_poziomy_widma->setRange ( ( int ) spectrum_beg_x, ( int ) till ) ;
-        //                cout
-        //                    << "Update sliders, scrolls range beg: " << spectrum_beg_x << " till = "
-        //                    << till
-        //                    <<  endl ;
-        //
-        ui->ScrollBar_poziomy_widma->setValue ( ( int ) min_x );   // it seems that it should be the last of 3 above...
-        //cout << "Update sliders, scrolls 5" << endl ;
-
-        /*---
-          cout << "        w appl_update ["
-            << min_x
-            << "-"
-            << max_x
-            << "]"
-            << " page step = "
-            //<< max_x - min_x
-            << (ui->ScrollBar_poziomy_widma->pageStep ( ) )
-            << endl ;
-          ---*/
-
-        //---------
-
-
-        //=======================================================
-        // then update vertical scrollbar ---------------------- V SCR ----------
-        //=======================================================
-
-        //         int cur_max = doc->giveCurrentMaxCounts() ;
-        //         cout << "cur_max = " << cur_max << endl;
-
-        //             cout << "Update vertical scrollbar value ="
-        //                 << (cur_max - (max_yy - min_yy))
-        //                 << "     czyli cur_max - (max_yy - min_yy), gdzie "
-        //                 << " "
-        //                 << cur_max
-        //                 << " - ("
-        //                 << max_yy
-        //                 << " - "
-        //                 << min_yy << ") "
-        //                 << endl ;
-
-
-        // this below is impotrtant for 2D spectra
-        //---------------------------------
-        // to enable working with spectra 0.1 - 0.7 (root spectra)
-        // we make such a trick - multiplying by mnoznik.
-        // later results of scrollers will be divided
-
-
-        // sometimes in 1D spectra we can view higher than maximal peak
-        // so we change
-        if ( spectrum_end_y < max_yy )
-        {
-            spectrum_end_y = max_yy;
-        }
-        min_yy *= scrollbar_poziomy_mnoznik ;   // const defined in swiat.h  = 1000
-        max_yy *= scrollbar_poziomy_mnoznik ;
-        spectrum_beg_y *= scrollbar_poziomy_mnoznik ;
-        spectrum_end_y *= scrollbar_poziomy_mnoznik ;
-
-        //        COTO;
-        //         cout << "Po mnozniku  FULL  spectrum_beg_y = " << spectrum_beg_y << ", spectrum_end_y= " << spectrum_end_y
-        //              << ",  while visible is (max_yy - min_yy)= " << max_yy << " - " << min_yy << " = "  <<  (max_yy - min_yy)
-        //              << endl ;
-
-        // when we see on the picture higher than the highest peak - ther is on slider
-        if (
-            max_yy <= spectrum_end_y
-            &&
-            min_yy >= spectrum_beg_y
-            )
-        {
-            typ_x visible_part =  max_yy - min_yy ;
-            typ_x till2 = - ( spectrum_beg_y ) - ( visible_part ) ;
-
-            // NOTE:
-            // range had to ber from [ bottom of the spectrum(0)  ]
-            //                            to     [the top of the spectrum - (visible part)]
-            // how long is the slider - we define with the    setPageStep()
-
-            // but now, here it is upside down (this scroller is vertical)
-
-
-            ui->ScrollBar_pionowy_widma->setRange ( ( int ) - spectrum_end_y, ( int ) ( till2 ) ) ;
-            //             cout << "Update sliders, scrolls 7, range " << -spectrum_end_y << " till " << till  << endl ;
-
-            //
-            ui->ScrollBar_pionowy_widma->setPageStep ( ( int ) visible_part ) ;
-            //             cout << "Update sliders, scrolls 8" << endl ;
-            //ui->ScrollBar_pionowy_widma->setValue (min_yy);
-
-            //             cout << "In the new image of scrollbar   value set now is " << - max_yy << endl ;
-            ui->ScrollBar_pionowy_widma->setValue ( ( int )   - max_yy );
-            //             cout << "Update sliders, scrolls 9" << endl ;
-
-
-            //----
-            //             cout
-            //                 << "*** update scrv  range 0-" << cur_max
-            //                 << " page step =" << (max_yy - min_yy)
-            //                 << " value =" << min_yy
-            //                 << endl ;
-            //--------
-        }
-        else
-        {
-            // picture is bigger - higher  than specturm
-            ui->ScrollBar_pionowy_widma->setRange ( 0, 0 ) ;
-            ui->ScrollBar_pionowy_widma->setValue ( 0 );
-        }
-        //        COTO;
-    }
-    else
-    {
-        // making all slider disabled
-    }
-    //    COTO;
-    /*----------*/
-    //     cout << "++++++++++++++++++++++++++++++++ appl_update scrolls - ends " << endl ;
-    flag_reaction_for_scroll_slider_event = false;
-    //    COTO;
-    // set_current_undo_text_in_menu();  ???????????????
-
-    busy--;
-}
-//***********************************************************************
-#ifdef NIGDY
-void appl_form::ScrollBar_poziomy_widma_nextPage()
-{
-
-    //    COTO;
-    Tplate_spectrum * doc = ( Tplate_spectrum * ) ( ws-> currentSubWindow()->widget() );
-    cout << "ScrollBar_poziomy_widma_nextPage  " << endl ;
-    flag_reaction_for_scroll_slider_event = true;
-    if ( doc )
-        doc->shift_right ( 1 );
-
-    // pozostale tez przesuwam
-    if ( flag_act_on_all_spectra )
-        apply_to_other_spectra();
-
-    // cout << " handler next Page, po shift right " << endl ;
-    set_current_undo_text_in_menu();
-}
-
-//***********************************************************************
-void appl_form::ScrollBar_poziomy_widma_prevPage()    // handler of the signal
-{
-#ifdef NIGDY
-    cout << "appl_form::ScrollBar_poziomy_widma_prevPage() " << endl;
-    //    COTO;
-    Tplate_spectrum * doc = ( Tplate_spectrum * ) ( ws-> currentSubWindow()->widget() );
-    flag_reaction_for_scroll_slider_event = true;
-    if ( doc )
-        doc->shift_left ( 1 );
-    // pozostale tez przesuwam
-    if ( flag_act_on_all_spectra )
-        apply_to_other_spectra();
-    set_current_undo_text_in_menu();
-#endif
-}
-//***********************************************************************
-void appl_form::ScrollBar_poziomy_widma_prevLine()
-{
-#ifdef NIGDY
-    cout << "appl_form::ScrollBar_poziomy_widma_prevLine() " << endl;
-    //    COTO;
-    Tplate_spectrum * doc = ( Tplate_spectrum * ) ( ws-> currentSubWindow()->widget() );
-    flag_reaction_for_scroll_slider_event = true;
-    if ( doc )
-        doc->shift_left ( 10 );
-    // pozostale tez przesuwam
-    if ( flag_act_on_all_spectra )
-        apply_to_other_spectra();
-
-    //cout << "line left" << endl ;
-    set_current_undo_text_in_menu();
-#endif
-}
-//***********************************************************************
-void appl_form::ScrollBar_poziomy_widma_nextLine()
-{
-#ifdef NIGDY
-    cout << "appl_form::ScrollBar_poziomy_widma_nextLine() " << endl;
-    //    COTO;
-    Tplate_spectrum * doc = ( Tplate_spectrum * ) ( ws-> currentSubWindow()->widget() );
-    flag_reaction_for_scroll_slider_event = true;
-    if ( doc )
-        doc->shift_right ( 10 );
-    // pozostale tez przesuwam
-    if ( flag_act_on_all_spectra )
-        apply_to_other_spectra();
-
-    //   cout << "line Right" << endl ;
-    set_current_undo_text_in_menu();
-#endif
-}
-//***********************************************************************
-void appl_form::ScrollBar_pionowy_widma_sliderMoved ( int value_bottom )
-{
-
-}
-#endif
 //************************************************************************
 //************************************************************************
-// Slideres and scrollbars
-//************************************************************************
-void appl_form::on_ScrollBar_poziomy_widma_sliderMoved ( int left_edge )
-{
-    static int working_now = 0 ;
-    if(working_now > 0)
-    {
-        //cout << "rejected scroll horiz = level = " << working_now << endl;
-        return;
-    }
-    working_now++;
-    // parametr zmienia sie od 0 4096 (w obie strony)
-    Tplate_spectrum * doc = ( Tplate_spectrum * ) ( area-> currentSubWindow()->widget() );
-    flag_reaction_for_scroll_slider_event = true;
-    if ( doc )
-        doc->  scrollbar_horizontal_moved ( left_edge );
-    /*--------*/
 
-    // pozostale tez przesuwam
-    if ( flag_act_on_all_spectra )
-        apply_to_other_spectra();
-    //cout << "poziomy moved, wartosc parametru left edge= " << left_edge << endl ;
-    set_current_undo_text_in_menu();
-    working_now--;
-
-}
-//****************************************************************************************
-void appl_form::on_ScrollBar_pionowy_widma_sliderMoved ( int value_bottom )
-{
-    //     cout << " ScrollBar_pionowy_widma_sliderMoved (  "
-    //     << " value_bottom= " << value_bottom << ")"<< endl ;
-    //    COTO;
-    /*- -*/
-    Tplate_spectrum * doc = ( Tplate_spectrum * ) ( area-> currentSubWindow()->widget() );
-    flag_reaction_for_scroll_slider_event = true;
-    if ( doc )
-        doc->   scroller_vertical_moved ( value_bottom );
-
-    // pozostale tez przesuwam
-    if ( flag_act_on_all_spectra )
-        apply_to_other_spectra();
-
-    set_current_undo_text_in_menu();
-}
 //****************************************************************************************
 void appl_form::on_black_white_action_triggered ( bool checked )
 {
@@ -3267,10 +2868,7 @@ void appl_form::on_matrix_projection_Action_triggered()
             s = new spectrum_1D ( area, name_of_projection );
             auto win =  area->addSubWindow ( s, Qt::Window );
             // now conect all spectra
-            connect (
-                s, SIGNAL ( spec_update_scrolls_and_sliders() ),
-                this, SLOT ( appl_update_scrolls_and_sliders() )
-                );
+
 
             //cout << "before connecting in selected combo groups" << endl ;
             connect (
@@ -4002,16 +3600,6 @@ void appl_form::make_Custom_tiling(int how_many_spec, int vert_rows, int horiz_c
 //***********************************************************************************************************************
 void appl_form::on_actionCheck_incrementers_triggered()
 {
-#if 0
-
-    t4checking_incrementers_dlg  * dlgc = new t4checking_incrementers_dlg;
-    dlgc->exec();
-
-    delete dlgc;
-
-#endif
-
-
 
 #if 1
 

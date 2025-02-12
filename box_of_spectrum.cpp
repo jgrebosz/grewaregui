@@ -82,33 +82,21 @@ box_of_spectrum::box_of_spectrum (
 
 }
 //*********************************************************************
-void box_of_spectrum::showContextMenu(QPoint pos)
+void box_of_spectrum::showSpectrumContextMenu(QPoint pos)
 {
-    // appl_form_ptr->give_workspace() ->setFocus();
 
-    // auto tmp = appl_form_ptr->give_workspace() ->hasFocus();
-    // cout << "Focus = " << tmp << endl;
+    QPoint globalPos = pos;
+    QPoint localPos = mapFromGlobal(globalPos);
 
+    // some options of popup menu would like to have it in "channels"
+    x_mouse_click = typ_x ( pix2worX (localPos.x()) );
+    y_mouse_click = typ_x ( pix2worY (localPos.x()) );
+    parent->moj_showContextMenu(localPos);
 
-    // cout << "showContextMenu BOX --> KLAWISZOWO  CTL-N Surowa Pozycja x = ["
-    //      << pos.x() << ", " << pos.y() << "]"
-    //      << "  w  widmie " << parent->name_of_spectrum
-    //      // << " appl_form_ptr->give_workspace() ->hasFocus() = "
-    //      // <<  appl_form_ptr->give_workspace() ->hasFocus()
-    //      << endl;
-
-    // Wspolrzedne w tym widgecie bierzemy z ostaniej pozcyji przesuwanej myszki
-    take_position_from_mouse();
-
-    // cout << "wywolanie moj_showContextMenu z parenta" << endl;
-    // cout << "Nazwa dla jego parenta = " << parent->name_of_spectrum << endl;
-    // cout << "a current spectum is " << real_spectrum_name << endl;
-    parent->moj_showContextMenu(pos);
-    // appl_form_ptr->give_workspace() ->setFocus();
     // cout << " end of "<< __PRETTY_FUNCTION__ << endl;
 }
 //*********************************************************************
-void box_of_spectrum::ctxMenu(const QPoint &)
+void box_of_spectrum::ctxMenu(const QPoint &) // [[deprecated]]
 {
 
 }
@@ -651,58 +639,7 @@ void box_of_spectrum::draw_all ( QPainter * pior )
     double fontsiz = rect().width() / 50.0;
     if(fontsiz > 5)
         draw_pinup_notices(piorko, fontsiz);
-#if 0 
-    // The info about the gates required (dark yellow)
-    piorko.setPen ( QPen ( black_white ? Qt::black : Qt::darkYellow, 2, Qt::SolidLine ) ); // preparing the pen
 
-    QFont sansFont ( "Helvetica [Cronyx]" );
-    piorko.setFont ( sansFont );
-
-
-    // calculating the position of notice
-    double x_notice = minX + 0.03 * ( maxX- minX ) ;
-    double y_notice = maxY - ( 0.1* ( maxY - minY ) ) ;
-    if ( p->give_flag_log_scale() )
-    {
-        y_notice = pow ( 10, y_notice );
-    }
-
-
-    p->nalepka_notice.set_xy ( x_notice,  y_notice );
-    sansFont.setPixelSize ( 12 );
-    piorko.setFont ( sansFont );
-    p->nalepka_notice.draw ( this, &piorko, p->give_flag_log_scale() );
-
-    // -----------
-    if ( krot != 1 ) // this is a rebining factor
-    {
-        piorko.setPen ( QPen ( black_white ? Qt::black : Qt::red, 2, Qt::SolidLine ) ); // preparing the pen
-        QString inf = QString ( "1 bin = %1 channels" ).arg ( krot ) ;
-        p->rebining_notice.set_info ( inf.toStdString().c_str() ) ;
-        // calculating the position of notice
-        x_notice = minX + 0.8 * ( maxX- minX ) ;
-        y_notice = maxY - ( 0.15* ( maxY - minY ) ) ;
-        if ( p->give_flag_log_scale() )
-        {
-            y_notice = pow ( 10, y_notice );
-        }
-        p->rebining_notice.set_xy ( x_notice,  y_notice );
-        //  sansFont.setPixelSize(12);
-        //  piorko.setFont(sansFont);
-        p->rebining_notice.draw ( this, &piorko, p->give_flag_log_scale() );
-    }
-
-    //----------- other user definied notices -----------------
-    piorko.setPen ( QPen ( black_white ? Qt::black : Qt::cyan, 2, Qt::SolidLine ) ); // preparing the pen
-
-    sansFont.setPixelSize ( 15 );
-    piorko.setFont ( sansFont );
-
-    for ( unsigned int i = 0 ; i < p->nalepka.size() ; i ++ ) // drawing all gates
-    {
-        p->nalepka[i].draw ( this, &piorko, p->give_flag_log_scale() );
-    }
-#endif // 0
 }
 //***********************************************************************
 void box_of_spectrum::draw_integration_markers ( QPainter& piorko )
@@ -942,9 +879,10 @@ void box_of_spectrum::set_spectrum_pointer ( vector<int> * ptr, spectrum_descr *
     specif = d ;
 }
 //***********************************************************************
-void   box_of_spectrum::take_position_from_mouse()
+void   box_of_spectrum::take_position_from_mouse() // [[deprecated]]
 {
     // we make it easer: just take the last mouse position
+    cout << __PRETTY_FUNCTION__ << " is deprecated " << endl;
 
     x_mouse_click =real_x;
     y_mouse_click = real_y;
@@ -960,7 +898,7 @@ void   box_of_spectrum::take_position_from_mouse()
 void   box_of_spectrum::mousePressEvent ( QMouseEvent * e )
 {
     // we set the values
-
+    COTO;
     x_mouse_click = typ_x ( pix2worX ( e->
 #if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
                                    position().
@@ -972,10 +910,11 @@ void   box_of_spectrum::mousePressEvent ( QMouseEvent * e )
 #endif
                                  y() ) ) ;
     pressed_button_state = e->button() ;
-    //    cout << "started mousepress in  box_spectrum" << endl;
-    //       cout << "in mousePressEvent,   Pixl=" << e->x()
-    //      << "  means channel =" <<  pix2worX(e->x() )
-    //      << endl ;
+    COTO;
+       // cout << "started mousepress in  box_spectrum" << endl;
+       //    cout << "in mousePressEvent,   Pixl=" << e->x()
+       //   << "  means channel =" <<  pix2worX(e->x() )
+       //   << endl ;
 
     //       if(pressed_button_state == Qt::RightButton)
     //       {
@@ -1001,28 +940,43 @@ void   box_of_spectrum::mousePressEvent ( QMouseEvent * e )
 
     //warning: at first event will be normal, one click press mouse.
     // then immediately it will come here once more
-
+COTO;
     if ( e->type() ==QEvent::MouseButtonDblClick ) // double click
     {
         e->accept () ;
         flag_was_mouse_click = false;
-        //cout << "double click in box_spectrum" << endl;
+        // cout << "double click in box_spectrum" << endl;
         //COTO;
         parent->expand_double_click ( x_mouse_click, y_mouse_click, ( e->modifiers ()  & Qt::ShiftModifier ) ) ;
         // cout << "Afer expand function " << endl ;
         //COTO;
 
     }
+    if(e->button() & Qt::RightButton)
+    {
+#if  (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+        auto pos = e->position(). toPoint();
+
+        // cout << "Myszkowa Pozycja  scene x = "  <<  p.x()
+        //      << endl;
+#else
+        auto pos = e->pos();
+#endif
+        // cout << "Myszkowa Pozycja x = " << pos.x() << ", y = " << pos.y()              << endl;
+        parent->show_context_1d_menu(pos);
+
+    }
     else
     {
-        //COTO;
+        COTO;
         // cout << "single click in box_spectrum" << endl;
 
         flag_was_mouse_click = true ;
         e->ignore ();   // so it will go to the parent
-        //COTO;
+        COTO;
     }
     //COTO;
+    update();
     // cout << "finished mousepress in  box_spectrum" << endl;
 }
 //***********************************************************************

@@ -3,6 +3,8 @@
 *.Debug
 *.Release
 *.user
+./debug/*
+./release/*
 moc_*
 ui_*
 *.idx

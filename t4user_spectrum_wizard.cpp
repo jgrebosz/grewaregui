@@ -637,18 +637,7 @@ void T4user_spectrum_wizard::called_creator_self_gate(QTableWidget *table, bool 
 		//    Tselfgate_type - to suggest the type of selgate
 		typsg = selfgate_type_for_this_type_of_incrementer(table->item(row, 0)->text().toStdString() );
 	}
-#if 0
-	bool ok;
-	QString res = QInputDialog::getItem(this,
-										"There is plenty of selfgates possible",
-										"Select type of the selfgate from the list below:", lst,
-										typsg, // 1,
-										false, // true,
-										&ok
-										);
-	if ( !ok )return ;
 
-#else
 
     T4selfgate_selector dlg_sg;
     dlg_sg.set_parameters("There are several types of selfgates.\nSelect the desired type",
@@ -663,7 +652,7 @@ void T4user_spectrum_wizard::called_creator_self_gate(QTableWidget *table, bool 
         res = dlg_sg.get_selected_string() ;
 	}else return;
 
-#endif
+
 
 
 
@@ -1429,19 +1418,8 @@ string T4user_spectrum_wizard::select_sg_name_from_disk(Tselfgate_type typ)
 							  "No selfgates of this particular type exist yet.\n"
                               "You must create it at first");
 		return "";
-
 	}
 
-#if 0
-	bool ok;
-	QString sg_name = QInputDialog::getItem(this,"Select an item:",
-											"Choose the self-condition which you want to edit",
-											lista_cond, 0,
-											false, &ok);
-	if ( !ok )return "" ;
-
-
-#else
 	T4selfgate_selector dlg;
 	dlg.set_parameters("Choose the self-condition which you want to edit",
 					   lista_cond,
@@ -1454,11 +1432,6 @@ string T4user_spectrum_wizard::select_sg_name_from_disk(Tselfgate_type typ)
 	{
 		sg_name = dlg.get_selected_string() ;
 	}else return "";
-
-
-#endif
-
-
 
 
 	// user selected an item and pressed OK

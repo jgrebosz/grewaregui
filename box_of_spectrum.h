@@ -200,7 +200,7 @@ protected: // Protected attributes
 
 
 public slots:
-    void showContextMenu(QPoint pos);
+    void showSpectrumContextMenu(QPoint pos);
 
 protected:
 };

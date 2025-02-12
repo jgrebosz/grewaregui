@@ -148,10 +148,7 @@ private slots:
     void enable_some_actions ( int typ );
 
     void on_actionSpy_Update_pause_and_run_again_triggered();
-    void appl_update_scrolls_and_sliders();
 
-    void on_ScrollBar_poziomy_widma_sliderMoved(int left_edge);
-    void on_ScrollBar_pionowy_widma_sliderMoved(int position);
 
     void on_black_white_action_triggered(bool checked);
 
@@ -259,11 +256,7 @@ protected:
 
     void make_Custom_tiling(int how_many_spec, int vert_rows, int horiz_columns);
     std::vector<std::string> suggest_incrementer(T4incrementer_selector *dlg, std::string filter);
-    //    void ScrollBar_poziomy_widma_nextPage();
-    //    void ScrollBar_poziomy_widma_prevPage() ;
-    //    void ScrollBar_poziomy_widma_prevLine();
-    //    void ScrollBar_poziomy_widma_nextLine();
-    //    void ScrollBar_pionowy_widma_sliderMoved ( int value_bottom );
+
 
 
     void common_galileo_signals_dialog(string input_file,
@@ -294,12 +287,10 @@ protected:
     bool flag_reaction_for_scroll_slider_event;
 
     QMdiArea *area;
-    //    T4select_spectra * ss;
+
     bool flag_act_on_all_spectra;
     bool flag_display_previously_displayed_spectra = false;
     vector<string> last_spectra_selection ;
-
-
 
 };
 /////////////////////////////////////////////////////////////

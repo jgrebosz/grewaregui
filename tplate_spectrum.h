@@ -72,10 +72,10 @@ public slots:
     virtual void scaleY_by_05() = 0;
     virtual void integrate ( T4results_of_integration * );
     virtual void give_parameters ( typ_x *, typ_x *, typ_x *, typ_x *, spectrum_descr * );
-    virtual void scrollbar_horizontal_moved ( int ) = 0;
+    // virtual void scrollbar_horizontal_moved ( int ) = 0;
     virtual void scaleY_by_factor ( double ) = 0;
-    virtual void slider_horizontal ( int ) = 0;
-    virtual void scroller_vertical_moved ( int ) = 0;
+    // virtual void slider_horizontal ( int ) = 0;
+    // virtual void scroller_vertical_moved ( int ) = 0;
     virtual int giveCurrentMaxCounts() = 0;
     virtual void Tplate_spectrum_destroyed ( QObject * );
     virtual void set_parameters ( typ_x, typ_x, typ_x, typ_x );
@@ -141,6 +141,7 @@ protected:
     // for MAC
 public:
     virtual void showContextMenu() = 0;
+
     static Tplate_spectrum* getHoveredDocument() {
         return hoveredDocument;
     }

@@ -63,9 +63,9 @@ T4manager_user_conditions::T4manager_user_conditions(QWidget *parent) :
 
 
 
-	// colors of left vertical label
-	// does not work properly. Makes it black!
-	//ui->table->verticalHeader()->setStyleSheet( "background-color:rgba(155, 144, 71, 30);");
+    // colors of left vertical label
+    // does not work properly. Makes it black!
+    //ui->table->verticalHeader()->setStyleSheet( "background-color:rgba(155, 144, 71, 30);");
 
 
     // from init()-------------------------------
@@ -77,7 +77,7 @@ T4manager_user_conditions::T4manager_user_conditions(QWidget *parent) :
     ui->table->setColumnCount ( 3);
 
     // column 0 is editable, but others - no:
-		ui->table->setAlternatingRowColors(true);
+    ui->table->setAlternatingRowColors(true);
 
     update_the_table() ;
 
@@ -133,8 +133,8 @@ void T4manager_user_conditions::on_push_remove_selected_clicked()
     if(range.count() == 0)
     {
         showWarningMessage(
-                             "No condition selected",
-                             QString("Select the condition by clicking once on its name\n") );
+            "No condition selected",
+            QString("Select the condition by clicking once on its name\n") );
         return ;
     }
 
@@ -158,7 +158,7 @@ void T4manager_user_conditions::on_push_remove_selected_clicked()
 
             if(is_possible_to_remove_this_condition(vec_cond_descr[row].name + user_cond_ext) == false)
             {
-				cerr << "niemozliwe usuniecie tego warunku" << endl;
+                cerr << "niemozliwe usuniecie tego warunku" << endl;
                 return ;
 
             }
@@ -170,7 +170,7 @@ void T4manager_user_conditions::on_push_remove_selected_clicked()
                 QMessageBox msgBox;
                 msgBox.setText("Removing the condition definition");
                 msgBox.setInformativeText( QString("You are going to remove the definition nr %1\nof the condition %2\n"
-                                                   "Are you sure?").arg(row+1).arg(vec_cond_descr[row].name.c_str() ))  ;
+                                                  "Are you sure?").arg(row+1).arg(vec_cond_descr[row].name.c_str() ))  ;
                 msgBox.setStandardButtons(QMessageBox::Yes | QMessageBox::YesToAll |  QMessageBox::No | QMessageBox::Cancel);
                 msgBox.setDefaultButton(QMessageBox::No);
                 answ = msgBox.exec();
@@ -253,10 +253,10 @@ void T4manager_user_conditions::on_push_edit_selected_condition_clicked()
     if(nr >= ui->table->rowCount() || nr == -1)
     {
         showWarningMessage(
-                             "No condition selected",
-                             QString(nr == -1 ?
-										 "No condition was selected to edit" :
-                                         "Select the condition by clicking once on its name\n") );
+            "No condition selected",
+            QString(nr == -1 ?
+                        "No condition was selected to edit" :
+                        "Select the condition by clicking once on its name\n") );
         return ;
     }
     row_is_selected();
@@ -313,8 +313,8 @@ void T4manager_user_conditions::update_the_table()
     how_many_items = katalog2.count() ;
 
     QProgressDialog progress( infor,
-                              "Abort reading", 0, how_many_items,
-                              this);
+                             "Abort reading", 0, how_many_items,
+                             this);
     progress.setMinimumDuration (5000) ; // miliseconds
     progress.setValue(2);
     qApp->processEvents();
@@ -340,9 +340,9 @@ void T4manager_user_conditions::update_the_table()
 
 
         string name_c = (*it).toStdString() ;
-//        cout << "Trying to read condition definition " << name_c << endl;
+        //        cout << "Trying to read condition definition " << name_c << endl;
 
-		auto pos = name_c.rfind(".") ;
+        auto pos = name_c.rfind(".") ;
         name_c.erase(pos) ;
 
         us.set_name(name_c);
@@ -357,10 +357,10 @@ void T4manager_user_conditions::update_the_table()
     progress.setValue( how_many_items );
 
 
-	auto nr_rows =vec_cond_descr.size();
+    auto nr_rows =vec_cond_descr.size();
     ui->table->setRowCount ( nr_rows );
 
-	for (int j = 0; j < (int)nr_rows; ++j )
+    for (int j = 0; j < (int)nr_rows; ++j )
     {
         ui->table->setItem(j, 0, new QTableWidgetItem(vec_cond_descr[j].give_name().c_str()) )  ;
         ui->table->item(j, 0)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
@@ -398,14 +398,14 @@ void T4manager_user_conditions::on_push_How_to_clone_clicked()
 {
 
     showWarningMessage(
-                             "Cloning the definition of the condition",
-                             QString("If you want to clone some condition\n\n"
-                                     "   1. Open it for editing (Press button: Edit Selected condition)\n\n"
-                                     "   2. On the first page of the editing wizard - change the name of the condition\n\n\n"
-                                     "Note: By this the original condition will not be affected, "
-                                     "(its definition is already on the disk)\n"
-                                     "and the new-named condition (clone) will be stored on the disk independently\n"),
-                             QMessageBox::Information);
+        "Cloning the definition of the condition",
+        QString("If you want to clone some condition\n\n"
+                "   1. Open it for editing (Press button: Edit Selected condition)\n\n"
+                "   2. On the first page of the editing wizard - change the name of the condition\n\n\n"
+                "Note: By this the original condition will not be affected, "
+                "(its definition is already on the disk)\n"
+                "and the new-named condition (clone) will be stored on the disk independently\n"),
+        QMessageBox::Information);
 
 }
 //********************************************************************************
@@ -417,8 +417,8 @@ string T4manager_user_conditions::is_name_unique( string n, int nr )
     for(unsigned i = 0 ; i < vec_cond_descr.size() ; i++)
     {
         if(new_name == vec_cond_descr[i].give_name()
-                &&
-                i != (unsigned)nr )
+            &&
+            i != (unsigned)nr )
         {
             new_name += "A" ;
             i = 0 ; // starting again
@@ -429,11 +429,11 @@ string T4manager_user_conditions::is_name_unique( string n, int nr )
     if(changed)
     {
         showWarningMessage(
-                             "Duplicate name of the condition",
-                             QString("The name of the condition:\n\t%1\n"
-                                     "was already existing in the list, so it had to be changed into:\n"
-                                     "\t%2\n").arg(n.c_str())
-                             .arg(new_name.c_str()));
+            "Duplicate name of the condition",
+            QString("The name of the condition:\n\t%1\n"
+                    "was already existing in the list, so it had to be changed into:\n"
+                    "\t%2\n").arg(n.c_str())
+                .arg(new_name.c_str()));
     }
     return new_name ;
 }
@@ -526,7 +526,7 @@ void T4manager_user_conditions::update_review()
     ui->review->setRowCount ( nr_rows );
 
 
-	//ui->review->setStyleSheet( "background-color: rgb(255, 255, 190);   selection-color: rgb(255, 198, 171);");
+    //ui->review->setStyleSheet( "background-color: rgb(255, 255, 190);   selection-color: rgb(255, 198, 171);");
 
 
 
@@ -562,7 +562,7 @@ void T4manager_user_conditions::update_review()
             }
 
             ui->review->item(current_line+r, 1)->setText( (vec_cond_descr[j]. item_1D_AND[r].obligatory_in_event  == 1 ?
-                                                               "consider this line as: false" : " consider this line as: true"));
+                                                                "consider this line as: false" : " consider this line as: true"));
             ui->review->item(current_line+r, 2)->setText( (vec_cond_descr[j]. item_1D_AND[r].var_name.c_str() ));
             ui->review->item(current_line+r, 3)->setText( QString::number(vec_cond_descr[j]. item_1D_AND[r].min_value));
             ui->review->item(current_line+r, 4)->setText( QString::number(vec_cond_descr[j]. item_1D_AND[r].max_value));
@@ -601,7 +601,7 @@ void T4manager_user_conditions::update_review()
             }
 
             ui->review->item(current_line+r, 8)->setText( (vec_cond_descr[j]. item_2D_AND[r].obligatory_in_event  == 1 ?
-                                                               "consider this line as: false" : " consider this line as: true"));
+                                                                "consider this line as: false" : " consider this line as: true"));
             ui->review->item(current_line+r, 9)->setText( vec_cond_descr[j]. item_2D_AND[r].var_x_name.c_str()  );
             ui->review->item(current_line+r, 10)->setText( vec_cond_descr[j]. item_2D_AND[r].var_y_name.c_str()) ;
             ui->review->item(current_line+r, 11)->setText( vec_cond_descr[j]. item_2D_AND[r].polygon_name.c_str());
@@ -691,7 +691,7 @@ void T4manager_user_conditions::update_review()
         for(unsigned r = 0 ; r < 19 ; r++)   // <--- 19 columns of the text
         {
             ui->review->item(current_line+ extra_lines+1, r)->setBackground(QColor(220,220,220));
-			ui->review->item(current_line+ extra_lines+1, r)->setText("***" );
+            ui->review->item(current_line+ extra_lines+1, r)->setText("***" );
         }
 
         current_line += extra_lines +1 ;
@@ -742,21 +742,21 @@ void T4manager_user_conditions::on_push_Save_review_as_file_clicked()
     if(plik)
     {
         wiad = QString("Report succesfully written as \n") +
-                (gpath.conditions+ "report_conditions.txt").c_str() ;
-       showWarningMessage(
-                                 "Report about user defined conditions",
-                                 wiad,
-                                 QMessageBox::Information);
+               (gpath.conditions+ "report_conditions.txt").c_str() ;
+        showWarningMessage(
+            "Report about user defined conditions",
+            wiad,
+            QMessageBox::Information);
     }
     else
     {
         wiad = QString("Error while writing the report \n") +
-                (gpath.conditions+ "report_conditions.txt").c_str() ;
+               (gpath.conditions+ "report_conditions.txt").c_str() ;
 
         showWarningMessage(
-                              "Report about user defined  conditions",
-                              wiad,
-                              QMessageBox::Critical);
+            "Report about user defined  conditions",
+            wiad,
+            QMessageBox::Critical);
     }
     return ;
 
@@ -791,10 +791,10 @@ bool T4manager_user_conditions::is_possible_to_remove_this_condition( string con
 
   */
     cout
-            << " F. T4manager_user_conditions::is_possible_to_remove_this_condition("
-            << condition_name
-            << ")"
-            << endl;
+        << " F. T4manager_user_conditions::is_possible_to_remove_this_condition("
+        << condition_name
+        << ")"
+        << endl;
 
 
     bool possible = true;
@@ -852,8 +852,8 @@ bool T4manager_user_conditions::is_possible_to_remove_this_condition( string con
         mmm += "\n(You can delete a user_defined spectrum - using the the User Defined Spectrum Manager)";
 
         showWarningMessage("Impossible to delete the condition",
-                               mmm.c_str(),
-                               QMessageBox::Critical);  // error
+                           mmm.c_str(),
+                           QMessageBox::Critical);  // error
 
     }// end if impossible
 
@@ -864,13 +864,13 @@ bool T4manager_user_conditions::is_possible_to_remove_this_condition( string con
 
         // taking the spectra names from the directory - only
         QDir katalog3(gpath.Qconditions() );
-//        QString
+        //        QString
         name_filter = user_cond_filter.c_str();
         // in the condition dir
         //QStringList
-                lista = katalog3.entryList (QStringList(name_filter) ) ;
-//        int
-                nr = 0 ;
+        lista = katalog3.entryList (QStringList(name_filter) ) ;
+        //        int
+        nr = 0 ;
         for ( QStringList::Iterator it = lista.begin() ; it != lista.end() ;  ++it, nr++ )
         {
             //            cout << "Trying to read condition definition " << (*it).toStdString() << endl;
@@ -921,8 +921,8 @@ bool T4manager_user_conditions::is_possible_to_remove_this_condition( string con
             mmm += "\n(You must delete them first )";
 
             showWarningMessage( "Impossible to delete the condition",
-                                   mmm.c_str(),
-                                   QMessageBox::Critical);  // error
+                               mmm.c_str(),
+                               QMessageBox::Critical);  // error
 
         }// end if impossible
 
@@ -959,16 +959,16 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
     error e;
     //---------------
     string introduction_txt =  "This is the option to clone a condition which contains \n"
-                               "at most 2 pattern of characters which had to be smartly replaced\n"
-                               "Such substring will be replaced with your desired values"
-                               "(i.e. for all possible cluster crystals)\n"
-                               "By this action, the set of new spectra wiil be created.\n\n"
-                               "The replacement will be done :\n"
-                               "The replacement will be done:\n"
-                               "    1. Inside  the name of the conditon, \n"
-                               "and everywhere inside the definition of this conditon:\n"
-                               "    2. Inside the name of any incrementer (variable) ,\n"
-                               "    3. Inside the name of any other condition refered in this condition.\n";
+                              "at most 2 pattern of characters which had to be smartly replaced\n"
+                              "Such substring will be replaced with your desired values"
+                              "(i.e. for all possible cluster crystals)\n"
+                              "By this action, the set of new spectra wiil be created.\n\n"
+                              "The replacement will be done :\n"
+                              "The replacement will be done:\n"
+                              "    1. Inside  the name of the conditon, \n"
+                              "and everywhere inside the definition of this conditon:\n"
+                              "    2. Inside the name of any incrementer (variable) ,\n"
+                              "    3. Inside the name of any other condition refered in this condition.\n";
 
     QMessageBox::information(this,
                              "Cloning the conditon ", introduction_txt.c_str(),
@@ -989,213 +989,7 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
             throw e;
         }
         row_is_selected();
-#if 0
-        // checking if the name of the spectrum contains the substring A_1
-        string pattern = "_A_1_";
-        string condname = vec_cond_descr[nr].name ;
-        string::size_type loc = condname.find( pattern);
-        if( loc == string::npos )
-        {
-            e.title = "Wrong name of the conditon ";
-            e.message = "The name of the selected conditon does not contain the substring \"_A_1_\" ";
-            e.kind = 1; // critial
-            throw e;
-        }
 
-        int result = QMessageBox::information(this,
-                                              "Cloning the _A_1_ conditon ",
-                                              "This is the option to clone a conditon  which contains the substring \"_A_1_\"\n "
-                                              "Such substring will be replaced with _A_2_ , _A_3_, ... , _R_7_"
-                                              "(i.e. for all possible cluster crystals)\n"
-                                              "By this action, the new 104 conditons  wiil be created.\n\n"
-                                              "The replacement will be done:\n"
-                                              "    1. Inside  the name of the conditon, \n"
-                                              "and everywhere inside the definition of this conditon:\n"
-                                              "    2. Inside the name of any incrementer (variable) ,\n"
-                                              "    3. Inside the name of any other condition refered in this condition.\n"
-
-                                              "\n\nDo you really want to create such set of 104 clones ? ",
-
-                                              QMessageBox::Yes,
-                                              QMessageBox::No,
-                                              QMessageBox::Cancel);
-        if(result != QMessageBox::Yes )
-        {
-            return ;
-        }
-
-
-        //
-        //cout << "OK, we can clone it !" << endl;
-
-        //  reading the whole contents of the file
-        string pathed_name = gpath.conditions + condname + user_cond_ext;
-
-        ifstream plik(pathed_name.c_str() );
-        if(!plik)
-        {
-            string m = "Error while opening the file :";
-            m + pathed_name;
-
-            e.title = "Can't open a file ";
-            e.message = m ;
-            e.kind = 1; // critial
-            throw e;
-        }
-        // read in the whole contents
-        string contents;
-        string one_line;
-        while(plik)
-        {
-            getline(plik, one_line);  // delimiter (\n) is not added to the string
-            // so we add it
-            contents += one_line;
-            contents += '\n';
-        }
-
-        //  search all the positions of the substrings A_0
-        vector<string::size_type> position;
-
-        for(string::size_type i = 0 ; ; i++)
-        {
-            loc = contents.find(pattern, i);
-            if( loc == string::npos )
-                break;
-            position.push_back(loc);
-            i = loc;
-        }
-        if(!position.size())
-        {
-            cout << "No " << pattern << " found inside the file " <<  condname << endl;
-
-            e.title = "Some nonsense ? ";
-            e.message = "The  cloned conditon  definition does not use anything with the substring \"_A_0_\" "
-                        "\nPerhaps you are doing some nonsense...";
-            e.kind = 2; // critial
-            throw e;
-
-        }
-        // FOR loop over all crystals========================================
-        bool make_checking_if_clone_exists = true;
-
-        //----------------------
-        string markers =
-                "ABCDEFGJKLMNPQR"  ; // : "ABCDGJKL" ;
-
-        string mess = "Which set of detectors do you have?";
-        int  odp = QMessageBox::information(this, "Set of Detectors", mess.c_str(),
-                                            "ABCDEFGJKLMNPQR",
-                                            "ABCDGJKL",  "Cancel",
-                                            0 );
-
-        switch(odp)
-        {
-        case 0:
-        default:
-            break;
-
-        case 1:
-            markers = "ABCDGJKL" ;
-            break;
-
-        case 2:
-            raise();
-            return;
-            break;
-        }
-
-
-        //----------------------
-
-
-
-        for(unsigned int d = 0 ; d < markers.size() ; d++)
-            for(unsigned int k= 1 ; k<= 7 ; k++)
-            {
-                if(d == 0 && k == 1) continue;
-
-                //      cout << "d = " << d << " , k = " << k << endl;
-                ostringstream s;
-                s << "_" << markers[d] << "_" << k << "_" ;
-                string new_pattern = s.str();
-                // For loop over all patterns inside
-                string output_contents = contents;
-                for(unsigned int i = 0 ; i < position.size() ; i++)
-                {
-                    output_contents.replace(position[i],  new_pattern.size(), new_pattern);
-                }
-                // save -------------- -----------------------------
-                string new_filename = condname;
-                // change all the patterns in the new filename
-
-                do
-                {
-                    loc = new_filename.find(pattern);
-                    if(loc != string::npos)
-                    {
-                        new_filename.replace(loc,  new_pattern.size(), new_pattern);
-                    }
-                    //      cout << "Currently new_filename = " << new_filename << endl;
-                }
-                while(loc != string::npos);
-                //         cout << "New file = " << new_filename << endl;
-                new_filename =  gpath.conditions + new_filename +  user_cond_ext;
-
-                // checking if it exists
-                if(make_checking_if_clone_exists)
-                {
-                    ifstream plik_exists(new_filename.c_str());
-                    if(plik_exists)
-                    {
-                        int odp =  QMessageBox::question(this,
-                                                         "Overwrite ?",
-                                                         QString(string("Condition named  \n" + new_filename + "\nalready exist. \n Overwite it?").c_str() ),
-                                                         QMessageBox::Yes,
-                                                         QMessageBox::YesAll,
-                                                         QMessageBox::No);
-                        switch(odp)
-                        {
-                        case QMessageBox::No: continue; break;
-                        case QMessageBox::Yes: break;
-                        case QMessageBox::YesAll: make_checking_if_clone_exists = false ; break;
-                        }
-                    } // if exists
-                } // if make checking
-
-                ofstream plikB(new_filename.c_str());
-                if(!plikB)
-                {
-                    e.message= string ("Can't open the file for writing: ") +  new_filename ;
-                    e.title = "Error while opening the file";
-                    e.kind = 1; // critial
-                    throw e;
-                }
-                plikB << output_contents ;
-                if(!plikB)
-                {
-                    e.message= string ("Can't write the file ") +  new_filename ;
-                    e.title = "Error while writing the file";
-                    e.kind = 1; // critial
-                    throw e;
-                }
-                plikB.close();
-                flag_any_change = true;
-            } // end for  d (detectors) and for k
-
-        update_the_table() ;
-
-    }// end of try
-    catch(error m)
-    {
-        QMessageBox::warning(this,
-                             m.title.c_str(),
-                             m.message.c_str(),
-                             QMessageBox::Ok,
-                             QMessageBox::NoButton,
-                             QMessageBox::NoButton);
-        return;
-    }
-#else
 
 
 
@@ -1269,12 +1063,12 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
         // ready to create the new spectra
 
         string txt = /*introduction_txt + */
-                "\n\nDo you really want to create such set of clones ? ";
+            "\n\nDo you really want to create such set of clones ? ";
 
         for(auto x : filenames) {  txt += x + "   "; }
         auto result = askYesNoCancel(
-                                          "Cloning the spectra",
-                                          txt.c_str());
+            "Cloning the spectra",
+            txt.c_str());
         if(result != QMessageBox::Yes )
         {
             return ;
@@ -1306,11 +1100,11 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
 
 
                 string result4 =
-                        dlg.make_a_clone_from_skeleton_using_kombination(file_contents_skeleton,
-                                                                         chain_one[d],
-                                                                         chain_two[k],
-                                                                         &result_bw,
-                                                                         &flag_any_change2);
+                    dlg.make_a_clone_from_skeleton_using_kombination(file_contents_skeleton,
+                                                                     chain_one[d],
+                                                                     chain_two[k],
+                                                                     &result_bw,
+                                                                     &flag_any_change2);
 
 
                 if(!flag_any_change2) continue;
@@ -1335,13 +1129,13 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
                     if(plik_exists)
                     {
                         int odp =  askQuestionWithButtons(          // +
-                                                         "Overwrite ?",
-                                                         string("Condition called \n" +
-                                                                new_filename +
-                                                                "\nalready exist. \n Overwite it?").c_str(),
-                                                         "Yes",
-                                                         "Yest to all",
-                                                         "No", 3);
+                            "Overwrite ?",
+                            string("Condition called \n" +
+                                   new_filename +
+                                   "\nalready exist. \n Overwite it?").c_str(),
+                            "Yes",
+                            "Yest to all",
+                            "No", 3);
                         switch(odp)
                         {
                         case 1: break;   // QMessageBox::Yes:
@@ -1381,14 +1175,12 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
     }// end of try
     catch(error m)
     {
-       showWarningMessage(
-                             m.title.c_str(),
-                             m.message.c_str() );
+        showWarningMessage(
+            m.title.c_str(),
+            m.message.c_str() );
         return;
     }
 
-
-#endif
 
     raise();   // to the top of desktop
     if(flag_any_change)appl_form_ptr-> warning_spy_is_in_action();
@@ -1396,18 +1188,18 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
 //********************************************************************************************
 void T4manager_user_conditions::on_ComboBox_filter_textChanged(const QString &  /* arg1*/ )
 {
-  static bool flag_working = 0;
+    static bool flag_working = 0;
 
-  if(flag_working) return; // if there are many conditions - we do not want "pile-ups"
+    if(flag_working) return; // if there are many conditions - we do not want "pile-ups"
 
-  flag_working = true;
-  update_the_table();
-  flag_working = false;
+    flag_working = true;
+    update_the_table();
+    flag_working = false;
 }
 //********************************************************************************************
 void T4manager_user_conditions::on_ComboBox_filter_editTextChanged(const QString &arg1)
 {
-	on_ComboBox_filter_textChanged(arg1 );
+    on_ComboBox_filter_textChanged(arg1 );
 }
 //********************************************************************************************
 
@@ -1478,7 +1270,7 @@ void T4manager_user_conditions::on_review_cellDoubleClicked(int row, [[__maybe_u
     if ( dlg->exec() == QDialog::Accepted )
     {
         vec_cond_descr[which].name
-                = is_name_unique(vec_cond_descr[which].name, which);
+            = is_name_unique(vec_cond_descr[which].name, which);
 
         //update_the_table() ;
         vec_cond_descr[which].save_condition();

@@ -732,18 +732,6 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
         // checking if the name of the spectrum contains the pattern (substring A_1)
 
         string specname = vec_spectra[nr].name_of_spectrum;
-#if 0
-        if(specname.empty() ||  row == -1)
-        {
-            e.title = "No spectrum is selected now";
-            e.message = "\n\n\nPlease select a spectrum which you want to clone\n\n"
-                    +
-                    introduction_txt;
-            e.kind = 1; // critcial
-            throw e;
-        }
-
-#endif
 
         //  reading the whole contents of the template file
         string pathed_name = gpath.user_def_spectra + specname + user_spec_ext;
