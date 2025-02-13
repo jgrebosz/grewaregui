@@ -122,15 +122,15 @@ public:
 
 protected:
     // Obsługa zdarzenia menu kontekstowego (kliknięcie prawym przyciskiem myszy)
-    void contextMenuEvent(QContextMenuEvent *event) override
-    {
-        auto pos = event->globalPos();
+    // void contextMenuEvent(QContextMenuEvent *event) override  // USINUETE BO INACZEJ DWA RAZY POJWAIAŁO SIĘ POPUP MENU
+    // {
+    //     auto pos = event->globalPos();
 
-        // cout << "Myszka Prawy klawisz - global Pozycja x = " << pos.x() << ", y = " << pos.y()
-             // << endl;
+    //     // cout << "Myszka Prawy klawisz - global Pozycja x = " << pos.x() << ", y = " << pos.y()
+    //          // << endl;
 
-        moj_showContextMenu(pos);
-    }
+    //     moj_showContextMenu(pos);
+    // }
 
 
 public:
