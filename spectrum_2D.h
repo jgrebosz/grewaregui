@@ -8,7 +8,7 @@
 #include <QShortcut>
 #include <QKeySequence>
 
-#include "qmessagebox.h"
+// #include "qmessagebox.h"
 #include "tplate_spectrum.h"
 
 #include <box_of_matrix.h>
@@ -52,7 +52,7 @@ enum refresh_big_matrices_policy { not_decided, skip_one =1, skip_all, refresh_o
 */
 #endif
 
-
+//using namespace std;
 ////////////////////////////////////////////////////////////////////
 class spectrum_2D : public Tplate_spectrum
 {
@@ -209,24 +209,24 @@ public:
 
 
     bool is_flag_error_while_reading() { return flag_error_while_reading;}
-    void set_new_refreshing_times();  // virtual
+   void set_new_refreshing_times()  override ; // virtual
 
     // void white_black( bool on );
-    void black_white_spectrum ( bool on );
+    void black_white_spectrum ( bool on )   override ;
     /** No descriptions */
-    void closeEvent ( QCloseEvent * e );
+    void closeEvent ( QCloseEvent * e )  override ;
     /** No descriptions */
     void integrate_polygon ( polygon_gate &g );
     /** No descriptions */
-    void zero_spectrum();
+    void zero_spectrum()  override ;
     /** To display on the menu bar */
-    string give_undo_text ( int nr );
+    string give_undo_text ( int nr )   override ;
     /** No descriptions */
     void adjust_range_to_legal_values();
     /** No descriptions */
     void ask_z_threshold();
     bool is_possible_to_erase_this_polygon ( string );
-    int give_minZthreshold() { return min_z_threshold; }
+    int give_minZthreshold()  override  { return min_z_threshold; }
 
     void show_context_2d_menu(QPoint pos);
     //---------------
@@ -234,20 +234,20 @@ public:
 public slots:
 
     void init();
-    void destroy();
-    void mousePressEvent ( QMouseEvent *e );
-    void keyPressEvent ( QKeyEvent *e );
+    void destroy()   override ;
+    void mousePressEvent ( QMouseEvent *e ) override;
+    void keyPressEvent ( QKeyEvent *e )   override ;
 
-    void wheelEvent ( QWheelEvent * e );
-    void mouseMoveEvent ( QMouseEvent * e );
+    void wheelEvent ( QWheelEvent * e ) override;
+    void mouseMoveEvent ( QMouseEvent * e )override;
 
     // ---------
-    void paintEvent ( QPaintEvent * );
+    void paintEvent ( QPaintEvent * ) override;
     // void init();
-    void resizeEvent ( QResizeEvent * );
+    void resizeEvent ( QResizeEvent * ) override;
 
 
-    void focusInEvent ( QFocusEvent * ) ;
+    void focusInEvent ( QFocusEvent * ) override;
 
 
     void recalculate_my_geometry();
@@ -255,75 +255,75 @@ public slots:
 
     //----------------------------------
     // two overloaded function for expansion
-    void expand();
+    void expand() override;
     void expand ( typ_x mleft, typ_x mtop, typ_x mright, typ_x mbottom );
     //----------------------------------
 
     // void mousePressEvent( QMouseEvent * e );
     void remember_as_marker ( typ_x k );
-    void full();
+    void full() override;
     void auto_maximum();
-    void shift_right ( int divider );
-    void shift_left ( int divider );
-    void scale_to_maxY();
-    void scaleY_by_2();
-    void scaleY_by_05();
-    void integrate ( T4results_of_integration *ptr );
+    void shift_right ( int divider ) override;
+    void shift_left ( int divider ) override;
+    void scale_to_maxY() override;
+    void scaleY_by_2() override;
+    void scaleY_by_05() override;
+    void integrate ( T4results_of_integration *ptr ) override;
     void give_parameters ( typ_x * min_ch, typ_x * max_co,
                          typ_x * max_ch, typ_x * min_co,
-                         spectrum_descr *sd );
+                         spectrum_descr *sd ) override;
     //typ_x * sp_beg, typ_x * sp_end );
     // void scrollbar_horizontal_moved ( int int_left_edge );
-    void scaleY_by_factor ( double value );
+    void scaleY_by_factor ( double value ) override;
     // void slider_horizontal ( int value );
     // void scroller_vertical_moved ( int value_bottom );
-    int giveCurrentMaxCounts();
+    int giveCurrentMaxCounts() override;
     // void spectrum__destroyed( QObject * );
     void set_parameters ( typ_x min_ch, typ_x max_yy,
-                        typ_x max_ch, typ_x min_yy );
-    void save();
-    void save_as ( string prefix );
-    void set_the_name ( QString & name );
+                        typ_x max_ch, typ_x min_yy ) override;
+    void save() override;
+    void save_as ( std::string prefix ) override;
+    void set_the_name ( QString & name ) override;
     void print_it();
     void paint_all_on_screen();
     // 2 below are not needed, but they are pure virtuali in a base class
-    void draw_all_on_screen()
+    void draw_all_on_screen() override
     {
         cout << "  spectrum_2D::draw_all_on_screen - is just update " << endl;
         //update() ;
     }
-    void draw_all ( QPainter * )
+    void draw_all ( QPainter * ) override
     {
         cout << "  spectrum_2D::draw_all - is just update " << endl;
         // update() ;
     }
 
-    void read_in_file ( const char * name, bool this_is_first_time );
+    void read_in_file ( const char * name, bool this_is_first_time ) override;
     //    bool find_x_description ( const char * name );
-    void log_linear ( bool stan );
-    void auto_scale( bool state)
+    void log_linear ( bool stan ) override;
+    void auto_scale( bool state) override
     { // cout << "Wirtualna " << __PRETTY_FUNCTION__ << endl;
         flag_auto_maximum = state;
     }
     void set_backgr_marker ( typ_x dana );
-    vector<typ_x>* give_bg_markers();
+    std::vector<typ_x>* give_bg_markers();
 
-    vector<polygon_gate>&  give_vector_of_polygons();
+    std::vector<polygon_gate>&  give_vector_of_polygons();
 
     typ_x justify_to_bin_center ( typ_x dana );
     int typ_x_to_bin ( typ_x value );
     bool give_bg_info ( double * sl, double * off );
     void paint_all ( QPainter * piorko );
-    bool give_flag_log_scale();
+    bool give_flag_log_scale() override;
 
-    void real_save_ascii ( QString & nazwa, bool flag_radware );
-    void show_polygons ( bool stan ) ; // { } ;
+    void real_save_ascii ( QString & nazwa, bool flag_radware ) override;
+    void show_polygons ( bool stan ) override ; // { } ;
     bool give_flag_show_polygons()
     {
         return  flag_show_polygons ;
     }
 
-    void show_disk_names_of_gates ( bool flag )
+    void show_disk_names_of_gates ( bool flag ) override
     {
         //cout <<  "now flag_show_disknames_of_polygons = " <<  flag  << endl ;
         flag_show_disknames_of_polygons = flag ;
@@ -333,7 +333,7 @@ public slots:
     {
         return flag_show_disknames_of_polygons ;
     }
-    void lupa_button_pressed();
+    void lupa_button_pressed() override;
 
     void error_more_than_one_polygon_selected() ;
     void erase_polygon ( int nr );
@@ -342,20 +342,20 @@ public slots:
         return max_counts_on_map ;
     }
     int give_value_of_pixel ( typ_x x, typ_x y ) ;
-    void shift_up_down ( int divider ) ;
+    void shift_up_down ( int divider ) override ;
 
     bool find_polygons_with_names_as_this_marix();
     void add_new_polygon() ;
     //     void add_horizontal_polygon();
 
-    void re_read_spectrum();
-    string projection ( int axis_x ); // <---- virtual
-    bool is_polygon_name_unique ( string name ) ;
+    void re_read_spectrum() override;
+    std::string projection ( int axis_x ) override; // <---- virtual
+    bool is_polygon_name_unique ( std::string name ) ;
     void paste_polygon() ;
     /** storing the parameters in case of later undo command */
     // void remember_for_undo(string s);
 
-    void draw_scale_or_not ( bool stan );
+    void draw_scale_or_not ( bool stan ) override;
 
 
     // slots for popup Qmenu..........................................
